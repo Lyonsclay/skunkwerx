@@ -1,0 +1,35 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+	background: black;
+}
+
+.main {
+    position: absolute;
+    left: 0; right: 0;
+    width: 521px;
+    margin: auto;
+    margin-top: 5em;
+}
+
+* html .center {
+	position: absolute;
+}
+
+.banner {
+	height: 70px;
+  margin: 20px;
+  border-bottom: 2px solid;
+  font: 40px/40px "Stalinist One";
+  font-weight: 200;
+  color: #9e2817;
+  text-align: center;
+}
+
+.notice {
+	text-align: center;
+	font: 20px arial;
+	color: #dee4d8;
+}
