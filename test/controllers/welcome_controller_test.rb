@@ -21,6 +21,6 @@ class WelcomeControllerTest < ActionController::TestCase
 
   test "menu should have 'contact' button" do
     get :index
-    assert_select ".button_bar ul>li", "CONTACT"
+    assert_select ".menu_bar ul>li", "CONTACT"
   end
 end
