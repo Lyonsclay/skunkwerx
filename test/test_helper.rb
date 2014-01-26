@@ -7,6 +7,7 @@ require 'capybara/dsl'
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
+  # Capybara.app = Skunkwerx::Application
 end
 
 class ActiveSupport::TestCase
