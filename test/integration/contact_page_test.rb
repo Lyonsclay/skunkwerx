@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'capybara/rails'
 require 'capybara/dsl'
-# Capybara.default_driver = :selenium
+Capybara.default_driver = :selenium
 
 class ContactPageTest < ActionDispatch::IntegrationTest
   test "welcome page has CONTACT button in menu bar" do
@@ -11,8 +11,10 @@ class ContactPageTest < ActionDispatch::IntegrationTest
   end
 
   test "CONTACT button leads to contact page" do
-    get "/"
-    click_link("CONTACT")
-    follow_redirect!
+    visit root_path
+
+    find(".menu_bar").click_link("CONTACT")
+    page.has_content?('(502)')
+
   end
 end

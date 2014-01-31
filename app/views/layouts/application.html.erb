@@ -2,16 +2,44 @@
 <html>
 <head>
   <title>Skunkwerx</title>
-  <link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false" %>
+
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+
+  <link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
+	<div class="main">
+		<div class="banner">
+			<%= image_tag("skunkwerx_header_1-24-10.jpg") %>
+		</div>
 
-<%= yield %>
+		<div class="menu_bar">
+			<ul>
+				<li><%= link_to "HOME", "/" %></li>
+				<li><%= link_to "SERVICES" %></li>
+				<li><%= link_to "MALONE TUNING" %></li>
+				<li><%= link_to "PRODUCTS" %></li>
+				<!-- <li><%#= link_to "CHECKOUT" %></li> -->
+				<li><%= link_to "CONTACT", "/contact" %></li>
+				<li><%= link_to "ABOUT" %></li>
+			</ul>
+		</div>
 
+		<!-- <div class="notice">
+			<p>This site is currently under construction. Please call (502) 724-2605.</p>
+			<p>Or email &nbsp;<%#= mail_to("dax@skunkwerx-performance.com") %></p>
+		</div> -->
+
+	<%= yield %>
+
+
+	</div>
 </body>
 </html>
