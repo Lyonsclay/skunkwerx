@@ -11,6 +11,9 @@ Skunkwerx::Application.routes.draw do
 
   get 'contact/map'
 
+  resources :freshbooks, only: [:index]
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
