@@ -1,0 +1,2 @@
+class MaloneTuningsController < ApplicationController
+end
