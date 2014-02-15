@@ -1,5 +1,7 @@
 Skunkwerx::Application.routes.draw do
-  resources :malone_tunings
+  resources :malone_tunes
+
+  # resources :malone_tunings
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -14,6 +16,10 @@ Skunkwerx::Application.routes.draw do
   get 'contact/map'
 
   resources :freshbooks, only: [:index]
+
+  # get '/malone_tunings/:id', to 'malone_tunings#show'
+
+
 
 
   # Example of regular route:
