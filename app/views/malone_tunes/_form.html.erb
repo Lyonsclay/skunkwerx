@@ -1,0 +1,17 @@
+<%= form_for(@malone_tune) do |f| %>
+  <% if @malone_tune.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@malone_tune.errors.count, "error") %> prohibited this malone_tune from being saved:</h2>
+
+      <ul>
+      <% @malone_tune.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
