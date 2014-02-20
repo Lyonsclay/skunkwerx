@@ -33,7 +33,7 @@ group :doc do
 end
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -48,8 +48,12 @@ gem 'pry', group: [:development, :test]
 group :development, :test do
   gem 'capybara'
   gem 'selenium-webdriver'
+  gem 'rspec-rails'
 end
 
+group :test do
+  gem 'factory_girl_rails'
+end
 
 # Enable Heroku static asset serving and logging on
 gem 'rails_12factor', group: :production
