@@ -1,10 +1,15 @@
 Skunkwerx::Application.routes.draw do
-  resources :malone_tunes
-
-  # resources :malone_tunings
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+
+  get 'admin/login', to: 'sessions#new', as: :login
+
+  resources :malone_tunes
+
+  get 'admin', to: 'admin#index', via: 'get'
+
+  resources :sessions, only: [:new, :create, :destroy]
+
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
@@ -17,7 +22,7 @@ Skunkwerx::Application.routes.draw do
 
   resources :freshbooks, only: [:index]
 
-  # get '/malone_tunings/:id', to 'malone_tunings#show'
+  # get 'malone_tunings/:id', to 'malone_tunings#show'
 
 
 
