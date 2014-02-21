@@ -1,7 +1,8 @@
+
 // On document load execute code for directions to business.
-if ($('#map_canvas').length){
-    $(document).on('ready page:load', function() {
+$(document).on('ready page:load', function() {
   // Only load script if on contact page.
+  if ($('#map_canvas').length){
 
     // Create new map with infowindow and marker. //
 
@@ -73,9 +74,9 @@ if ($('#map_canvas').length){
       initialize();
       calcRoute();
     });
-
+  }
 });
 
-}
+
 
 
