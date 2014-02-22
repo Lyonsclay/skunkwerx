@@ -24,8 +24,7 @@ Skunkwerx::Application.routes.draw do
 
   # get 'malone_tunings/:id', to 'malone_tunings#show'
 
-
-
+  get 'page_under_construction', to: 'page_under_construction#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
