@@ -19,3 +19,11 @@
 # Ignore Freshbooks authorization token
 /app/assets/javascripts/freshbooks.js
 
+freshbooks_test.rb
+
+freshbooks.xml
+
+malone_html.html
+
+malone_tuning_test.rb
+
