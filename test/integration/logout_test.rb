@@ -27,7 +27,7 @@ class LoginTest < ActionDispatch::IntegrationTest
         u = admin(admin)
         sess.https!
         sess.post "/sessions", session: { username: u.email, password: "foobar" }
-binding.pry
+# binding.pry
         sess.assert_response :success
         sess.https!(false)
       end

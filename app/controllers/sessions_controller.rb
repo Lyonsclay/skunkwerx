@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 
 class SessionsController < ApplicationController
   # layout can also receive symbol
