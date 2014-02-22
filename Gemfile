@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+ruby "2.1.0"
+
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
@@ -43,7 +46,7 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-gem 'pry', group: [:development, :test]
+#gem 'pry', group: [:development, :test]
 
 group :development, :test do
   gem 'capybara'
