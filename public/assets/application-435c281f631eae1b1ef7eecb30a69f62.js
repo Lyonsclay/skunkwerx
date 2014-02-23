@@ -10700,7 +10700,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 
 
 }).call(this);
-alert("Hello!");
+
 
 (function() {
 
