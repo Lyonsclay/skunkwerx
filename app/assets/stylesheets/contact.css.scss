@@ -20,7 +20,8 @@
 
  	.bold {
  		width: 250px;
- 		font: 20px "Helvetica";
+ 		font: 24px "Helvetica";
+ 		font-weight: 400;
  		border: 2px solid FireBrick;
  		border-radius: 5px;
  		padding: 10px 10px 10px 40px;
@@ -56,4 +57,10 @@
 	margin-left: 240px;
 	padding-right: 50px;
 	width: 570px;
+	font: 20px "Helvetica Neue";
+	font-weight: 200;
+	letter-spacing: 1px;
+	color: silver;
+	color: red;
+	font-family: cursive;
 }
