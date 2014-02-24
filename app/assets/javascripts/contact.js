@@ -23,7 +23,7 @@ $(document).on('ready page:load', function() {
 
     // Create infowindow with content text.
     var infowindow = new google.maps.InfoWindow({
-        content: "Skunwerx Performance LLC, &nbsp&nbsp&nbsp* enter from alley *"
+        content: "Skunkwerx Performance LLC, &nbsp&nbsp&nbsp* enter from alley *"
     });
 
     // Create new marker for business address.
