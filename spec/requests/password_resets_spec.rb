@@ -1,4 +1,4 @@
-# require 'spec_helper'
+require 'spec_helper'
 
 describe "PasswordResets" do
   it "emails user when requestiong password reset" do
