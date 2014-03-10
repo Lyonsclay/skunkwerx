@@ -8,8 +8,13 @@ class PasswordResetsController < ApplicationController
 
   def create
     admin = Admin.find_by_email(params[:email])
-    admin.send_password_reset if admin
-    redirect_to login_url, :notice => "Email sent with password reset instructions."
+    if admin
+      admin.send_password_reset
+      redirect_to login_url, :notice => "Email sent with password reset instructions"
+    else
+      flash[:notice] = "Could not find that email address"
+      redirect_to '/password_resets/new'
+    end
   end
 
   def edit
@@ -21,12 +26,16 @@ class PasswordResetsController < ApplicationController
     # On success redirect to admin home
 # binding.pry
     admin = find_admin
-    admin.update_attributes(password: params[:password], password_confirmation: params[:password_confirmation])
+# binding.pry
+    password = params[:admin][:password]
+    password_confirmation = params[:admin][:password_confirmation]
+    admin.update_attributes(password: password, password_confirmation: password_confirmation)
     if admin.save
+      flash[:notice] = "Password has been reset"
       redirect_to admin
     else
-      flash[:notice] = "You got problems"
-      redirect_to(admin)
+      flash[:notice] = admin.errors.messages
+      redirect_to admin
     end
   end
 end

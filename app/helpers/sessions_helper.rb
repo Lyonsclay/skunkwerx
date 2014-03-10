@@ -11,6 +11,12 @@ module SessionsHelper
     @current_admin = admin
   end
 
+  def sign_out
+    flash[:notice] = "You have successfully signed out"
+    cookies.permanent[:remember_token] = nil
+    @current_admin = nil
+  end
+
   def current_admin
     remember_token = Admin.encrypt(cookies[:remember_token])
     @current_admin ||= Admin.find_by(remember_token: remember_token)

@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
   layout 'admin'
 
   def new
+
   end
 
   def create
@@ -14,8 +15,8 @@ class SessionsController < ApplicationController
     admin = Admin.find_by(email: email)
     if admin && admin.authenticate(password)
       sign_in(admin)
-binding.pry
-      flash[:notice] = "Password has been reset"
+# binding.pry
+
       redirect_to '/admin'
     else
       flash[:error] = 'Invalid email/password combination'
@@ -24,7 +25,8 @@ binding.pry
   end
 
   def delete
-    session.clear
-    redirect_to :admin
+    sign_out
+# binding.pry
+    redirect_to '/admin'
   end
 end
