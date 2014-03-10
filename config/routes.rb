@@ -4,6 +4,8 @@ Skunkwerx::Application.routes.draw do
 
   get 'admin/login', to: 'sessions#new', as: :login
 
+  get 'admin/logout', to: 'sessions#delete', as: :logout
+
   resources :malone_tunes
 
   get 'admin', to: 'admin#index', via: 'get'
@@ -25,6 +27,8 @@ Skunkwerx::Application.routes.draw do
   # get 'malone_tunings/:id', to 'malone_tunings#show'
 
   get 'page_under_construction', to: 'page_under_construction#index'
+
+  resources :password_resets
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

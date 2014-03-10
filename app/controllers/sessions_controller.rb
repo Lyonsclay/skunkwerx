@@ -14,7 +14,8 @@ class SessionsController < ApplicationController
     admin = Admin.find_by(email: email)
     if admin && admin.authenticate(password)
       sign_in(admin)
-# binding.pry
+binding.pry
+      flash[:notice] = "Password has been reset"
       redirect_to '/admin'
     else
       flash[:error] = 'Invalid email/password combination'
@@ -22,6 +23,8 @@ class SessionsController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
+    session.clear
+    redirect_to :admin
   end
 end
