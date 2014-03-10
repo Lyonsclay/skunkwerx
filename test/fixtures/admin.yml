@@ -1,0 +1,4 @@
+admin_one:
+ email: jack@jack.com
+ password_digest: jackalack
+

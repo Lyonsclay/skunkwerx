@@ -1,0 +1,7 @@
+<%= form_for @admin, :url => {:action => :update }, :method => "patch" do |f| %>
+	<%= f.label :password %>
+	<%= f.password_field :password %>
+	<%= f.label :password_confirmation %>
+	<%= f.password_field :password_confirmation %>
+	<%= f.submit "Update Password" %>
+<% end %>
