@@ -1,8 +1,10 @@
 require 'spec_helper'
+require 'pry'
 
 describe Admin do
 
-  before do @admin = Admin.new(name: "Example Admin", email: "admin@example.com", password: "foobar", password_confirmation: "foobar")
+  before do
+    @admin = FactoryGirl.create(:admin)
   end
 
   subject { @admin }
@@ -66,8 +68,28 @@ describe Admin do
     before { @admin.save }
 
     # Equivalent;
-    # it { expect(@user.remember_token).not_to be_blank }
+    # it { expect(@admin.remember_token).not_to be_blank }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "#send_password_reset" do
+    it "generates a unique password_reset_token each time" do
+      @admin.send_password_reset
+      last_token = @admin.password_reset_token
+      @admin.send_password_reset
+# binding.pry
+      @admin.password_reset_token.should_not eq(last_token)
+    end
+
+    it "saves the time the password reset was sent" do
+      @admin.send_password_reset
+      @admin.password_reset_sent_at.should be_present
+    end
+
+    it "delivers email to admin" do
+      @admin.send_password_reset
+      last_email.to.should include(@admin.email)
+    end
   end
 end
 

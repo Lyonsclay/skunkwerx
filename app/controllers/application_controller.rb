@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # By default helpers are available in views but not in controllers.
   include SessionsHelper
+  include PasswordResetsHelper
 end

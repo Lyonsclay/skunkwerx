@@ -11,13 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213221402) do
+ActiveRecord::Schema.define(version: 20140306220820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "admins", force: true do |t|
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   create_table "malone_tunes", force: true do |t|

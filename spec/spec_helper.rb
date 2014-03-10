@@ -46,4 +46,8 @@ RSpec.configure do |config|
   # From Factory Girl README
   # https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
   config.include FactoryGirl::Syntax::Methods
+
+  config.include(MailerMacros)
+  config.before(:each) { reset_email }
+
 end

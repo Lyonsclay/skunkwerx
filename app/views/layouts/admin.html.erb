@@ -9,24 +9,21 @@
   <%#= javascript_include_tag params[:controller] %>
   <%= csrf_meta_tags %>
 
-  <!-- Used for logo in graphics composition. -->
-  <link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>
-  <!-- Used for menu_bar buttons. -->
-  <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
 
 </head>
 <body>
 	<div class="main">
-
-
-
+		<div class="notice">
+			<h4>Notices: </h4>
+	    <h4><%= flash[:notice] %></h4>
+	    <h4><%= flash[:error] %></h4>
+		</div>
 		<!-- <div class="notice">
 			<p>This site is currently under construction. Please call (502) 724-2605.</p>
 			<p>Or email &nbsp;<%#= mail_to("dax@skunkwerx-performance.com") %></p>
 		</div> -->
 
-	<%= yield %>
+	   <%= yield %>
 
 	</div>
 </body>
