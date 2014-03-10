@@ -7,8 +7,7 @@ describe "PasswordResets" do
     click_link "password"
     fill_in "Email", :with => admin.email
     click_button "Send Email"
-    current_path.should eq(login_path
-      )
+    current_path.should eq(login_path)
     page.should have_content("Email sent")
     last_email.to.should include(admin.email)
   end
@@ -18,9 +17,9 @@ describe "PasswordResets" do
     click_link "password"
     fill_in "Email", :with => "garbage"
     click_button "Send Email"
-    current_path.should eq(login_path
-      )
-    page.should have_content("Email sent")
+# binding.pry
+    current_path.should eq(new_password_reset_path)
+    page.should_not have_content("Email sent")
     last_email.should be_nil
   end
 
@@ -29,7 +28,7 @@ describe "PasswordResets" do
     fill_in "Password", :with => "foobar"
     fill_in "Password confirmation", :with => "foobar"
     click_button "Update Password"
-    current_path.should eq(admin_path(admin))
+    current_path.should eq(login_path)
     page.should have_content("Password has been reset")
   end
 end
