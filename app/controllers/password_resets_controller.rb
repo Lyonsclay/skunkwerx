@@ -34,8 +34,8 @@ class PasswordResetsController < ApplicationController
       flash[:notice] = "Password has been reset"
       redirect_to admin
     else
-      flash[:notice] = admin.errors.messages
-      redirect_to admin
+    flash[:notice] = admin.errors.messages
+    redirect_to edit_password_reset_path
     end
   end
 end
