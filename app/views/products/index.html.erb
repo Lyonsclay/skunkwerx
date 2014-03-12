@@ -1,3 +1,13 @@
-<h2>Skunkwerx Products</h2>
-
+<div class="products">
+	<div id="title">
+		<h2>Skunkwerx Products</h2>
+	</div>
+	<div class="items">
+	<% @products.each do |product| %>
+		<p><%= product.name %></p>
+		<p><%= product.description %></p>
+		<p><%= product.price %></p>
+	<% end %>
+	</div>
+</div>
 
