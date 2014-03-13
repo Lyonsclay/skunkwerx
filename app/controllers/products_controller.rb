@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.order(:title)
+    @products = Product.order(:name)
   end
 end

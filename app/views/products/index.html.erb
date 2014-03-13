@@ -15,7 +15,7 @@
 							<%= product.name %>
 						</dt>
 						<dt class="price">
-							<%= product.price %>
+							<%= sprintf("$%0.02f", product.price) %>
 						</dt>
 						<dd>
 							<p><%= product.description %></p>
