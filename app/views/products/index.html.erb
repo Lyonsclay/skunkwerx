@@ -1,13 +1,30 @@
 <div class="products">
 	<div id="title">
-		<h2>Skunkwerx Products</h2>
+		<p>Skunkwerx Products</p>
 	</div>
 	<div class="items">
-	<% @products.each do |product| %>
-		<p><%= product.name %></p>
-		<p><%= product.description %></p>
-		<p><%= product.price %></p>
-	<% end %>
+	<table>
+		<% @products.each do |product| %>
+			<tr class="<%= cycle('odd_line', 'even_line') %>">
+				<td class="image">
+					<%= image_tag(product.image_url, class: 'image_url', size: "150x150") %>
+				</td>
+				<td class="description">
+					<dl>
+						<dt>
+							<%= product.name %>
+						</dt>
+						<dt class="price">
+							<%= product.price %>
+						</dt>
+						<dd>
+							<p><%= product.description %></p>
+						</dd>
+					</dl>
+				</td>
+			</tr>
+		<% end %>
+	</table>
 	</div>
 </div>
 
