@@ -7,6 +7,8 @@ Skunkwerx::Application.routes.draw do
 
   get 'admin/logout', to: 'sessions#delete', as: :logout
 
+  get 'products/edit'
+
   resources :malone_tunes
 
   get 'admin', to: 'admin#index', via: 'get'
