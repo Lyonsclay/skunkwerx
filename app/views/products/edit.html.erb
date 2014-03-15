@@ -1,0 +1,12 @@
+<%= form_for @products do |f| %>
+	<p>
+		<%= f.label :image_url %>
+		<%= f.image_url %>
+	</p>
+
+	<%= f.name %>
+	<%= f.description %>
+	<%= f.price %>
+	<%= f.quantity %>
+	<%= f.submit %>
+<% end %>
