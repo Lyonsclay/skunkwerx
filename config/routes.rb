@@ -1,37 +1,46 @@
 Skunkwerx::Application.routes.draw do
-  get "products/index"
+  # get "products/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+
+  # You can have the root of your site routed with "root"
+  root 'welcome#index'
 
   get 'admin/login', to: 'sessions#new', as: :login
 
   get 'admin/logout', to: 'sessions#delete', as: :logout
 
-  get 'products/edit'
-
-  resources :malone_tunes
-
   get 'admin', to: 'admin#index', via: 'get'
 
+  # get 'products/edit', to: 'products#edit', as: :edit_product
+
+  namespace :admin do
+    resources :products, only: [:index, :edit, :update]
+  end
+
+  # resources :admin do
+  #   resources :products, only: [:edit, :update], controller: 'admin/products'
+  # end
+
+  # get 'admin/:id/products', to: 'products#admin_products'
+
   resources :sessions, only: [:new, :create, :destroy]
-
-
-  # You can have the root of your site routed with "root"
-  root 'welcome#index'
 
   # get 'contact/index'
 
   resources :contact, only: [:index]
 
-  get 'contact/map'
+  # get 'contact/map'
 
-  resources :freshbooks, only: [:index]
+  # resources :malone_tunes
+
+  # resources :freshbooks, only: [:index]
 
   # get 'malone_tunings/:id', to 'malone_tunings#show'
 
-  get 'page_under_construction', to: 'page_under_construction#index'
+  # get 'page_under_construction', to: 'page_under_construction#index'
 
-  resources :password_resets
+  resources :password_resets, except: [:index]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

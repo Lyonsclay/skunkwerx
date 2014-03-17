@@ -1,0 +1,25 @@
+<h1>Skunkwerx Admin Pages</h1>
+<%= form_for @product, url: { action: 'edit'} do |f| %>
+	<p>
+		<%= f.label :image_url %>
+		<%= f.text_field :image_url %>
+	</p>
+
+	<%= f.submit %>
+<% end %>
+	<p>
+		name:&nbsp
+		<%= @product.name %>
+	</p>
+	<p>
+	 	description:<br>
+		<%= @product.description %>
+	</p>
+	<p>
+		price:&nbsp
+		$<%= @product.price %>
+	</p>
+	<p>
+		quantity:&nbsp
+		<%= @product.quantity %>
+	</p>
