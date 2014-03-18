@@ -10,7 +10,7 @@ class AdminControllerTest < ActionController::TestCase
   end
 
 
-  test "should get admin/products" do
+  test "should get admin/index" do
     sign_in(Admin.first)
     get :index
 # binding.pry
