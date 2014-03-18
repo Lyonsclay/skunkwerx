@@ -18,12 +18,6 @@ Skunkwerx::Application.routes.draw do
     resources :products, only: [:index, :edit, :update]
   end
 
-  # resources :admin do
-  #   resources :products, only: [:edit, :update], controller: 'admin/products'
-  # end
-
-  # get 'admin/:id/products', to: 'products#admin_products'
-
   resources :sessions, only: [:new, :create, :destroy]
 
   # get 'contact/index'
@@ -32,13 +26,17 @@ Skunkwerx::Application.routes.draw do
 
   # get 'contact/map'
 
+  get 'products/index'
+
   # resources :malone_tunes
 
   # resources :freshbooks, only: [:index]
 
   # get 'malone_tunings/:id', to 'malone_tunings#show'
 
-  # get 'page_under_construction', to: 'page_under_construction#index'
+  get 'malone_tunes/index'
+
+  get 'page_under_construction', to: 'page_under_construction#index'
 
   resources :password_resets, except: [:index]
 

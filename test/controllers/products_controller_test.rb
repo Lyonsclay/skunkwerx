@@ -16,11 +16,5 @@ class ProductsControllerTest < ActionController::TestCase
     assert_select '.items tr', Product.all.count
     assert_select '.price', /\$[,\d]+\.\d\d/
   end
-
-  test "should get admin_products" do
-    get :admin_products, product_id: 1, admin_id: @admin.remember_token
-    assert_response :success
-
-  end
-
 end
+
