@@ -59,3 +59,9 @@ end
 
 # Enable Heroku static asset serving and logging on
 gem 'rails_12factor', group: :production
+
+# Uploading Files to S3
+# Following Heroku tutorial https://devcenter.heroku.com/articles/paperclip-s3
+gem 'paperclip'
+gem 'aws-sdk'
+

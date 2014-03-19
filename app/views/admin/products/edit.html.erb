@@ -1,11 +1,11 @@
 <h1>Skunkwerx Admin Pages</h1>
-<%= form_for @product, url: { action: 'edit'} do |f| %>
-	<p>
-		<%= f.label :image_url %>
-		<%= f.text_field :image_url %>
-	</p>
+<%= form_for [:admin, @product], html: { multipart: true } do |f| %>
+	<div class="field">
+		<%= f.label :image %>
+		<%= f.file_field :image %>
+		<%= f.submit 'Add Photo' %>
+	</div>
 
-	<%= f.submit %>
 <% end %>
 	<p>
 		name:&nbsp
