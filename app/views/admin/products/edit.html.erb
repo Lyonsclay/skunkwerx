@@ -1,6 +1,6 @@
 <h1>Skunkwerx Admin Pages</h1>
 <%= form_for [:admin, @product], html: { multipart: true } do |f| %>
-	<div class="field">
+	<div class="image_url">
 		<%= f.label :image %>
 		<%= f.file_field :image %>
 		<%= f.submit 'Add Photo' %>
