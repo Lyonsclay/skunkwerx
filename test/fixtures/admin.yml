@@ -1,4 +1,8 @@
 admin_one:
  email: jack@jack.com
- password_digest: jackalack
+ password_digest: <%= BCrypt::Password.create("jackalack") %>
+
+admin_two:
+  email: spack@spack.com
+  password_digest: <%= BCrypt::Password.create("spackalack") %>
 

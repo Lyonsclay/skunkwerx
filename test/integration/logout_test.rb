@@ -1,13 +1,27 @@
 require 'test_helper'
+require 'pry'
 
 class LoginTest < ActionDispatch::IntegrationTest
   fixtures :admin
 
+  test "https login" do
+    https!
+    get login_path
+    assert_response :success
+# binding.pry
+    post_via_redirect '/sessions', session: { email: admin(:admin_one).email, password: "jackalack" }
+    assert_equal '/admin', path
+    https!(false)
+    get '/admin/products'
+    assert_response :success
+    assert assigns(:products)
+  end
+
   test "visit '/admin' page and login if no sessions current" do
     admin = login(:admin_one)
-
+    admin_two = login(:admin_two)
     admin.visits_site
-
+    admin_two.visits_site
   end
 
   private
