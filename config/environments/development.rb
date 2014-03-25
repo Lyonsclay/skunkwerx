@@ -23,8 +23,8 @@ Skunkwerx::Application.configure do
     port: 587,
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: 'clay.morton',
-    password: '10times10'
+    user_name: ENV['MAILER_USERNAME'],
+    password: ENV['MAILER_PASSWORD']
   }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true

@@ -1,3 +1,7 @@
 AWS_ACCESS_KEY_ID: AKIAISRDUXR2EXIKIPMA
 AWS_SECRET_ACCESS_KEY: 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
 AWS_BUCKET: skunkwerx
+FRESHBOOKS_KEY: 9060c77f9995a67283430a2fb07d35d1
+FRESBOOKS_URL:  https://skunkwerxperformanceautomotivellc.freshbooks.com/api/2.1/xml-in
+MAILER_USERNAME: clay.morton
+MAILER_PASSWORD: 10times10

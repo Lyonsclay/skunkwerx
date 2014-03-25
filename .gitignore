@@ -19,12 +19,15 @@
 # Ignore Freshbooks authorization token
 /app/assets/javascripts/freshbooks.js
 
-freshbooks_test.rb
+/freshbooks_test.rb
 
-freshbooks.xml
+# freshbooks.xml
 
-malone_html.html
+# malone_html.html
 
-malone_tuning_test.rb
+# malone_tuning_test.rb
 
 .env
+
+# Ignore api credentials
+/config/local_env.yml
