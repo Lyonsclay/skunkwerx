@@ -16,6 +16,9 @@ Skunkwerx::Application.routes.draw do
 
   namespace :admin do
     resources :products, only: [:index, :edit, :update]
+    resources :freshbooks, only: [:index]
+    post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
+
   end
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -28,13 +31,7 @@ Skunkwerx::Application.routes.draw do
 
   get 'products/index'
 
-  # resources :malone_tunes
-
   # resources :freshbooks, only: [:index]
-
-  # get 'malone_tunings/:id', to 'malone_tunings#show'
-
-  get 'malone_tunes/index'
 
   get 'page_under_construction', to: 'page_under_construction#index'
 
