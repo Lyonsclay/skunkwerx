@@ -14,7 +14,7 @@ class Admin::ProductsControllerTest < ActionController::TestCase
 # binding.pry
     assert_select '.items td.description dt', Product.last.name
     assert_select '.items tr', Product.all.count
-    assert_select '.price', /\$[,\d]+\.\d\d/
+    assert_select '.unit_cost', /\$[,\d]+\.\d\d/
   end
 
   test "should get edit and assign image" do
