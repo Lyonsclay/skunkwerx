@@ -14,11 +14,11 @@ class ProductTest < ActiveSupport::TestCase
 
   test "product price must be positive" do
     product = Product.first
-    product.price = -1
+    product.unit_cost = -1
     assert product.invalid?
     assert_equal ["must be greater than or equal to 0.01"],
     product.errors[:unit_cost]
-    product.price = 1
+    product.unit_cost = 1
     assert product.valid?
   end
 
