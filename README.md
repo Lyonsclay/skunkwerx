@@ -1,9 +1,8 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+This app has been built for Skunkwerx Performance Automotive LLC. It serves the purpose
+of providing a basic customer interface for arranging automotive service and web sales 
+for products related to performance enhancement.
 
 * Ruby version
 
