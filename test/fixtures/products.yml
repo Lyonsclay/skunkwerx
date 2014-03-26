@@ -1,14 +1,14 @@
 product_one:
   name: yangfire
   description: It's made with phosphorous
-  price: 42.50
+  unit_cost: 42.50
   quantity: 20
-  image_file_name: skittles
+  image_file_name: skittles.png
 
 product_two:
   name: nam_nam
   description: It's so yummy!
-  price: 18.75
+  unit_cost: 18.75
   quantity: 12
-  image_file_name: skittles!
+  image_file_name: skittles!.png
 
