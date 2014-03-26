@@ -1,8 +1,7 @@
 require 'pry'
 
 class AdminMailer < ActionMailer::Base
-  # default from: "dax@skunkwerx-performance.com"
-  default from: "clay.morton@gmail.com"
+  default from: ENV['MAILER_USERNAME']
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
