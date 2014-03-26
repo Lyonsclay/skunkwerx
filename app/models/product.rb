@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
-  validates :name, :description, :quantity, :price, presence: true
-  validates :price, numericality: {greater_than_or_equal_to: 0.01}
+
+  validates :name, :description, :quantity, :unit_cost, presence: true
+  validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
   validates :name, uniqueness: true
   # validates :image, allow_blank: true, format: {
   #   with: %r{\.(gif|jpg|png)\Z}i,
@@ -20,6 +21,7 @@ class Product < ActiveRecord::Base
 
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
 
   # For caching
   def self.latest
