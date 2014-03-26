@@ -6,7 +6,6 @@ require 'rexml/document'
 # Import into the top level namespace for convenience
 include REXML
 
-
 class Admin::FreshbooksController < ApplicationController
   layout 'admin'
 
@@ -20,15 +19,13 @@ class Admin::FreshbooksController < ApplicationController
       xml_hash = Hash.from_xml freshbooks_call(message(1)).body
       num = xml_hash["response"]["items"]["pages"].to_i
       items = []
-# binding.pry
       # Make a call for each page and add results to items array.
       (1..num).each do |page|
         response = freshbooks_call(message(page))
         xml_hash = Hash.from_xml response.body
         items += xml_hash["response"]["items"]["item"]
-# binding.pry
       end
-
+      #Save items that have been flagged with a value in tax2_id
       items.each do |item|
         unless item["tax2_id"].nil?
           if item["name"].match("Malone")
@@ -44,7 +41,6 @@ class Admin::FreshbooksController < ApplicationController
       #Flash error
     end
     redirect_to '/admin'
-
   end
 
   private
@@ -60,12 +56,12 @@ class Admin::FreshbooksController < ApplicationController
 
   # Set the request URL
   def freshbooks_call(message)
-    uri = URI.parse('https://skunkwerxperformanceautomotivellc.freshbooks.com/api/2.1/xml-in')
+    uri = URI.parse(ENV['FRESHBOOKS_URL'])
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(uri.request_uri)
-    request.basic_auth '9060c77f9995a67283430a2fb07d35d1', 'X'
+    request.basic_auth ENV['FRESHBOOKS_KEY'], 'X'
     request.body = message
     response = http.request(request)
     return response
