@@ -4,7 +4,11 @@ class Admin::ProductsController < ApplicationController
   layout 'admin'
 
   def index
-    @products = Product.order(:name)
+    if current_admin
+      @products = Product.order(:name)
+    else
+      redirect_to root_path
+    end
   end
 
   def edit
