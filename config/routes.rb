@@ -18,7 +18,6 @@ Skunkwerx::Application.routes.draw do
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
-
   end
 
   resources :sessions, only: [:new, :create, :destroy]
