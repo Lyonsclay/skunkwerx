@@ -3,6 +3,9 @@ require 'pry'
 
 describe Admin::FreshbooksController do
   let(:admin) { create(:admin) }
+  before(:each) do
+    Product.delete_all
+  end
 
   describe "GET index" do
     it "retrieves the index" do
@@ -19,6 +22,9 @@ describe Admin::FreshbooksController do
       get :items_sync
       expect(response).should redirect_to '/admin'
       expect(Product.last).not_to eq(nil)
+      expect(flash[:notice]).to eq("Products have been successfully synced")
     end
   end
+
+
 end
