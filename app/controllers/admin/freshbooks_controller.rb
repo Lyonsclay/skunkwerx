@@ -10,6 +10,9 @@ class Admin::FreshbooksController < ApplicationController
   layout 'admin'
 
   def index
+    if !current_admin
+      redirect_to root_path
+    end
   end
 
   def items_sync
@@ -37,9 +40,9 @@ class Admin::FreshbooksController < ApplicationController
       end
 
     else
-      #Response 400?
-      #Flash error
+      redirect_to root_path
     end
+    flash[:notice] = "Products have been successfully synced"
     redirect_to '/admin'
   end
 
