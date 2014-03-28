@@ -1,0 +1,2 @@
+class MaloneTunesController < ApplicationController
+end
