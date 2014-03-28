@@ -9,8 +9,8 @@ describe Admin::FreshbooksController do
 
   describe "GET index" do
     it "retrieves the index" do
+      controller.stub(:current_admin).and_return(true)
       get :index
-
       expect(response).to render_template("index")
     end
   end
@@ -20,7 +20,7 @@ describe Admin::FreshbooksController do
       controller.stub(:current_admin).and_return(true)
       expect(Product.last).to eq(nil)
       get :items_sync
-      expect(response).should redirect_to '/admin'
+      expect(response).to redirect_to '/admin'
       expect(Product.last).not_to eq(nil)
       expect(flash[:notice]).to eq("Products have been successfully synced")
     end
