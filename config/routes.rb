@@ -20,6 +20,8 @@ Skunkwerx::Application.routes.draw do
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
   end
 
+  get 'malone_tunes/index'
+
   resources :sessions, only: [:new, :create, :destroy]
 
   # get 'contact/index'
