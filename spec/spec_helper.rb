@@ -40,6 +40,10 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  # Move integrations tests from spec/requests to spec/features
+  # Capybara 2.+ requires this folder hiearchy
+  config.include RSpec::Rails::RequestExampleGroup, type: :feature
+
   # Hartl tutorial in 3rd edition will adopt newer technique of feature specs.
   config.include Capybara::DSL
 
