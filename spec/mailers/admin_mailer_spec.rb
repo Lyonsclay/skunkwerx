@@ -6,10 +6,10 @@ describe AdminMailer do
     let(:mail) { AdminMailer.password_reset(admin) }
 
     it "sends admin password reset url" do
-      mail.subject.should eq("Password Reset")
-      mail.to.should eq([admin.email])
-      mail.from.should eq([ENV['MAILER_USERNAME']])
-      mail.body.encoded.should match(edit_password_reset_path(admin.password_reset_token))
+      expect(mail.subject).to eq("Password Reset")
+      expect(mail.to).to eq([admin.email])
+      expect(mail.from).to eq([ENV['MAILER_USERNAME']])
+      expect(mail.body.encoded).to match(edit_password_reset_path(admin.password_reset_token))
     end
   end
 

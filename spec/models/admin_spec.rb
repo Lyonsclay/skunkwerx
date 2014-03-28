@@ -77,18 +77,17 @@ describe Admin do
       @admin.send_password_reset
       last_token = @admin.password_reset_token
       @admin.send_password_reset
-# binding.pry
       @admin.password_reset_token.should_not eq(last_token)
     end
 
     it "saves the time the password reset was sent" do
       @admin.send_password_reset
-      @admin.password_reset_sent_at.should be_present
+      expect(@admin.password_reset_sent_at).to be_present
     end
 
     it "delivers email to admin" do
       @admin.send_password_reset
-      last_email.to.should include(@admin.email)
+      expect(last_email.to).to include(@admin.email)
     end
   end
 end

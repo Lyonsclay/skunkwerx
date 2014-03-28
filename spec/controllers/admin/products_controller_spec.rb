@@ -1,12 +1,13 @@
 require 'spec_helper'
+require 'pry'
 
 describe Admin::ProductsController do
   let(:admin) { create(:admin) }
 
   describe "GET " do
     it "renders the products/index form" do
-      get 'index'
-      # response.should render_template(:new)
+      controller.stub(:current_admin).and_return(true)
+      get :index
       expect(response).to render_template("index")
     end
   end
