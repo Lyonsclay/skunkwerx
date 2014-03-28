@@ -7,7 +7,6 @@ describe SessionsController do
   describe "GET new" do
     it "renders the login form" do
       get 'new'
-      # response.should render_template(:new)
       expect(response).to render_template("new")
     end
   end
