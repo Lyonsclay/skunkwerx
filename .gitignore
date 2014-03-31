@@ -27,7 +27,7 @@
 
 # malone_tuning_test.rb
 
-.env
+/.env
 
 # Ignore api credentials
 /config/local_env.yml
