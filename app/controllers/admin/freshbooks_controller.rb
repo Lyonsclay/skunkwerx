@@ -30,6 +30,7 @@ class Admin::FreshbooksController < ApplicationController
       end
       #Save items that have been flagged with a value in tax2_id
       items.each do |item|
+        item.delete_if{ |k,v| k = "item_id" }
         unless item["tax2_id"].nil?
           if item["name"].match("Malone")
             MaloneTune.create(item)
