@@ -15,7 +15,7 @@ class Product < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300#'
     },
-    bucket: 'skunkwerx',
+    bucket: ENV['S3_BUCKET_NAME'],
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
 
