@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 20140325035941) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-<<<<<<< HEAD
     t.integer  "item_id"
     t.decimal  "unit_cost",          precision: 8, scale: 2
     t.integer  "inventory"
@@ -63,8 +62,6 @@ ActiveRecord::Schema.define(version: 20140325035941) do
     t.integer  "tax1_id"
     t.string   "tax2_id"
     t.string   "updated"
-=======
->>>>>>> Implement paperclip with s3 storage for product.image
   end
 
 end
