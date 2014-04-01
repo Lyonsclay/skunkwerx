@@ -25,6 +25,4 @@ describe Admin::FreshbooksController do
       expect(flash[:notice]).to eq("Products have been successfully synced")
     end
   end
-
-
 end
