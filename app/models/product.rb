@@ -15,13 +15,15 @@ class Product < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300#'
     },
-    bucket: 'skunkwerx',
+    bucket: ENV['S3_BUCKET_NAME'],
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
 
   # Validate the attached image is image/jpg, image/png, etc
-  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  # validates_attachment_content_type :image, :content_type => /\Aimage\/(gif|jp?g|png)\Z/
+
   validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
+  validates_attachment_content_type :image, :content_type => /^image\/(png|gif|jpeg)/
 
   # For caching
   def self.latest
