@@ -1,4 +1,7 @@
 <h1>Skunkwerx Admin Pages</h1>
+<ul>
+	<li><%= link_to "HOME", "/admin" %></li>
+</ul>
 <%= form_for [:admin, @product], html: { multipart: true } do |f| %>
 	<div class="image_url">
 		<%= f.label :image %>
@@ -7,19 +10,19 @@
 	</div>
 
 <% end %>
-	<p>
-		name:&nbsp
-		<%= @product.name %>
-	</p>
-	<p>
-	 	description:<br>
-		<%= @product.description %>
-	</p>
-	<p>
-		price:&nbsp
-		$<%= @product.unit_cost %>
-	</p>
-	<p>
-		quantity:&nbsp
-		<%= @product.quantity %>
-	</p>
+<p>
+	name:&nbsp
+	<%= @product.name %>
+</p>
+<p>
+ 	description:<br>
+	<%= @product.description %>
+</p>
+<p>
+	price:&nbsp
+	$<%= @product.unit_cost %>
+</p>
+<p>
+	quantity:&nbsp
+	<%= @product.quantity %>
+</p>

@@ -2,7 +2,9 @@
 	<div id="title">
 		<p>Skunkwerx Products</p>
 	</div>
-	<%= link_to "HOME", "/admin" %>
+	<ul>
+		<li><%= link_to "HOME", "/admin" %></li>
+	</ul>
 	<div class="items">
 	<table>
 		<% cache(@products) do %>
@@ -35,4 +37,3 @@
 	</table>
 	</div>
 </div>
-
