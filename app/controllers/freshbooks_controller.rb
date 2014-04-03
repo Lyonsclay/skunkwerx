@@ -1,2 +1,0 @@
-class FreshbooksController < ApplicationController
-end
