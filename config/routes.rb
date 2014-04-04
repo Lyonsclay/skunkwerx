@@ -18,7 +18,10 @@ Skunkwerx::Application.routes.draw do
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
+    post 'freshbooks/callback_item_create', to: 'freshbooks#callback_item_create', as: :callback_item_create
   end
+
+  post 'callback_verify', to: 'admin/freshbooks#callback_verify', as: :callback_verify
 
   get 'malone_tunes/index'
 

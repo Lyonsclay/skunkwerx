@@ -19,12 +19,12 @@ class Admin::FreshbooksController < ApplicationController
     # Make sure admin is signed in!
     if current_admin
       # Make initial call to determine number( num ) of pages
-      xml_hash = Hash.from_xml freshbooks_call(message(1)).body
+      xml_hash = Hash.from_xml freshbooks_call(initial_message(1)).body
       num = xml_hash["response"]["items"]["pages"].to_i
       items = []
       # Make a call for each page and add results to items array.
       (1..num).each do |page|
-        response = freshbooks_call(message(page))
+        response = freshbooks_call(initial_message(page))
         xml_hash = Hash.from_xml response.body
         items += xml_hash["response"]["items"]["item"]
       end
@@ -47,34 +47,29 @@ class Admin::FreshbooksController < ApplicationController
     redirect_to '/admin'
   end
 
-  private
-
-  def message(page)
-    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
-        <request method=\"item.list\">
-          <page>#{page}</page>
-          <per_page>50</per_page>
-          <folder>active</folder>
-        </request>"
+  def callback_item_create
+    if current_admin
+      event = "item.create"
+      response = freshbooks_call(callback_create_message(event))
+      xml_hash = Hash.from_xml response.body
+      callback_id = xml_hash['response']['callback_id']
+      session[:callback_id] = callback_id
+      flash[:notice] = display_response(response)
+    end
+    render 'admin/index'
   end
 
-  # Set the request URL
-  def freshbooks_call(message)
-    uri = URI.parse(ENV['FRESHBOOKS_URL'])
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Get.new(uri.request_uri)
-    request.basic_auth ENV['FRESHBOOKS_KEY'], 'X'
-    request.body = message
-    response = http.request(request)
-    return response
-  end
-
-  def display_response(response)
-    puts "body: #{response.body}"
-    puts "code: #{response.code}"
-    puts "message: #{response.message}"
-    puts "class: #{response.class.name}"
+  def callback_verify
+    if request.url == "http://www.freshbooks.com/api/"
+      puts request.url
+      # uri = URI(params[:url])
+      verifier = params[:verifier]
+      callback_id = session[:callback_id]
+      response = freshbooks_call(callback_verify_message(callback_id, verifier))
+      flash[:notice] = display_response(response)
+    end
+    render 'admin/freshbooks/index'
+# binding.pry
   end
 end
+

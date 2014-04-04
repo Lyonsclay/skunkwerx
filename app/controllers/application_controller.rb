@@ -5,4 +5,5 @@ class ApplicationController < ActionController::Base
   # By default helpers are available in views but not in controllers.
   include SessionsHelper
   include PasswordResetsHelper
+  include Admin::FreshbooksHelper
 end
