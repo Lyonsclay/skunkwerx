@@ -27,15 +27,9 @@ Skunkwerx::Application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
 
-  # get 'contact/index'
-
   resources :contact, only: [:index]
 
-  # get 'contact/map'
-
   get 'products/index'
-
-  # resources :freshbooks, only: [:index]
 
   get 'page_under_construction', to: 'page_under_construction#index'
 
