@@ -53,7 +53,13 @@ class Admin::FreshbooksController < ApplicationController
       response = freshbooks_call(callback_create_message(event))
       xml_hash = Hash.from_xml response.body
       callback_id = xml_hash['response']['callback_id']
+      puts "******************* callback_id ******************"
+      puts callback_id
+      puts "**************************************************"
       session[:callback_id] = callback_id
+      puts "******************* session[:callback_id] ********"
+      puts session[:callback_id]
+      puts "***************************************************"
       flash[:notice] = display_response(response)
     end
     render 'admin/index'
@@ -68,6 +74,10 @@ class Admin::FreshbooksController < ApplicationController
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
         callback_id = session[:callback_id]
+        puts "*************** Rainbow Country ******************"
+        puts "******************* session[:callback_id] ********"
+        puts session[:callback_id]
+        puts "***************************************************"
         puts "******************** callback_verify_message ***************"
         puts callback_verify_message(callback_id, verifier)
         puts "*********************************************************"
