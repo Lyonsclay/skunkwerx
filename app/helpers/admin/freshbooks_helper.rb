@@ -31,7 +31,7 @@ module Admin::FreshbooksHelper
     "<request method='callback.create'>
       <callback>
       <event>#{event}</event>
-      <uri>http://www.skunkwerx-performance.com/callback_verify</uri>
+      <uri>http://www.skunkwerx-performance.com/webhooks</uri>
       </callback>
     </request>"
   end
@@ -63,6 +63,6 @@ module Admin::FreshbooksHelper
     puts "code: #{response.code}"
     puts "message: #{response.message}"
     puts "class: #{response.class.name}"
-    "body: #{response.body}" + "code: #{response.code}" + "message: #{response.message}" + "class: #{response.class.name}"
+    "body: #{response.body}\n" + "code: #{response.code}" + "message: #{response.message}\n" + "class: #{response.class.name}"
   end
 end
