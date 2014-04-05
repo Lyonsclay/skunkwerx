@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300#'
     },
+    default_url: ':style/missing.png',
     bucket: ENV['S3_BUCKET_NAME'],
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
@@ -23,7 +24,7 @@ class Product < ActiveRecord::Base
   # validates_attachment_content_type :image, :content_type => /\Aimage\/(gif|jp?g|png)\Z/
 
   validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
-  validates_attachment_content_type :image, :content_type => /^image\/(png|gif|jpeg)/
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   # For caching
   def self.latest
