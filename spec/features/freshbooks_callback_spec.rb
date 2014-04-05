@@ -19,7 +19,7 @@ describe "Freshbooks webhook request" do
 # binding.pry
     # action: callback_verify, controller: admin/freshbooks
       # name=callback.verify&object_id=1&system=https%3A%2F%2F2ndsite.freshbooks.com&user_id=1&verifier=3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT
-      post callback_verify_path, name: "callback.verify", verifier: "3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT"
+      post webhooks_path, name: "callback.verify", verifier: "3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT"
     end
   end
 end

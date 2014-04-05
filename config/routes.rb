@@ -21,7 +21,7 @@ Skunkwerx::Application.routes.draw do
     post 'freshbooks/callback_item_create', to: 'freshbooks#callback_item_create', as: :callback_item_create
   end
 
-  post 'callback_verify', to: 'admin/freshbooks#callback_verify', as: :callback_verify
+  post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
 
   get 'malone_tunes/index'
 
