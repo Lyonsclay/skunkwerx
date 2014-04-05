@@ -62,6 +62,9 @@ class Admin::FreshbooksController < ApplicationController
   def webhooks
     puts "CallbackVerify params[]"
     puts params
+    puts "*************** request.url *******************"
+    puts request.url
+    puts "***********************************************"
     if /http:\/\/www.freshbooks.com\/api/.match request.url
       puts request.url
       puts "www.freshbookds.com\/api"
