@@ -59,14 +59,15 @@ class Admin::FreshbooksController < ApplicationController
     render 'admin/index'
   end
 
-  def callback_verify
-    if request.url == "http://www.freshbooks.com/api/"
+  def webhooks
+    if /http:\/\/www.freshbooks.com\/api/.match request.url
       puts request.url
-      # uri = URI(params[:url])
-      verifier = params[:verifier]
-      callback_id = session[:callback_id]
-      response = freshbooks_call(callback_verify_message(callback_id, verifier))
-      flash[:notice] = display_response(response)
+      if params[:name] = "callback.verify"
+        verifier = params[:verifier]
+        callback_id = session[:callback_id]
+        response = freshbooks_call(callback_verify_message(callback_id, verifier))
+        flash[:notice] = display_response(response)
+      end
     end
     render 'admin/freshbooks/index'
 # binding.pry
