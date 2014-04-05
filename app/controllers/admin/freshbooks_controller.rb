@@ -65,15 +65,15 @@ class Admin::FreshbooksController < ApplicationController
     puts "*************** request.url *******************"
     puts request.url
     puts "***********************************************"
-    if /http:\/\/www.freshbooks.com\/api/.match request.url
-      puts request.url
-      puts "www.freshbookds.com\/api"
+    # if /http:\/\/www.freshbooks.com\/api/.match request.url
+      puts response.url
+      puts "www.freshbooks.com\/api"
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
         callback_id = session[:callback_id]
         response = freshbooks_call(callback_verify_message(callback_id, verifier))
         flash[:notice] = display_response(response)
-      end
+      # end
     end
     head 200
 # binding.pry
