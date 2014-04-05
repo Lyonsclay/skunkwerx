@@ -72,7 +72,6 @@ class Admin::FreshbooksController < ApplicationController
         flash[:notice] = display_response(response)
       end
     head 200
-binding.pry
   end
 end
 
