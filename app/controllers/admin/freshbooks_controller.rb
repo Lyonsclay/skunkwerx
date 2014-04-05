@@ -60,8 +60,11 @@ class Admin::FreshbooksController < ApplicationController
   end
 
   def webhooks
+    puts "CallbackVerify params[]"
+    puts params
     if /http:\/\/www.freshbooks.com\/api/.match request.url
       puts request.url
+      puts "www.freshbookds.com\/api"
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
         callback_id = session[:callback_id]
@@ -69,7 +72,7 @@ class Admin::FreshbooksController < ApplicationController
         flash[:notice] = display_response(response)
       end
     end
-    render 'admin/freshbooks/index'
+    head 200
 # binding.pry
   end
 end
