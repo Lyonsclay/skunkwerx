@@ -68,6 +68,9 @@ class Admin::FreshbooksController < ApplicationController
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
         callback_id = session[:callback_id]
+        puts "******************** callback_verify_message ***************"
+        puts callback_verify_message(callback_id, verifier)
+        puts "*********************************************************"
         response = freshbooks_call(callback_verify_message(callback_id, verifier))
         flash[:notice] = display_response(response)
       end
