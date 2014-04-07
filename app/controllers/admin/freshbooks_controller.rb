@@ -8,6 +8,7 @@ include REXML
 
 class Admin::FreshbooksController < ApplicationController
   layout 'admin'
+  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
     if !current_admin
