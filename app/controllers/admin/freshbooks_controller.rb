@@ -12,6 +12,7 @@ class Admin::FreshbooksController < ApplicationController
   # before_action :verify_authenticity_token, only: Proc.new { |c| c.request.original_url == 'http://www.freshbooks.com/api/' }
   before_action :verify_authenticity_token, only: Proc.new { |c| c.request.format == 'application/json' }
   # protect_from_forgery except: :webhooks
+  before_action :common_content, only: [:callback_item_create, :webhooks]
 
   def index
     if !current_admin
@@ -57,14 +58,10 @@ class Admin::FreshbooksController < ApplicationController
       response = freshbooks_call(callback_create_message(event))
       xml_hash = Hash.from_xml response.body
       callback_id = xml_hash['response']['callback_id']
-      puts "******************* callback_id ******************"
-      puts callback_id
-      puts "**************************************************"
       session[:callback_id] = callback_id
-      puts "******************* session[:callback_id] ********"
-      puts session[:callback_id]
-      puts "***************************************************"
       flash[:notice] = display_response(response)
+      flash[:callback_id] = callback_id
+      @callback_id = callback_id
     end
     render 'admin/index'
   end
@@ -81,6 +78,10 @@ class Admin::FreshbooksController < ApplicationController
         puts "*************** Rainbow Country ******************"
         puts "******************* session[:callback_id] ********"
         puts session[:callback_id]
+        puts "******************* flash[:callback_id] **********"
+        puts flash[:callback_id]
+        puts "******************* @callback_id *****************"
+        pust @callback_id
         puts "***************************************************"
         puts "******************** callback_verify_message ***************"
         puts callback_verify_message(callback_id, verifier)
