@@ -67,20 +67,17 @@ class Admin::FreshbooksController < ApplicationController
   end
 
   def webhooks
-  puts "************ CallbackVerify params[] **************"
+    puts "************ CallbackVerify params[] **************"
     puts params
-    puts "*************** request.inspect *******************"
-    puts request.inspect
-    puts "******** Rails.cache.read 'callback_id ************"
-    puts Rails.cache.read 'callback_id'
-    puts "***********************************************"
+    if params[:system] = "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
-        callback_id = @@callback_id
+        callback_id = Rails.cache.read "callback_id"
         response = freshbooks_call(callback_verify_message(callback_id, verifier))
         flash[:notice] = display_response(response)
       end
-    head 200
+      head 200
+    end
   end
 end
 
