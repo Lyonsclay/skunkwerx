@@ -68,23 +68,12 @@ class Admin::FreshbooksController < ApplicationController
   def webhooks
     puts "CallbackVerify params[]"
     puts params
-    puts "*************** request.url *******************"
-    puts request.url
+    puts "*************** request.referrer *******************"
+    puts request.referrer
     puts "***********************************************"
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
-        callback_id = session[:callback_id]
-        puts "*************** Rainbow Country ******************"
-        puts "******************* session[:callback_id] ********"
-        puts session[:callback_id]
-        puts "******************* flash[:callback_id] **********"
-        puts flash[:callback_id]
-        puts "******************* @@callback_id ****************"
-        puts @@callback_id
-        puts "***************************************************"
-        puts "****************** callback_verify_message ************"
-        puts callback_verify_message(callback_id, verifier)
-        puts "*********************************************************"
+        callback_id = @@callback_id
         response = freshbooks_call(callback_verify_message(callback_id, verifier))
         flash[:notice] = display_response(response)
       end
