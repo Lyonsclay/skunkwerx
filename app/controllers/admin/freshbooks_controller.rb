@@ -59,17 +59,20 @@ class Admin::FreshbooksController < ApplicationController
       callback_id = xml_hash['response']['callback_id']
       session[:callback_id] = callback_id
       flash[:notice] = display_response(response)
-      flash[:callback_id] = callback_id
+      # flash[:callback_id] = callback_id
       @@callback_id = callback_id
+      Rails.cache.write 'callback_id', callback_id
     end
     render 'admin/index'
   end
 
   def webhooks
-    puts "CallbackVerify params[]"
+  puts "************ CallbackVerify params[] **************"
     puts params
-    puts "*************** request.referrer *******************"
-    puts request.referrer
+    puts "*************** request.inspect *******************"
+    puts request.inspect
+    puts "******** Rails.cache.read 'callback_id ************"
+    puts Rails.cache.read 'callback_id'
     puts "***********************************************"
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
