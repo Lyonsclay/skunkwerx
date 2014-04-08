@@ -10,7 +10,8 @@ class Admin::FreshbooksController < ApplicationController
   layout 'admin'
   # skip_before_action :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
   skip_before_action :verify_authenticity_token, only: :webhooks
-  before_action :verify_authenticity_token, unless: Proc.new { |c| c.request.original_url == 'http://www.freshbooks.com/api/' }
+  # before_action :verify_authenticity_token, unless: Proc.new { |c| c.request.original_url == 'http://www.freshbooks.com/api/' }
+  before_action :verify_authenticity_token, unless: Proc.new { |c| c.request.format == 'application/json' }
 
   def index
     if !current_admin
@@ -71,8 +72,8 @@ class Admin::FreshbooksController < ApplicationController
   def webhooks
     puts "CallbackVerify params[]"
     puts params
-    puts "*************** request.url *******************"
-    puts request.url
+    puts "*************** request.original_url *******************"
+    puts request.original_url
     puts "***********************************************"
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
