@@ -10,7 +10,7 @@ class Admin::FreshbooksController < ApplicationController
   layout 'admin'
   # skip_before_action :verify_authenticity_token, only: :webhooks
   # before_action :verify_authenticity_token, only: Proc.new { |c| c.request.original_url == 'http://www.freshbooks.com/api/' }
-  before_action :verify_authenticity_token, only: Proc.new { |c| c.request.format == 'application/json' }
+  skip_before_action :verify_authenticity_token, only: Proc.new { |c| c.request.format == 'application/json' }
   # protect_from_forgery except: :webhooks
 
   def index
@@ -20,7 +20,7 @@ class Admin::FreshbooksController < ApplicationController
   end
 
   def items_sync
-    # Make sure admin is signed in!
+    # Make sure admin is logged in!
     if current_admin
       # Make initial call to determine number( num ) of pages
       xml_hash = Hash.from_xml freshbooks_call(initial_message(1)).body
@@ -43,7 +43,7 @@ class Admin::FreshbooksController < ApplicationController
           end
         end
       end
-
+    # Redirect to HOME if an admin not logged in.
     else
       redirect_to root_path
     end
@@ -67,14 +67,23 @@ class Admin::FreshbooksController < ApplicationController
   end
 
   def webhooks
-    puts "************ CallbackVerify params[] **************"
+    puts "************ Freshbooks Callbacks params[] **************"
     puts params
+    # Check to insure valid freshbooks api request.
     if params[:system] = "https://skunkwerxperformanceautomotivellc.freshbooks.com"
+      # Callback Verify action for all webhook methods;
       if params[:name] = "callback.verify"
         verifier = params[:verifier]
         callback_id = Rails.cache.read "callback_id"
         response = freshbooks_call(callback_verify_message(callback_id, verifier))
         flash[:notice] = display_response(response)
+      end
+      # Item Create Callback method creates new product.
+      if params[:name] = "item.create"
+        puts "**************** inside item.create ****************"
+        puts "******************* params *************************"
+        puts params
+        Product.create(params[:item])
       end
       head 200
     end
