@@ -59,8 +59,6 @@ class Admin::FreshbooksController < ApplicationController
       callback_id = xml_hash['response']['callback_id']
       session[:callback_id] = callback_id
       flash[:notice] = display_response(response)
-      # flash[:callback_id] = callback_id
-      @@callback_id = callback_id
       Rails.cache.write 'callback_id', callback_id
     end
     render 'admin/index'
@@ -69,6 +67,7 @@ class Admin::FreshbooksController < ApplicationController
   def webhooks
     puts "************ Freshbooks Callbacks params[] **************"
     puts params
+    puts "*********************************************************"
     # Check to insure valid freshbooks api request.
     if params[:system] = "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       # Callback Verify action for all webhook methods;
@@ -78,6 +77,7 @@ class Admin::FreshbooksController < ApplicationController
         callback_id = Rails.cache.read "callback_id"
         puts "**************** callback_id ********************"
         puts callback_id
+        puts "****************************************************"
         response = freshbooks_call(callback_verify_message(callback_id, verifier))
         flash[:notice] = display_response(response)
       end
@@ -86,7 +86,14 @@ class Admin::FreshbooksController < ApplicationController
         puts "**************** inside item.create ****************"
         puts "******************* params *************************"
         puts params
-        Product.create(params[:item])
+        puts "****************************************************"
+        item_id = params[:object_id]
+        response = freshbooks_call(item_get_message(item_id))
+        xml_hash = Hash.from_xml response.body
+        puts "*************** xml_hash **********************"
+        puts xml_hash
+        puts "***********************************************"
+        Product.create(xml_hash['response']['item'])
       end
       head 200
     end
