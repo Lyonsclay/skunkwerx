@@ -69,7 +69,8 @@ class Admin::FreshbooksController < ApplicationController
     puts params
     puts "*********************************************************"
     # Check to insure valid freshbooks api request.
-    if params[:system] = "https://skunkwerxperformanceautomotivellc.freshbooks.com"
+    if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
+      puts "**************** inside params[:system] ************"
       # Callback Verify action for all webhook methods;
       if params[:name] == "callback.verify"
         puts "**************** inside callback.verify *************"
