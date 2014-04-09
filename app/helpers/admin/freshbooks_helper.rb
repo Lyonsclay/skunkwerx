@@ -45,6 +45,10 @@ module Admin::FreshbooksHelper
     </request>"
   end
 
+  def item_get_message(item_id)
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?><request method=\"item.get\"><item_id>#{item_id}</item_id></request>"
+  end
+
   # Set the request URL
   def freshbooks_call(message)
     uri = URI.parse(ENV['FRESHBOOKS_URL'])
