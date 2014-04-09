@@ -72,7 +72,7 @@ class Admin::FreshbooksController < ApplicationController
     if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       puts "**************** inside params[:system] ************"
       # Callback Verify action for all webhook methods;
-      if params[:name] == "callback.verify"
+      if params["name "] == "callback.verify"
         puts "**************** inside callback.verify *************"
         verifier = params[:verifier]
         callback_id = Rails.cache.read "callback_id"
@@ -83,7 +83,7 @@ class Admin::FreshbooksController < ApplicationController
         flash[:notice] = display_response(response)
       end
       # Item Create Callback method creates new product.
-      if params[:name] == "item.create"
+      if params["name "] == "item.create"
         puts "**************** inside item.create ****************"
         puts "******************* params *************************"
         puts params
