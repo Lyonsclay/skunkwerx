@@ -2,19 +2,17 @@
 <html>
 <head>
   <title>Skunkwerx Admin Page</title>
-
   <%= stylesheet_link_tag "admin", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "admin", "data-turbolinks-track" => false %>
   <!-- loads controller specific scripts only on refresh -->
   <%#= javascript_include_tag params[:controller] %>
   <%= csrf_meta_tags %>
-
-
 </head>
 <body>
 	<div class="admin_portal">
 		<div class="notice">
-	  <h4><%= flash[:notice] %></h4>
+			<h4><%= flash[:sync_discrepancy] %></h4>
+	  	<h4><%= flash[:notice] %></h4>
 	    <h4><%= flash[:error] %></h4>
 		</div>
 		<!-- <div class="notice">
