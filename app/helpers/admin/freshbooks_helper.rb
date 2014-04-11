@@ -1,5 +1,5 @@
 module Admin::FreshbooksHelper
-# Callback Response
+# ## Callback Response ##
 # <?xml version="1.0" encoding="utf-8"?>
 # <response xmlns="http://www.freshbooks.com/api/" status="ok">
 # <callback_id>1</callback_id>
@@ -18,7 +18,9 @@ module Admin::FreshbooksHelper
 # name=callback.verify&object_id=1&system=https%3A%2F%2F2ndsite.freshbooks.com&user_id=1&verifier=3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT
 
 
-  def initial_message(page)
+###############################################################
+# ## Predefined messages to perform Freshbooks api requests; ##
+  def item_list_message(page)
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
         <request method=\"item.list\">
           <page>#{page}</page>
@@ -28,25 +30,107 @@ module Admin::FreshbooksHelper
   end
 
   def callback_create_message(event)
-    "<request method='callback.create'>
-      <callback>
-      <event>#{event}</event>
-      <uri>http://www.skunkwerx-performance.com/webhooks</uri>
-      </callback>
-    </request>"
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <request method=\"callback.create\">
+        <callback>
+        <event>#{event}</event>
+        <uri>http://www.skunkwerx-performance.com/webhooks</uri>
+        </callback>
+      </request>"
   end
 
   def callback_verify_message(callback_id, verifier)
-    "<request method='callback.verify'>
-      <callback>
-        <callback_id>#{callback_id}</callback_id>
-        <verifier>#{verifier}</verifier>
-      </callback>
-    </request>"
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <request method=\"callback.verify\">
+        <callback>
+          <callback_id>#{callback_id}</callback_id>
+          <verifier>#{verifier}</verifier>
+        </callback>
+      </request>"
   end
 
   def item_get_message(item_id)
-    "<?xml version=\"1.0\" encoding=\"utf-8\"?><request method=\"item.get\"><item_id>#{item_id}</item_id></request>"
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <request method=\"item.get\">
+        <item_id>#{item_id}</item_id>
+      </request>"
+  end
+
+  def callback_list_message(callback)
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <request method=\"callback.list\">
+        <event>#{callback}</event>
+        <uri>http://example.com/webhooks/ready</uri>
+      </request>"
+  end
+
+  #####################################################
+  # ## Methods that perform Freshbooks api requests; ##
+
+  def get_items
+    # Make initial call to determine number( num ) of pages
+    response_hash = freshbooks_call(item_list_message(1))
+    num = response_hash["response"]["items"]["pages"].to_i
+    items = []
+    # Make a call for each page and add results to items array.
+    (1..num).each do |page|
+      response_hash = freshbooks_call(item_list_message(page))
+      items += response_hash["response"]["items"]["item"]
+    end
+    # Delete items that are not slated for web sales.
+    items.delete_if {|item| item["tax2_id"].nil? }
+    # Strip key "item_id" from item ( not a product attribute ).
+    items.each do |item|
+      item.delete_if {|k,v| k == "item_id" }
+    end
+    items
+  end
+
+  # Callback create request
+  def callback_create(event)
+    response_hash = freshbooks_call(callback_create_message(event))
+    callback_id = response_hash['response']['callback_id']
+    Rails.cache.write 'callback_id', callback_id
+    flash[:notice] = display_response(response_hash)
+  end
+
+  # Callback verify method
+  def callback_verify(verifier)
+    puts "**************** inside callback.verify *************"
+    callback_id = Rails.cache.read 'callback_id'
+    puts "******************** callback_id ********************"
+    puts callback_id
+    puts "*****************************************************"
+    response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
+    flash[:notice] = display_response(response_hash)
+  end
+
+  # Perform two tests comparing Freshbooks items and Products( web products)
+  # in order to identify discrepancies which indicate webhooks are not
+  # performing correctly.
+  def check_items_against_products(product_items, new_products)
+    message = ""
+    if new_products.any?
+      message = "The following products were newly created; " + new_products.inspect
+    end
+    if product_items.count != Product.count
+      message += "\nAfter syncing with Freshbooks, "
+      message += "there are #{product_items.count} Freshbooks items and #{Product.count} web products"
+    end
+    message
+  end
+
+  # Receive item.create request and get product attributes.
+  def item_create(object_id)
+    puts "**************** inside item.create ****************"
+    puts "******************* params *************************"
+    puts params
+    puts "****************************************************"
+    response_hash = freshbooks_call(item_get_message(object_id))
+    puts "*************** response_hash **********************"
+    puts response_hash
+    puts "****************************************************"
+    Product.create(response_hash['response']['item'])
   end
 
   # Set the request URL
@@ -59,14 +143,18 @@ module Admin::FreshbooksHelper
     request.basic_auth ENV['FRESHBOOKS_KEY'], 'X'
     request.body = message
     response = http.request(request)
-    return response
+    Hash.from_xml response.body
   end
 
-  def display_response(response)
-    puts "body: #{response.body}"
-    puts "code: #{response.code}"
-    puts "message: #{response.message}"
-    puts "class: #{response.class.name}"
-    "body: #{response.body}\n" + "code: #{response.code}" + "message: #{response.message}\n" + "class: #{response.class.name}"
+  def callbacks_display(callback)
+    display_response(freshbooks_call(callback_list_message(callback)))
+  end
+
+  def display_response(response_hash)
+    puts "**************** response_hash **************"
+    puts response_hash
+    puts "*********************************************"
+    response_hash
   end
 end
+
