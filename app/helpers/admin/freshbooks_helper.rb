@@ -96,8 +96,13 @@ module Admin::FreshbooksHelper
 
   # Callback create request
   def callback_create(event)
+    puts "**************** inside callback_create **************"
     response_hash = freshbooks_call(callback_create_message(event))
+    puts "****************** response_hash *********************"
+    puts response_hash
+    puts "****************** callback_id ***********************"
     callback_id = response_hash['response']['callback_id']
+    puts callback_id
     Rails.cache.write 'callback_id', callback_id
     flash[:notice] = display_response(response_hash)
   end
