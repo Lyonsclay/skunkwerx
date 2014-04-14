@@ -48,9 +48,12 @@ class Admin::FreshbooksController < ApplicationController
   end
 
   def webhook_create
+    puts "********************* inside webhook_create *************"
     if current_admin
+      puts "********************** inside current_admin ************"
       callback_create(params[:method])
     end
+    puts "**************** right before redirect_to '/admin' ********"
     redirect_to '/admin'
   end
 
