@@ -63,10 +63,11 @@ module Admin::FreshbooksHelper
       </request>"
   end
 
+  # Specifying event seems to fail.
+  # <event>\"#{callback}\"</event>
   def callback_list_message(callback)
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <request method=\"callback.list\">
-        <event>\"#{callback}\"</event>
         <uri>http://example.com/webhooks/ready</uri>
       </request>"
   end
