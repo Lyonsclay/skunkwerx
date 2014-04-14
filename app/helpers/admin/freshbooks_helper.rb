@@ -163,5 +163,9 @@ module Admin::FreshbooksHelper
     puts "*********************************************"
     response_hash
   end
+
+  def find_key(key)
+    params.keys.detecdt {|k| k.match(/#{key}/) }
+  end
 end
 
