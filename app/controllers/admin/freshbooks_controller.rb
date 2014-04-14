@@ -1,10 +1,4 @@
 require 'pry'
-require 'net/https'
-require 'uri'
-# For parsing XML
-require 'rexml/document'
-# Import into the top level namespace for convenience
-include REXML
 
 class Admin::FreshbooksController < ApplicationController
   layout 'admin'

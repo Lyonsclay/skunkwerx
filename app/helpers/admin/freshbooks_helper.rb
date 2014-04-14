@@ -1,3 +1,10 @@
+require 'net/https'
+require 'uri'
+# For parsing XML
+require 'rexml/document'
+# Import into the top level namespace for convenience
+include REXML
+
 module Admin::FreshbooksHelper
 # ## Callback Response ##
 # <?xml version="1.0" encoding="utf-8"?>
@@ -59,7 +66,7 @@ module Admin::FreshbooksHelper
   def callback_list_message(callback)
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <request method=\"callback.list\">
-        <event>#{callback}</event>
+        <event>\"#{callback}\"</event>
         <uri>http://example.com/webhooks/ready</uri>
       </request>"
   end
