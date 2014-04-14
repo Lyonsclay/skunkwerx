@@ -65,10 +65,9 @@ module Admin::FreshbooksHelper
 
   # Specifying event seems to fail.
   # <event>\"#{callback}\"</event>
-  def callback_list_message(callback)
+  def callback_list_message
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <request method=\"callback.list\">
-        <uri>http://example.com/webhooks/ready</uri>
       </request>"
   end
 
@@ -160,7 +159,7 @@ module Admin::FreshbooksHelper
   end
 
   def callbacks_display(callback)
-    display_response(freshbooks_call(callback_list_message(callback)))
+    display_response(freshbooks_call(callback_list_message))
   end
 
   def display_response(response_hash)
