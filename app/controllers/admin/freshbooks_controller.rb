@@ -61,12 +61,13 @@ class Admin::FreshbooksController < ApplicationController
     # Check to insure valid freshbooks api request.
     if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       puts "**************** inside params[:system] ***************"
+      key = find_key("name")
       # Callback Verify action for all webhook methods;
-      if params["name "] == "callback.verify"
+      if params[key] == "callback.verify"
         callback_verify(params[:verifier])
       end
       # Item Create Callback method creates new product.
-      if params["name "] == "item.create"
+      if params[key] == "item.create"
         item_create(params[:object_id])
       end
       # Send response status ok.
