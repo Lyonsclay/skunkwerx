@@ -165,7 +165,7 @@ module Admin::FreshbooksHelper
   end
 
   def find_key(key)
-    params.keys.detecdt {|k| k.match(/#{key}/) }
+    params.keys.detect {|k| k.match(/#{key}/) }
   end
 end
 
