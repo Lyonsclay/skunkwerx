@@ -35,17 +35,21 @@ class Admin::FreshbooksController < ApplicationController
           end
         end
       end
+      flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
       # Fail-safe if item.delete callback doesn't work.
       if Product.count > product_items.count
         item_names = product_items.map { |i| i["name"] }
         product_names = Product.all.map { |p| p.name }
         old_product_names = product_names - item_names
         old_product_names.each do |name|
-          # Product.find_by_name(name).destroy
+          puts "************ items_sync product delete *************"
+          product = Product.find_by_name(name)
+          puts "************ product *******************************"
+          puts product
+          puts "****************************************************"
+          product.destroy
         end
       end
-      flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
-
       if flash[:sync_discrepancy].empty?
         flash[:notice] = "Products are up to date"
       end
