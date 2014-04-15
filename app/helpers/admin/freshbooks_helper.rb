@@ -169,6 +169,49 @@ module Admin::FreshbooksHelper
     response_hash
   end
 
+  def freshbooks_sync
+    items = get_items
+    # malone_tunes_items = []
+    product_items = []
+    # Track newly created items for sync descrepancy assesment.
+    new_products = []
+    # Split items into malone_tunes and products and save to database.
+    items.each do |item|
+      if item["name"].match("Malone")
+        # malone_tunes_items += item
+        MaloneTune.create(item)
+      else
+        product_items << item
+        p = Product.create(item)
+        if p.save
+          new_products << p
+        end
+      end
+    end
+    flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
+    # Fail-safe if item.delete callback doesn't work.
+    if Product.count > product_items.count
+      old_products_delete(product_items)
+    end
+    if flash[:sync_discrepancy].empty?
+      flash[:notice] = "Products are up to date"
+    end
+  end
+
+  def old_products_delete(product_items)
+    item_names = product_items.map { |i| i["name"] }
+    product_names = Product.all.map { |p| p.name }
+    old_product_names = product_names - item_names
+    old_product_names.each do |name|
+      puts "************ items_sync product delete *************"
+      product = Product.find_by_name(name)
+      puts "************ product *******************************"
+      puts product
+      puts "****************************************************"
+      product.destroy
+    end
+  end
+
   def find_key(key)
     params.keys.detect {|k| k.match(/#{key}/) }
   end
