@@ -31,3 +31,6 @@
 
 # Ignore api credentials
 /config/local_env.yml
+
+# Temporary file for constructing xml strings.
+/
