@@ -40,7 +40,6 @@ class Admin::FreshbooksController < ApplicationController
         item_names = product_items.map { |i| i["name"] }
         product_names = Product.all.map { |p| p.name }
         old_product_names = product_names - item_names
-binding.pry
         old_product_names.each do |name|
           # Product.find_by_name(name).destroy
         end
