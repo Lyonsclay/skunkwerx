@@ -126,8 +126,8 @@ module Admin::FreshbooksHelper
       message = "The following products were newly created; " + new_products.inspect
     end
     if product_items.count != Product.count
-      message += "\nAfter syncing with Freshbooks, "
-      message += "there are #{product_items.count} Freshbooks items and #{Product.count} web products"
+      message += "\nBefore syncing with Freshbooks, "
+      message += "there were #{product_items.count} Freshbooks items and #{Product.count} web products"
     end
     message
   end
