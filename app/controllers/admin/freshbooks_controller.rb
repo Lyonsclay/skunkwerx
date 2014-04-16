@@ -11,7 +11,7 @@ class Admin::FreshbooksController < ApplicationController
     if !current_admin
       redirect_to root_path
     end
-    @callbacks = callbacks_display("item.create")
+    @callbacks = callbacks_display
   end
 
   def items_sync

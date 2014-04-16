@@ -118,6 +118,21 @@ module Admin::FreshbooksHelper
     flash[:notice] = display_response(response_hash)
   end
 
+  # Perform two tests comparing Freshbooks items and Products( web products)
+  # in order to identify discrepancies which indicate webhooks are not
+  # performing correctly.
+  def check_items_against_products(product_items, new_products)
+    message = ""
+    if new_products.any?
+      message = "The following products were newly created; " + new_products.inspect
+    end
+    if product_items.count != Product.count
+      message += "\nBefore syncing with Freshbooks, "
+      message += "there were #{product_items.count} Freshbooks items and #{Product.count} web products"
+    end
+    message
+  end
+
   # Receive item.create request and get product attributes.
   def item_create(object_id)
     puts "**************** inside item.create ****************"
@@ -144,7 +159,7 @@ module Admin::FreshbooksHelper
     Hash.from_xml response.body
   end
 
-  def callbacks_display(callback)
+  def callbacks_display
     display_response(freshbooks_call(callback_list_message))
   end
 
@@ -186,7 +201,7 @@ module Admin::FreshbooksHelper
 
   #####################################################
   # ## Support methods that don't make api call; ######
-
+  #
   # Perform two tests comparing Freshbooks items and Products( web products)
   # in order to identify discrepancies which indicate webhooks are not
   # performing correctly.
