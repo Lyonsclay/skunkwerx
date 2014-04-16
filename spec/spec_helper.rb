@@ -57,5 +57,5 @@ RSpec.configure do |config|
   config.include Features::CallbackHelpers
 
   #Don't run tests with external api calls.
-  config.filter_run_excluding api: true unless ENV['run']
+  config.filter_run_excluding api: true unless ENV['RUN_API_TESTS'] == "run"
 end

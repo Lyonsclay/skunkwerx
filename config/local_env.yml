@@ -6,4 +6,4 @@ FRESHBOOKS_URL: https://skunkwerxperformanceautomotivellc.freshbooks.com/api/2.1
 MAILER_USERNAME: clay.morton
 MAILER_PASSWORD: PissedOff76
 
-RUN_API_TESTS: Don't Run
+RUN_API_TESTS: Don't run
