@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'capybara/rspec'
 require 'pry'
 
-describe "Freshbooks webhook request" do
+describe "Freshbooks webhook request", api: true do
   describe "Post webhook_create" do
     it "has response success" do
     post admin_webhook_create_path

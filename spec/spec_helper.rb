@@ -54,5 +54,8 @@ RSpec.configure do |config|
   config.include(MailerMacros)
   config.before(:each) { reset_email }
 
-config.include Features::CallbackHelpers
+  config.include Features::CallbackHelpers
+
+  #Don't run tests with external api calls.
+  config.filter_run_excluding api: true unless ENV['run']
 end

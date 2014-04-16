@@ -7,7 +7,7 @@ describe Admin::FreshbooksController do
     Product.delete_all
   end
 
-  describe "GET index" do
+  describe "GET index", api: true do
     it "retrieves the index" do
       controller.stub(:current_admin).and_return(true)
       get :index
@@ -16,7 +16,7 @@ describe Admin::FreshbooksController do
   end
 
   # This test actually calls api!
-  describe "Freshbooks :items_sync" do
+  describe "Freshbooks :items_sync", api: true do
     it "should get items from freshbooks" do
       controller.stub(:current_admin).and_return(true)
       expect(Product.last).to eq(nil)
