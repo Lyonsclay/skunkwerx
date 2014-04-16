@@ -205,21 +205,15 @@ module Admin::FreshbooksHelper
   # If there are products on the Skunkwerx database that
   # are not on the Freshbooks database they will be removed.
   # This condition would result if webhooks failed.
-  def old_products_delete(product_items)
-    item_names = product_items.map { |i| i["name"] }
-    product_names = Product.all.map { |p| p.name }
-    old_product_names = product_names - item_names
-    old_product_names.each do |name|
-      puts "************ items_sync product delete *************"
-      product = Product.find_by_name(name)
-      puts "************ product *******************************"
-      puts product
-      puts "****************************************************"
-      product.destroy
-    end
+  def dead_products_delete(items)
+    # List of item ids for Freshbooks items both Malone and Skunkwerx.
+    items_ids = items.map { |i| i["item_id"].to_i }
+    # Remove dead Products
+    Product.where.not(item_id: items_ids).delete_all
+    # Remove dead MaloneTunes
+    MaloneTune.where.not(item_id: items_ids).delete_all
   end
 
-  # Issue with ["name"] and ["name "] coming from api
   def find_key(key)
     params.keys.detect {|k| k.match(/#{key}/) }
   end
