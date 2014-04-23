@@ -17,6 +17,7 @@ Skunkwerx::Application.routes.draw do
   namespace :admin do
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
+    resources :malone_tunes, only: [:index, :show]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
   end
@@ -33,7 +34,7 @@ Skunkwerx::Application.routes.draw do
 
   get 'page_under_construction', to: 'page_under_construction#index'
 
-  resources :password_resets, except: [:index]
+  resources :password_resets, except: [:index, :update, :destroy]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
