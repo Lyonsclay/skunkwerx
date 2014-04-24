@@ -1,0 +1,63 @@
+table {
+	border-collapse: collapse;
+	width: 850px;
+	border-top: 4px solid chocolate;
+}
+
+td.list_actions {
+	position: absolute;
+
+	a {
+	position: relative;
+	bottom: -15px;
+	}
+}
+
+td.image {
+	width: 400px;
+	float: right;
+	padding: left 80px;
+}
+
+dl {
+	width: 400px;
+	padding-right: 50px;
+}
+
+th {
+	width: 400px;
+	padding-left: 50px;
+}
+
+td {
+	width: 900px;
+	img: {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+}
+
+.list_line_odd {
+	height: 380px;
+
+
+	background: LightGray;
+}
+
+.list_line_even td {
+	height: 380px;
+	background: silver;
+}
+
+.list_description {
+
+}
+
+tbody {
+	width: 850px;
+}
+
+
+
+
+

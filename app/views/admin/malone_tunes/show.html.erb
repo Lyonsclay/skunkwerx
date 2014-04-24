@@ -1,0 +1,49 @@
+<h2>Model Tunes for <%= @make_model %></h2>
+
+<% @model_tunes.each do |tune| %>
+	<table>
+		<thead>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="list_description">
+					<dl>
+						<!-- <dt>Make:&nbsp</dt> -->
+						<dd><%= tune[:name] %></dd>
+						<dd><%= tune[:description] %></dd>
+						<dd><%= tune[:price] %></dd>
+					</dl>
+				</td>
+				<td>
+				<%= image_tag(tune[:graph_url], size: "300x214" ) %>
+				</td>
+			</tr>
+		</thead>
+		</tbody>
+			<tr>
+				<th>
+				<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
+				</th>
+
+				<th>
+				<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
+				</th>
+			</tr>
+			<tr  class="require-recommend">
+				<% tune[:requires].each do |url| %>
+				<td><%= image_tag(url) %></td>
+				<% end %>
+				<% tune[:recommended].each do |url| %>
+				<td><%= image_tag(url) %></td>
+				<% end %>
+			</tr>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td class="list_actions">
+					<%#= link_to 'Edit', edit_malone_tunes_path(model) %><br/>
+					<%#= link_to 'Remove', delete_malone_tunes_path(model) %><br/>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+<% end %>
