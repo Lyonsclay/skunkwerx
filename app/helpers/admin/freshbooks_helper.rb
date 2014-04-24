@@ -178,7 +178,7 @@ module Admin::FreshbooksHelper
     new_products = []
     # Split items into malone_tunes and products and save to database.
     items.each do |item|
-      if item["name"].match("Malone")
+      if item["name"].match("Malone")  ###### /Malone/.match item["name"]
         # malone_tunes_items += item
         MaloneTune.create(item)
       else
