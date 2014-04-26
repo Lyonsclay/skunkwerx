@@ -4,14 +4,7 @@ table {
 	border-top: 4px solid chocolate;
 }
 
-td.list_actions {
-	position: absolute;
 
-	a {
-	position: relative;
-	bottom: -15px;
-	}
-}
 
 td.image {
 	width: 400px;
@@ -27,6 +20,7 @@ dl {
 th {
 	width: 400px;
 	padding-left: 50px;
+	padding-right: 100px;
 }
 
 td {
@@ -54,7 +48,7 @@ td {
 }
 
 tbody {
-	width: 850px;
+
 }
 
 
