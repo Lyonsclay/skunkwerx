@@ -25,7 +25,7 @@ module Skunkwerx
     end
 
     #http://guides.rubyonrails.org/asset_pipeline.html#precompiling-assets
-    config.assets.precompile += ['admin.js', 'admin.css']
+    # config.assets.precompile += ['admin.js', 'admin.css']
 
     I18n.enforce_available_locales = true
 
