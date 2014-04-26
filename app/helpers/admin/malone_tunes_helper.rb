@@ -45,7 +45,9 @@ module Admin::MaloneTunesHelper
     tunes = doc.css("div.view.view-engine").last.css("div.views-row")
 # binding.pry
     tunes.each do |tune|
-      tune_attributes = { name: tune.css('div.views-field.views-field-field-stage-tunes-title p').first.text }
+# binding.pry
+
+      tune_attributes = { name: tune.children[1].text.strip }
       tune_attributes.update(description: tune.css('div.views-field-field-stage-description p').text)
       tune_attributes.update(price: find_price(doc, tune_attributes[:name]))
       unless tune.css('a').first.nil?
