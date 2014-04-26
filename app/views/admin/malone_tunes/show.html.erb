@@ -28,12 +28,16 @@
 				</th>
 			</tr>
 			<tr  class="require-recommend">
+				<td>
 				<% tune[:requires].each do |url| %>
-				<td><%= image_tag(url) %></td>
+					<%= image_tag(url) %>
 				<% end %>
+				</td>
+				<td>
 				<% tune[:recommended].each do |url| %>
-				<td><%= image_tag(url) %></td>
+					<%= image_tag(url) %>
 				<% end %>
+				</td>
 			</tr>
 		</tbody>
 
