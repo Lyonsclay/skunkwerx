@@ -13,11 +13,8 @@ class Admin::MaloneTunesController < ApplicationController
   def show
     @model_tunes = model_tunes
     @make_model = params[:model][:make] + params[:model][:model]
-
   end
 
   def create
   end
-
-
 end
