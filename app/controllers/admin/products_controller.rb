@@ -1,7 +1,7 @@
 require 'pry'
 
 class Admin::ProductsController < ApplicationController
-  layout 'admin'
+  layout 'admin/application'
 
   def index
     if current_admin

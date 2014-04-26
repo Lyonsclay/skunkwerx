@@ -1,7 +1,7 @@
 require 'pry'
 
 class Admin::MaloneTunesController < ApplicationController
-  layout 'admin'
+  layout 'admin/application'
 
   def index
     unless current_admin
