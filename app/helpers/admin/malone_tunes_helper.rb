@@ -39,42 +39,55 @@ module Admin::MaloneTunesHelper
     models
   end
 
-  def model_tunes
-    model_tunes = []
+################################################################################
+################################################################################
+################################################################################
+  def model_engine_tunes
+    tunes = []
+    # Load document with all tunes for particular model vehicle.
     doc = Nokogiri::HTML(open(@@base + params[:model][:href]))
-    tunes = doc.css("div.view.view-engine").last.css("div.views-row")
-# binding.pry
-    tunes.each do |tune|
-# binding.pry
-
-      tune_attributes = { name: tune.children[1].text.strip }
+    #####################################################################
+    # Get each tune specs from table with all tunes for that model.
+    doc.css('div.view-content tbody tr').each do |tune|
+      tune_attributes = {}
+      tune_attributes = { engine: tunes.last[:engine] } unless tunes.empty?
+      unless tune.css('.views-field-field-engine').text.strip.empty?
+        tune_attributes[:engine] = tune.css('.views-field-field-engine').text.strip
+      end
+      unless tune.css('.views-field-field-collection-engine').text.strip.empty?
+        tune_attributes[:engine] = tune.css('.views-field-field-collection-engine').text.strip
+      end
+      tune_attributes.update(name: tune.css('.views-field-field-new-collection-tune').text.strip)
+      if tune_attributes[:name].empty?
+        tune_attributes[:name] = tune.css('.views-field-field-collection-tune').text.strip
+      end
+      tune_attributes.update(power: tune.css('.views-field-field-collection-power').text.strip)
+      tune_attributes.update(price: tune.css('.views-field-field-collection-price-cad-').text.strip)
+      tune_attributes.update(standalone_price: tune.css('.views-field-field-price'))
+      tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase'))
+      tunes << tune_attributes
+    end
+    #####################################################################
+    # Get additional attributes including image URLs.
+    tunes_details = doc.css('.view-engine').last.css('div.views-row')
+    tunes_details.each do |tune|
+      tune_name = tune.children[1].text.strip
+      tune_attributes = tunes.find { |a| tune_name =~ /#{a[:name]}/ }
+      tune_attributes[:name] = tune.children[1].text.strip
       tune_attributes.update(description: tune.css('div.views-field-field-stage-description p').text)
-      tune_attributes.update(price: find_price(doc, tune_attributes[:name]))
       unless tune.css('a').first.nil?
-        tune_attributes.update(graph_url: tune.css("div.views-field.views-field.views-field-field-stage-dyno-chart a").first["href"])
+        tune_attributes.update(graph_url: tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
       end
       tune_attributes.update(requires: requires_urls(tune))
       tune_attributes.update(recommended: recommended_urls(tune))
-      model_tunes << tune_attributes
-# binding.pry
     end
-    model_tunes
-  end
-
-  def find_price(doc, name)
-    prices = doc.css("table.views-table.cols-5 tbody tr")
-    prices.each do |price|
-      price_name = price.css("td.views-field-field-collection-tune p").text
-      if /#{price_name}/.match name
-        return price.css(".views-field-field-collection-price-cad-").text.strip
-      end
-    end
-    return "Can't find price"
+    tunes
   end
 
   def requires_urls(tune)
     tune.css("div.views-field.views-field-field-stage-requires-1 img").map { |t| t["src"] }
   end
+
   def recommended_urls(tune)
     tune.css("div.views-field.views-field-field-stage-recommended-1 img").map { |t| t["src"] }
   end
