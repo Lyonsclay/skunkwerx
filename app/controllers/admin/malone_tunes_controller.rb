@@ -11,7 +11,10 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def show
-    @model_tunes = model_tunes
+    @model_tunes = model_engine_tunes
+    @stock_engine = @model_tunes.first[:engine]
+    @stock_power = @model_tunes.first[:power]
+    @model_tunes.shift
     @make_model = params[:model][:make] + params[:model][:model]
   end
 

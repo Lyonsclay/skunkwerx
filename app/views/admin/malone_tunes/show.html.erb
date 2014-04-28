@@ -1,4 +1,6 @@
 <h2>Model Tunes for <%= @make_model %></h2>
+<h3>Stock Engine: <%= @stock_engine %></h3>
+<h3>Stock Power: <%= @stock_power %></h3>
 
 <% @model_tunes.each do |tune| %>
 	<table>
@@ -7,6 +9,7 @@
 				<td class="list_description">
 					<dl>
 						<!-- <dt>Make:&nbsp</dt> -->
+						<dd><%= tune[:engine] %></dd>
 						<dd><%= tune[:name] %></dd>
 						<dd><%= tune[:description] %></dd>
 						<dd><%= tune[:price] %></dd>
@@ -28,16 +31,18 @@
 				</th>
 			</tr>
 			<tr  class="require-recommend">
-				<td>
-				<% tune[:requires].each do |url| %>
-					<%= image_tag(url) %>
+				<% if tune[:requires] %>
+					<td>
+					<% tune[:requires].each do |url| %>
+						<%= image_tag(url) %>
+					<% end %>
+					</td>
+					<td>
+					<% tune[:recommended].each do |url| %>
+						<%= image_tag(url) %>
+					<% end %>
+					</td>
 				<% end %>
-				</td>
-				<td>
-				<% tune[:recommended].each do |url| %>
-					<%= image_tag(url) %>
-				<% end %>
-				</td>
 			</tr>
 		</tbody>
 
