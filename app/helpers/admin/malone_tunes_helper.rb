@@ -89,6 +89,6 @@ module Admin::MaloneTunesHelper
   end
 
   def recommended_urls(tune)
-    tune.css("div.views-field.views-field-field-stage-recommended-1 img").map { |t| t["src"] }
+    tune.css("div.views-field.views-field-field-recommended-1 img").map { |t| t["src"] }
   end
 end
