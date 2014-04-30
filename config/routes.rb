@@ -24,8 +24,6 @@ Skunkwerx::Application.routes.draw do
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
 
-  get 'malone_tunes/index'
-
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :contact, only: [:index]
