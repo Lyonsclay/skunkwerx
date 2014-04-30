@@ -9,9 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require contact
- *= require products
- *= require sessions
+ *= require_directory .
  */
 
 /* START_HIGHLIGHT */
