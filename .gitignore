@@ -38,3 +38,4 @@
 # Malone Tunes scraper
 /malone_tunes_free_run.rb
 
+public/assets/**
