@@ -1,57 +1,76 @@
+body {
+	background: GhostWhite;
+}
+
 table {
-	border-collapse: collapse;
+	border-collapse: separate;
 	width: 850px;
-	border-top: 4px solid chocolate;
-}
+	background-color: Gainsboro;
+	padding-top: 3px;
+	padding-left: 2px;
+	padding-bottom: 3px;
+	color: #2c0606;
 
-
-
-td.image {
-	width: 400px;
-	float: right;
-	padding: left 80px;
-}
-
-dl {
-	width: 400px;
-	padding-right: 50px;
-}
-
-th {
-	width: 400px;
-	padding-left: 50px;
-	padding-right: 100px;
-}
-
-td {
-	width: 900px;
-	img: {
-		padding-left: 30px;
-		padding-right: 30px;
+	td.list_description {
+		width: 450px;
 	}
 }
 
-.list_line_odd {
-	height: 380px;
+table.list_line_even {
+	background: Silver;
+	border: solid DimGray 3px;
+	border-radius: 15px;
+	margin-bottom: 10px;
 
-
-	background: LightGray;
+	tr:last-child td {
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
+	}
 }
 
-.list_line_even td {
-	height: 380px;
-	background: silver;
+table.list_line_odd {
+	border-radius: 15px;
+	border: solid DimGray 3px;
+	margin-bottom: 10px;
+
+	tr:last-child td {
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
+	}
 }
 
-.list_description {
+table.stock {
+	background: none;
+	height: 100px;
+	text-align: center;
+	font-size: 150;
+	border-radius: 15px;
+}
+
+td.list_description {
+	border: solid DimGray 1px;
+	border-radius: 10px;
+}
+
+td.graph img {
+	display: block;
+	margin: auto;
+}
+
+ul.menu {
+	list-style-type: none;
+
+	li {
+		display: inline-block;
+	}
+}
+
+
+
+label {
 
 }
 
-tbody {
+input[type='checkbox'] {
 
 }
-
-
-
-
-

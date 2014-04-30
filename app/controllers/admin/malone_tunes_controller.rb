@@ -12,10 +12,9 @@ class Admin::MaloneTunesController < ApplicationController
 
   def show
     @model_tunes = model_engine_tunes
-    @stock_engine = @model_tunes.first[:engine]
-    @stock_power = @model_tunes.first[:power]
-    @model_tunes.shift
-    @make_model = params[:model][:make] + params[:model][:model]
+    @model_tunes.pop if @model_tunes.last[:name].empty?
+    @make_model = params[:model][:make]
+    @make_model += params[:model][:model] unless params[:model][:model].nil?
   end
 
   def create

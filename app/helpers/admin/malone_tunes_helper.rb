@@ -63,8 +63,8 @@ module Admin::MaloneTunesHelper
       end
       tune_attributes.update(power: tune.css('.views-field-field-collection-power').text.strip)
       tune_attributes.update(price: tune.css('.views-field-field-collection-price-cad-').text.strip)
-      tune_attributes.update(standalone_price: tune.css('.views-field-field-price'))
-      tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase'))
+      tune_attributes.update(standalone_price: tune.css('.views-field-field-price').text.strip)
+      tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
       tunes << tune_attributes
     end
     #####################################################################
@@ -90,5 +90,14 @@ module Admin::MaloneTunesHelper
 
   def recommended_urls(tune)
     tune.css("div.views-field.views-field-field-recommended-1 img").map { |t| t["src"] }
+  end
+
+  def display_price(tune)
+    price = "Price: " + tune[:price] unless tune[:price].empty?
+    unless tune[:standalone_price].empty?
+      price = "Standalone Price: " + tune[:standalone_price]
+      price += "       Price With Purchase: " + tune[:price_with_purchase] unless tune[:price_with_purchase].empty?
+    end
+    price
   end
 end
