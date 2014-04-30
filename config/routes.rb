@@ -32,6 +32,8 @@ Skunkwerx::Application.routes.draw do
 
   get 'page_under_construction', to: 'page_under_construction#index'
 
+  get 'malone_tunes/index'
+
   resources :password_resets, except: [:index, :update, :destroy]
 
   # Example of regular route:
