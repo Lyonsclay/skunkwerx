@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  # layout can also receive symbol
-  layout 'admin'
 
   def new
   end
