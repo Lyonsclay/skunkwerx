@@ -1,6 +1,6 @@
 require 'pry'
 
-class PasswordResetsController < ApplicationController
+class Admin::PasswordResetsController < ApplicationController
   layout 'admin/application'
 
   def new
@@ -13,7 +13,7 @@ class PasswordResetsController < ApplicationController
       redirect_to login_url, :notice => "Email sent with password reset instructions"
     else
       flash[:notice] = "Could not find that email address"
-      redirect_to '/password_resets/new'
+      redirect_to new_admin_passwords_reset_path
     end
   end
 
@@ -35,7 +35,7 @@ class PasswordResetsController < ApplicationController
       redirect_to admin
     else
     flash[:notice] = admin.errors.messages
-    redirect_to edit_password_reset_path
+    redirect_to edit_admin_password_reset_path
     end
   end
 end

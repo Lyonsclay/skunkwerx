@@ -15,6 +15,7 @@ Skunkwerx::Application.routes.draw do
   # get 'products/edit', to: 'products#edit', as: :edit_product
 
   namespace :admin do
+    resources :password_resets, except: [:index, :destroy]
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
     resources :malone_tunes, only: [:index, :show]
@@ -33,8 +34,6 @@ Skunkwerx::Application.routes.draw do
   get 'page_under_construction', to: 'page_under_construction#index'
 
   get 'malone_tunes/index'
-
-  resources :password_resets, except: [:index, :update, :destroy]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
