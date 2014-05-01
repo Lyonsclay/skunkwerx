@@ -1,7 +1,7 @@
 require 'pry'
 
 class PasswordResetsController < ApplicationController
-  layout 'admin'
+  layout 'admin/application'
 
   def new
   end
