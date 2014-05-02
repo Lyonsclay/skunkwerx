@@ -1,6 +1,6 @@
 <h1>Log in</h1>
 <div class="sessions">
-	<%= form_for(:session, url: sessions_path) do |f| %>
+	<%= form_for(:session, url: admin_sessions_path) do |f| %>
     <%= f.label :email %>
     <%= f.text_field :email %>
     <%= f.label :password %>

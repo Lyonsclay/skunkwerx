@@ -6,15 +6,14 @@ Skunkwerx::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get 'admin/login', to: 'sessions#new', as: :login
+  get 'admin/login', to: 'admin/sessions#new', as: :login
 
-  get 'admin/logout', to: 'sessions#delete', as: :logout
+  get 'admin/logout', to: 'admin/sessions#delete', as: :logout
 
   get 'admin', to: 'admin#index', via: 'get'
 
-  # get 'products/edit', to: 'products#edit', as: :edit_product
-
   namespace :admin do
+    resources :sessions, only: [:new, :create, :destroy]
     resources :password_resets, except: [:index, :destroy]
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
@@ -24,8 +23,6 @@ Skunkwerx::Application.routes.draw do
   end
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
-
-  resources :sessions, only: [:new, :create, :destroy]
 
   resources :contact, only: [:index]
 

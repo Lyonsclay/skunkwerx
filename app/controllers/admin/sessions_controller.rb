@@ -1,4 +1,5 @@
-class SessionsController < ApplicationController
+class Admin::SessionsController < ApplicationController
+  layout 'admin/application'
 
   def new
   end
