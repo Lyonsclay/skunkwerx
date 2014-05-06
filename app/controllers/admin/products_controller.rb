@@ -5,7 +5,7 @@ class Admin::ProductsController < ApplicationController
   before_filter :authorize
 
   def index
-    @products
+    @products = Product.all
   end
 
   def edit
