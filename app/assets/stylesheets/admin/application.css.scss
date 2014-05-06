@@ -9,11 +9,12 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- */
+ * require_directory .
 
 /* START_HIGHLIGHT */
+
 .admin_portal {
-  border: 2px none pink;
+  border: 2px dotted pink;
   position: absolute;
   left: 0;
   right: 0;

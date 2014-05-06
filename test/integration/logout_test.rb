@@ -9,7 +9,7 @@ class LoginTest < ActionDispatch::IntegrationTest
     get login_path
     assert_response :success
 # binding.pry
-    post_via_redirect '/sessions', session: { email: admin(:admin_one).email, password: "jackalack" }
+    post_via_redirect '/admin/sessions', session: { email: admin(:admin_one).email, password: "jackalack" }
     assert_equal '/admin', path
     https!(false)
     get '/admin/products'
@@ -40,7 +40,7 @@ class LoginTest < ActionDispatch::IntegrationTest
         sess.extend(CustomDsl)
         u = admin(admin)
         sess.https!
-        sess.post "/sessions", session: { username: u.email, password: "foobar" }
+        sess.post "/admin/sessions", session: { username: u.email, password: "foobar" }
 # binding.pry
         sess.assert_response :success
         sess.https!(false)

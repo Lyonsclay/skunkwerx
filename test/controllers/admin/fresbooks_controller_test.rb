@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FreshbooksControllerTest < ActionController::TestCase
+class Admin::FreshbooksControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,12 +1,12 @@
 require 'test_helper'
 require 'pry'
-include SessionsHelper
+include Admin::SessionsHelper
 
 class AdminControllerTest < ActionController::TestCase
-  test "should redirect to sessions#new" do
+  test "should redirect to admin/sessions#new" do
     get :index
     assert_response :redirect
-    assert_redirected_to(controller: "sessions", action: "new")
+    assert_redirected_to(controller: "admin/sessions", action: "new")
   end
 
 

@@ -2,7 +2,7 @@
 <ul>
 	<li><%= link_to "HOME", "/admin" %></li>
 </ul>
-<%= form_tag("/password_resets", method: 'create') do %>
+<%= form_tag(admin_password_resets_path, method: :post) do %>
 	<%= label_tag :email %>
 	<%= text_field_tag :email %>
 	<%= submit_tag "Send Email" %>

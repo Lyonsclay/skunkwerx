@@ -33,4 +33,9 @@
 /config/local_env.yml
 
 # Temporary file for constructing xml strings.
-/
+/message_construct
+
+# Malone Tunes scraper
+/malone_tunes_free_run.rb
+
+public/assets/**

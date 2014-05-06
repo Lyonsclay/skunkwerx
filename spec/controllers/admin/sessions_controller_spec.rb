@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'pry'
 
-describe SessionsController do
+describe Admin::SessionsController do
   let(:admin) { create(:admin) }
 
   describe "GET new" do

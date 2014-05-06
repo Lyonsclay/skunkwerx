@@ -6,26 +6,23 @@ Skunkwerx::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get 'admin/login', to: 'sessions#new', as: :login
+  get 'admin/login', to: 'admin/sessions#new', as: :login
 
-  get 'admin/logout', to: 'sessions#delete', as: :logout
+  get 'admin/logout', to: 'admin/sessions#delete', as: :logout
 
   get 'admin', to: 'admin#index', via: 'get'
 
-  # get 'products/edit', to: 'products#edit', as: :edit_product
-
   namespace :admin do
+    resources :sessions, only: [:new, :create, :destroy]
+    resources :password_resets, except: [:index, :destroy]
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
+    resources :malone_tunes, only: [:index, :show]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
   end
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
-
-  get 'malone_tunes/index'
-
-  resources :sessions, only: [:new, :create, :destroy]
 
   resources :contact, only: [:index]
 
@@ -33,7 +30,7 @@ Skunkwerx::Application.routes.draw do
 
   get 'page_under_construction', to: 'page_under_construction#index'
 
-  resources :password_resets, except: [:index]
+  get 'malone_tunes/index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

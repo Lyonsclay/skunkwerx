@@ -9,7 +9,7 @@ describe AdminMailer do
       expect(mail.subject).to eq("Password Reset")
       expect(mail.to).to eq([admin.email])
       expect(mail.from).to eq([ENV['MAILER_USERNAME']])
-      expect(mail.body.encoded).to match(edit_password_reset_path(admin.password_reset_token))
+      expect(mail.body.encoded).to match(edit_admin_password_reset_path(admin.password_reset_token))
     end
   end
 

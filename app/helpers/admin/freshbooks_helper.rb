@@ -178,7 +178,7 @@ module Admin::FreshbooksHelper
     new_products = []
     # Split items into malone_tunes and products and save to database.
     items.each do |item|
-      if item["name"].match("Malone")
+      if item["name"].match("Malone")  ###### /Malone/.match item["name"]
         # malone_tunes_items += item
         MaloneTune.create(item)
       else
@@ -192,7 +192,7 @@ module Admin::FreshbooksHelper
     flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
     # Fail-safe if item.delete callback doesn't work.
     if Product.count > product_items.count
-      old_products_delete(product_items)
+      dead_products_delete(product_items)
     end
     if flash[:sync_discrepancy].empty?
       flash[:notice] = "Products are up to date"

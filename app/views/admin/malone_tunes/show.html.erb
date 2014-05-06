@@ -1,0 +1,85 @@
+<% stylesheet 'admin/malone_tunes/show' %>
+
+<ul class="menu">
+	<li><%= button_to "HOME", admin_path, method: :get %></li>
+	<li><%= button_to "BACK", admin_malone_tunes_path, method: :get %></li>
+</ul>
+
+<h2>Model Tunes for <%= @make_model %></h2>
+
+<% @model_tunes.each do |tune| %>
+	<% if tune[:name] =~ /Stock/ %>
+		<table class="stock">
+			<tr>
+				<td>
+					<dl>
+						<dd><%= tune[:engine] %></dd>
+					</dl>
+				</td>
+			</tr>
+		</table>
+
+	<% else %>
+		<table class="<%= cycle('list_line_odd', 'list_line_even') %>">
+			<thead>
+				<tr>
+					<td class="list_description">
+						<dl>
+							<!-- <dt>Make:&nbsp</dt> -->
+							<dd><b>Tune:</b>&nbsp;&nbsp; <%= tune[:name] %></dd>
+							<dd><b>Engine:</b>&nbsp;&nbsp; <%= tune[:engine] %></dd>
+							<dd><%= tune[:description] %></dd>
+							<dd><%= display_price(tune) %></dd>
+							<br>
+							<dd>
+								<%= check_box_tag 'select' %>
+								<%= label_tag 'select', 'Select This Tune' %>
+							</dd>
+						</dl>
+					</td>
+					<td class="graph">
+					<% unless tune[:graph_url].nil? %>
+						<%= image_tag(tune[:graph_url], size: "300x214" ) %>
+					<% end %>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+
+<!-- Requires and recommended graphics. -->
+			<% unless tune[:requires].nil? %>
+				</tbody>
+					<tr>
+						<th>
+						<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
+						</th>
+						<th>
+						<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
+						</th>
+					</tr>
+					<tr  class="require-recommend">
+						<% if tune[:requires] %>
+							<td>
+							<% tune[:requires].each do |url| %>
+								<%= image_tag(url) %>
+							<% end %>
+							</td>
+							<td>
+							<% tune[:recommended].each do |url| %>
+								<%= image_tag(url) %>
+							<% end %>
+							</td>
+						<% end %>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+
+					</tr>
+				</tfoot>
+			<% end %>
+		</table>
+	<% end %>
+<% end %>

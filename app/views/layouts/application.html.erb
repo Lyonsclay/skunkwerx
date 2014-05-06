@@ -6,13 +6,14 @@
   <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false", "contact" %>
 
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag params[:controller] %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
   <!-- loads controller specific scripts only on refresh -->
   <%#= javascript_include_tag params[:controller] %>
   <%= csrf_meta_tags %>
 
   <!-- Used for logo in graphics composition. -->
- <!--  <link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
+	<!--  <link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'> -->
   <!-- Used for menu_bar buttons. -->
   <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Nunito' %>

@@ -20,7 +20,7 @@ describe "Admin pages" do
     it "should not redirect index" do
       click_button "Log in"
       expect(page).to have_text "Invalid email/password combination"
-      expect(current_path).to eq(sessions_path)
+      expect(current_path).to eq(admin_sessions_path)
     end
 
     it "should redirect to index" do
