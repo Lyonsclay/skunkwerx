@@ -146,6 +146,20 @@ module Admin::FreshbooksHelper
     Product.create(response_hash['response']['item'])
   end
 
+  def item_delete(object_id)
+    Product.find_by_item_id(object_id).delete
+  end
+
+  def item_update(object_id)
+    puts "******************* inside item_update *****************"
+    product = Product.find_by_object_id(object_id)
+    puts "product: " + product.inspect
+    response_hash = freshbooks_call(item_get_message(object_id))
+    puts "response_hash: " + response_hash.inspect
+    product.update_attributes(response_hash['response']['item'])
+    puts "errors: " + product.errors
+  end
+
   # Set the request URL
   def freshbooks_call(message)
     uri = URI.parse(ENV['FRESHBOOKS_URL'])

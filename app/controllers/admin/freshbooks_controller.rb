@@ -31,13 +31,22 @@ class Admin::FreshbooksController < ApplicationController
     if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       puts "**************** inside params[:system] ***************"
       key = find_key("name")
+      puts "params: " + params.inspect
+      puts "key: " + key
       # Callback Verify action for all webhook methods;
       if params[key] == "callback.verify"
         callback_verify(params[:verifier])
       end
-      # Item Create Callback method creates new product.
+      # Freshbooks sends notification on item create, update and destroy.
       if params[key] == "item.create"
         item_create(params[:object_id])
+      end
+      if params[key] == "item.update"
+        puts "********************* inside item.update **************"
+        item_update(params[:object_id])
+      end
+      if params[key] == "item.delete"
+        item_delete(params[:object_id])
       end
       # Send response status ok.
       head 200
