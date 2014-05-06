@@ -13,7 +13,7 @@ class Admin::PasswordResetsController < ApplicationController
       redirect_to login_url, :notice => "Email sent with password reset instructions"
     else
       flash[:notice] = "Could not find that email address"
-      redirect_to new_admin_passwords_reset_path
+      redirect_to new_admin_password_reset_path
     end
   end
 

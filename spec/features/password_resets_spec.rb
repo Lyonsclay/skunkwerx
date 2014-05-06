@@ -18,13 +18,13 @@ describe "PasswordResets" do
     fill_in "Email", :with => "garbage"
     click_button "Send Email"
 # binding.pry
-    current_path.should eq(new_password_reset_path)
+    current_path.should eq(new_admin_password_reset_path)
     page.should_not have_content("Email sent")
     last_email.should be_nil
   end
 
   it "updates the user password when confirmation matches" do
-    visit edit_password_reset_path(admin.password_reset_token)
+    visit edit_admin_password_reset_path(admin.password_reset_token)
     fill_in "Password", :with => "foobar"
     fill_in "Password confirmation", :with => "foobar"
     click_button "Update Password"
