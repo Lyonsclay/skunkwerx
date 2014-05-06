@@ -152,7 +152,7 @@ module Admin::FreshbooksHelper
 
   def item_update(object_id)
     puts "******************* inside item_update *****************"
-    product = Product.find_by_object_id(object_id)
+    product = Product.find_by_item_id(object_id)
     puts "product: " + product.inspect
     response_hash = freshbooks_call(item_get_message(object_id))
     puts "response_hash: " + response_hash.inspect
