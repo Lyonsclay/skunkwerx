@@ -2,11 +2,9 @@ require 'pry'
 
 class Admin::MaloneTunesController < ApplicationController
   layout 'admin/application'
+  before_filter :authorize
 
   def index
-    unless current_admin
-      redirect_to root_path
-    end
     @models = vehicle_models
   end
 

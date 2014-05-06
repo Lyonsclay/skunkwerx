@@ -21,4 +21,10 @@ module SessionsHelper
     remember_token = Admin.encrypt(cookies[:remember_token])
     @current_admin ||= Admin.find_by(remember_token: remember_token)
   end
+
+  def authorize
+    unless current_admin
+      redirect_to root_path
+    end
+  end
 end

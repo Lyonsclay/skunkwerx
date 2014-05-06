@@ -2,13 +2,10 @@ require 'pry'
 
 class Admin::ProductsController < ApplicationController
   layout 'admin/application'
+  before_filter :authorize
 
   def index
-    if current_admin
-      @products = Product.order(:name)
-    else
-      redirect_to root_path
-    end
+    @products
   end
 
   def edit
