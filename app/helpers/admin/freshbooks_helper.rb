@@ -157,7 +157,7 @@ module Admin::FreshbooksHelper
     response_hash = freshbooks_call(item_get_message(object_id))
     puts "response_hash: " + response_hash.inspect
     product.update_attributes(response_hash['response']['item'])
-    puts "errors: " + product.errors
+    puts "errors: " + product.errors.to_s
   end
 
   # Set the request URL
