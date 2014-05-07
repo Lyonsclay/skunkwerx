@@ -24,7 +24,6 @@ module Admin::FreshbooksHelper
 # ## Body ##
 # name=callback.verify&object_id=1&system=https%3A%2F%2F2ndsite.freshbooks.com&user_id=1&verifier=3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT
 
-
 ###############################################################
 # ## Predefined messages to perform Freshbooks api requests; ##
 
@@ -135,7 +134,7 @@ module Admin::FreshbooksHelper
 
   # Receive item.create request and get product attributes.
   def item_create(object_id)
-    puts "**************** inside item.create ****************"
+    puts "**************** inside item_create ****************"
     puts "******************* params *************************"
     puts params
     puts "****************************************************"
@@ -161,7 +160,7 @@ module Admin::FreshbooksHelper
     puts "product: " + product.inspect
     response_hash = freshbooks_call(item_get_message(object_id))
     puts "response_hash: " + response_hash.inspect
-    unless respons_hash['response']['item']['tax2_id'].nil?
+    unless response_hash['response']['item']['tax2_id'].nil?
       product.update_attributes(response_hash['response']['item'])
     end
     puts "errors: " + product.errors.to_s
