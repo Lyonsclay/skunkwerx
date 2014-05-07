@@ -23,6 +23,9 @@ class Admin::FreshbooksController < ApplicationController
     redirect_to '/admin'
   end
 
+  # Post webhooks is the only call Freshbooks API will make to Skunkwerx website.
+  # This method must handle callback verify on callback creation and any callbacks
+  # that Freshbooks will make.
   def webhooks
     puts "************ Freshbooks Callbacks params[] **************"
     puts params
@@ -46,6 +49,7 @@ class Admin::FreshbooksController < ApplicationController
         item_update(params[:object_id])
       end
       if params[key] == "item.delete"
+        puts "********************* inside item.delete ***************"
         item_delete(params[:object_id])
       end
       # Send response status ok.

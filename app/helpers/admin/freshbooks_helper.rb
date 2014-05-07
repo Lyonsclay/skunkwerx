@@ -143,11 +143,16 @@ module Admin::FreshbooksHelper
     puts "*************** response_hash **********************"
     puts response_hash
     puts "****************************************************"
-    Product.create(response_hash['response']['item'])
+    unless response_hash['response']['item']['tax2_id'].nil?
+      Product.create(response_hash['response']['item'])
+    end
   end
 
   def item_delete(object_id)
-    Product.find_by_item_id(object_id).delete
+    puts "*********************** inside item_delete ********************** "
+    product = Product.find_by_item_id(object_id)
+    product.delete if product
+    puts "Product.last: " + Product.last.inspect
   end
 
   def item_update(object_id)
@@ -156,7 +161,9 @@ module Admin::FreshbooksHelper
     puts "product: " + product.inspect
     response_hash = freshbooks_call(item_get_message(object_id))
     puts "response_hash: " + response_hash.inspect
-    product.update_attributes(response_hash['response']['item'])
+    unless respons_hash['response']['item']['tax2_id'].nil?
+      product.update_attributes(response_hash['response']['item'])
+    end
     puts "errors: " + product.errors.to_s
   end
 
@@ -235,6 +242,7 @@ module Admin::FreshbooksHelper
   # are not on the Freshbooks database they will be removed.
   # This condition would result if webhooks failed.
   def dead_products_delete(items)
+    puts "***************** inside dead_products_delete ***************"
     # List of item ids for Freshbooks items both Malone and Skunkwerx.
     items_ids = items.map { |i| i["item_id"].to_i }
     # Remove dead Products
