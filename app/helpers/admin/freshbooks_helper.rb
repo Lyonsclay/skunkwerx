@@ -114,9 +114,12 @@ module Admin::FreshbooksHelper
 
   # Callback verify method
   def callback_verify(verifier)
-    puts "****************x inside callback_verify *************"
+    puts "**************** inside callback_verify *************"
+    puts "cache.read('callback_id'): "
+    puts Rails.cache.read 'callback_id'
+    puts
     callback_id = Rails.cache.read 'callback_id' || callback_id_retrieve
-    puts "callback_id: " + callback_id.to_s
+    puts "callback_id: " + callback_id
     puts "*****************************************************"
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
@@ -131,7 +134,7 @@ module Admin::FreshbooksHelper
     # Find the callback_id of the most recent callback.
     doc = Document.new callbacks_display.to_xml
     callback_ids = REXML::XPath.match(doc, '//callback-id')
-    callback_ids.first.text.to_i
+    callback_ids.first.text
   end
 
   def delete_all_webhooks
