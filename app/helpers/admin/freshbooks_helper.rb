@@ -70,7 +70,7 @@ module Admin::FreshbooksHelper
       </request>"
   end
 
-  # Specifying event seems to fail.
+  # Specifying event seems to fail, so it is left out.
   # <event>\"#{callback}\"</event>
   def callback_list_message
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -225,9 +225,10 @@ module Admin::FreshbooksHelper
     product_items = []
     # Track newly created items for sync descrepancy assesment.
     new_products = []
-    # Split items into malone_tunes and products and save to database.
+    # Split items into malone_tunes and products then save
+    # to database.
     items.each do |item|
-      if item["name"].match("Malone")  ###### /Malone/.match item["name"]
+      if item["name"].match("Malone")
         # malone_tunes_items += item
         MaloneTune.create(item)
       else
