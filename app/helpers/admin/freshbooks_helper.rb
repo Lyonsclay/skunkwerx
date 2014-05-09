@@ -115,10 +115,8 @@ module Admin::FreshbooksHelper
   # Callback verify method
   def callback_verify(verifier)
     puts "**************** inside callback_verify *************"
-    puts "cache.read('callback_id'): "
-    puts Rails.cache.read 'callback_id'
-    puts
-    callback_id = Rails.cache.read 'callback_id' || callback_id_retrieve
+    callback_id = Rails.cache.read 'callback_id'
+    callback_id ||= callback_id_retrieve
     puts "callback_id: " + callback_id
     puts "*****************************************************"
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
