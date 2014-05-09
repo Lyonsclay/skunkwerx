@@ -44,7 +44,7 @@ class Admin::FreshbooksController < ApplicationController
       # Callback Verify action for all webhook methods;
       if params[key] == "callback.verify"
         puts "****************** inside callback.verify **************"
-        puts "params[:verifier]: " + params[:verifer]
+        puts "params[:verifier]: " + params[:verifier]
         puts "********************************************************"
         callback_verify(params[:verifier])
       end
