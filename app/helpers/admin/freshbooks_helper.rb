@@ -104,21 +104,19 @@ module Admin::FreshbooksHelper
   def callback_create(event)
     puts "**************** inside callback_create **************"
     response_hash = freshbooks_call(callback_create_message(event))
-    puts "****************** response_hash *********************"
-    puts response_hash
-    puts "****************** callback_id ***********************"
+    puts "response_hash: " + response_hash
     callback_id = response_hash['response']['callback_id']
-    puts callback_id
+    puts "callback_id: " + callback_id
+    puts "*****************************************************"
     Rails.cache.write 'callback_id', callback_id
     flash[:notice] = display_response(response_hash)
   end
 
   # Callback verify method
   def callback_verify(verifier)
-    puts "**************** inside callback.verify *************"
+    puts "**************** inside callback_verify *************"
     callback_id = Rails.cache.read 'callback_id'
-    puts "******************** callback_id ********************"
-    puts callback_id
+    puts "callback_id: " + callback_id
     puts "*****************************************************"
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
@@ -166,14 +164,14 @@ module Admin::FreshbooksHelper
   end
 
   def item_delete(object_id)
-    puts "*********************** inside item_delete ********************** "
+    puts "*************** inside item_***********************"
     product = Product.find_by_item_id(object_id)
     product.delete if product
     puts "Product.last: " + Product.last.inspect
   end
 
   def item_update(object_id)
-    puts "******************* inside item_update *****************"
+    puts "**************** inside item_update *****************"
     product = Product.find_by_item_id(object_id)
     puts "product: " + product.inspect
     response_hash = freshbooks_call(item_get_message(object_id))
@@ -259,7 +257,7 @@ module Admin::FreshbooksHelper
   # are not on the Freshbooks database they will be removed.
   # This condition would result if webhooks failed.
   def dead_products_delete(items)
-    puts "***************** inside dead_products_delete ***************"
+    puts "************ inside dead_products_delete ************"
     # List of item ids for Freshbooks items both Malone and Skunkwerx.
     items_ids = items.map { |i| i["item_id"].to_i }
     # Remove dead Products

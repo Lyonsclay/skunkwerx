@@ -32,8 +32,8 @@ class Admin::FreshbooksController < ApplicationController
   # This method must handle callback verify on callback creation and any callbacks
   # that Freshbooks will make.
   def webhooks
-    puts "************ Freshbooks Callbacks params[] **************"
-    puts params
+    puts "*************** inside webhooks ************************"
+    puts "params: " + params
     puts "*********************************************************"
     # Check to insure valid freshbooks api request.
     if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
@@ -43,6 +43,9 @@ class Admin::FreshbooksController < ApplicationController
       puts "key: " + key
       # Callback Verify action for all webhook methods;
       if params[key] == "callback.verify"
+        puts "****************** inside callback.verify **************"
+        puts "params[:verifier]: " + params[:verifer]
+        puts "********************************************************"
         callback_verify(params[:verifier])
       end
       # Freshbooks sends notification on item create, update and destroy.
