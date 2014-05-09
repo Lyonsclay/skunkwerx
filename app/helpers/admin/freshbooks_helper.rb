@@ -115,7 +115,7 @@ module Admin::FreshbooksHelper
   # Callback verify method
   def callback_verify(verifier)
     puts "****************x inside callback_verify *************"
-    if Rails.cache.read('callback_id').empty?
+    if Rails.cache.read('callback_id').nil?
       callback_id = callback_id_retrieve
     else
       callback_id = Rails.cache.read 'callback_id'
