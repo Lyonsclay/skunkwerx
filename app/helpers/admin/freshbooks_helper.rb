@@ -46,6 +46,13 @@ module Admin::FreshbooksHelper
       </request>"
   end
 
+  def callback_delete_message(callback_id)
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <request method=\"callback.delete\">
+        <callback_id>#{callback_id}</callback_id>
+      </request>"
+  end
+
   def callback_verify_message(callback_id, verifier)
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <request method=\"callback.verify\">
@@ -117,9 +124,20 @@ module Admin::FreshbooksHelper
     flash[:notice] = display_response(response_hash)
   end
 
-  # Perform two tests comparing Freshbooks items and Products( web products)
-  # in order to identify discrepancies which indicate webhooks are not
-  # performing correctly.
+  def delete_all_webhooks
+    callback_list = freshbooks_call(callback_list_message)
+    doc = Document.new callback_list.to_xml
+    callback_list.each do |callback|
+      callback_ids = REXML::XPath.match( doc, '//callback-id')
+      callback_ids.map { |e| e.text.to_i }.each do |id|
+        response_hash = freshbooks_call(callback_delete_message(id))
+      end
+    end
+  end
+
+  # Compare Freshbooks items and Skunkwerx web products
+  # in order to identify discrepancies which indicate
+  # webhooks are not performing correctly.
   def check_items_against_products(product_items, new_products)
     message = ""
     if new_products.any?
