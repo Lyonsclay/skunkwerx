@@ -115,11 +115,27 @@ module Admin::FreshbooksHelper
   # Callback verify method
   def callback_verify(verifier)
     puts "****************x inside callback_verify *************"
-    callback_id = Rails.cache.read 'callback_id'
+    if Rails.cache.read('callback_id').empty?
+      callback_id = callback_id_retrieve
+    else
+      callback_id = Rails.cache.read 'callback_id'
+      Rails.cache.write 'callback_id', ""
+    end
     puts "callback_id: " + callback_id
     puts "*****************************************************"
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
+  end
+
+  # Method to retrieve callback_id from Freshbooks api. This is necessary if
+  # callback request was made from a server other than the one hosting
+  # skunkwerx-performance.com. This is also useful in the case that Rails.cache
+  # fails.
+  def callback_id_retrieve
+    # Find the callback_id of the most recent callback.
+    doc = Document.new callbacks_display.to_xml
+    callback_ids = REXML::XPath.match(doc, '//callback-id')
+    callback_ids.first.text.to_i
   end
 
   def delete_all_webhooks
