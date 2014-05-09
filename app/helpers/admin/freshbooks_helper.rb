@@ -116,7 +116,7 @@ module Admin::FreshbooksHelper
   def callback_verify(verifier)
     puts "****************x inside callback_verify *************"
     callback_id = Rails.cache.read 'callback_id' || callback_id_retrieve
-    puts "callback_id: " + callback_id
+    puts "callback_id: " + callback_id.to_s
     puts "*****************************************************"
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
@@ -127,6 +127,7 @@ module Admin::FreshbooksHelper
   # skunkwerx-performance.com. This is also useful in the case that Rails.cache
   # fails.
   def callback_id_retrieve
+    puts "****************** inside callback_id_retrieve ************"
     # Find the callback_id of the most recent callback.
     doc = Document.new callbacks_display.to_xml
     callback_ids = REXML::XPath.match(doc, '//callback-id')
