@@ -57,5 +57,7 @@ RSpec.configure do |config|
   config.include Features::CallbackHelpers
 
   #Don't run tests with external api calls.
-  config.filter_run_excluding api: true unless ENV['RUN_API_TESTS'] == "run"
+  config.filter_run_excluding api: true unless ENV['API'] == "run"
+  # Separate test that request and delete actual Freshbooks webhooks.
+  config.filter_run_excluding webhooks: true unless ENV['WEBHOOKS'] == "run"
 end
