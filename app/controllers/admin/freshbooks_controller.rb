@@ -33,7 +33,7 @@ class Admin::FreshbooksController < ApplicationController
   # that Freshbooks will make.
   def webhooks
     puts "*************** inside webhooks ************************"
-    puts "params: " + params
+    puts "params: " + params.inspect
     puts "*********************************************************"
     # Check to insure valid freshbooks api request.
     if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
