@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pry'
 
 class ProductTest < ActiveSupport::TestCase
   test "product attributes must not be empty" do

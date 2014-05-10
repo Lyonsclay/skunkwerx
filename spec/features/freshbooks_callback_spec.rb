@@ -9,13 +9,11 @@ describe "Freshbooks webhook request", api: true do
     end
 
     it "makes a call to Freshbooks api" do
-      # include Admin::FreshbooksHelper
       admin = FactoryGirl.create(:admin)
       SessionsHelper.stub(:current_admin).and_return(admin)
-      # post_via_redirect sessions_path, session: { email: admin.email, password: admin.password }
       # This method calls actual Freshbooks api
       post admin_webhook_create_path, method: "item.create"
-      expect(response.status).to eq(302) # redirect_to '/admin'
+      expect(response.status).to redirect_to '/admin'
       expect(Rails.cache.read "callback_id").to_not eq(nil)
       post webhooks_path, "name " => "callback.verify", verifier: "3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT", system: "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       expect(response.status).to eq(200)

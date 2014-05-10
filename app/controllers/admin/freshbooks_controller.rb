@@ -1,5 +1,3 @@
-require 'pry'
-
 class Admin::FreshbooksController < ApplicationController
   layout 'admin/application'
   # skip_before_action :verify_authenticity_token, only: :webhooks

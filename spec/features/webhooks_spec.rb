@@ -3,7 +3,7 @@ require 'capybara/rspec'
 include Features::CallbackHelpers
 include Admin::FreshbooksHelper
 # The following tests call methods that only live in the test
-# suite. In this case using the rspec test suite for these calls
+# suite. In this case using the rspec test space for these calls
 # separates the webhooks requests from the admin panel, so that
 # only the developer has access to these methods.
 

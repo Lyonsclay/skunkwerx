@@ -1,5 +1,3 @@
-require 'pry'
-
 module Features
   module CallbackHelpers
     def callback_delete_message(callback_id)
@@ -23,8 +21,9 @@ module Features
     def get_callback_verify(method)
       callback_verify = "0"
       num = 0
-      # Need to provide small delay for app at
-      # skunkwerx-performance.com to verify callback.
+      # This until loop provides small delay for app at
+      # skunkwerx-performance.com to receive verify callback,
+      # and authenticate verify callback with Freshbooks API.
       until callback_verify == "1" || num == 10 do
         num += 1
         doc = Document.new callbacks_display.to_xml

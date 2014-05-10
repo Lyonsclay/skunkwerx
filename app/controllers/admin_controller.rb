@@ -1,5 +1,3 @@
-require 'pry'
-
 class AdminController < ApplicationController
   layout 'admin/application'
 
