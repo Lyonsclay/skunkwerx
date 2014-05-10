@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pry'
 include Admin::SessionsHelper
 
 class AdminControllerTest < ActionController::TestCase
@@ -13,7 +12,6 @@ class AdminControllerTest < ActionController::TestCase
   test "should get admin/index" do
     sign_in(Admin.first)
     get :index
-# binding.pry
     assert_response :success
     assert_template :index
     # assert_response '.menu_bar ul li', 'HOME'

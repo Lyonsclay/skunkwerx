@@ -17,7 +17,6 @@ describe "PasswordResets" do
     click_link "password"
     fill_in "Email", :with => "garbage"
     click_button "Send Email"
-# binding.pry
     current_path.should eq(new_admin_password_reset_path)
     page.should_not have_content("Email sent")
     last_email.should be_nil

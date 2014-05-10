@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pry'
 
 class LoginTest < ActionDispatch::IntegrationTest
   fixtures :admin
@@ -8,7 +7,6 @@ class LoginTest < ActionDispatch::IntegrationTest
     https!
     get login_path
     assert_response :success
-# binding.pry
     post_via_redirect '/admin/sessions', session: { email: admin(:admin_one).email, password: "jackalack" }
     assert_equal '/admin', path
     https!(false)
@@ -41,7 +39,6 @@ class LoginTest < ActionDispatch::IntegrationTest
         u = admin(admin)
         sess.https!
         sess.post "/admin/sessions", session: { username: u.email, password: "foobar" }
-# binding.pry
         sess.assert_response :success
         sess.https!(false)
       end

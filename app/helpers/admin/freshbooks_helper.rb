@@ -24,7 +24,6 @@ module Admin::FreshbooksHelper
 # ## Body ##
 # name=callback.verify&object_id=1&system=https%3A%2F%2F2ndsite.freshbooks.com&user_id=1&verifier=3bPTNcPgbN76QLgKLSR9XdgQJWvhhN4xrT
 
-
 ###############################################################
 # ## Predefined messages to perform Freshbooks api requests; ##
 
@@ -47,6 +46,13 @@ module Admin::FreshbooksHelper
       </request>"
   end
 
+  def callback_delete_message(callback_id)
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>
+      <request method=\"callback.delete\">
+        <callback_id>#{callback_id}</callback_id>
+      </request>"
+  end
+
   def callback_verify_message(callback_id, verifier)
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
       <request method=\"callback.verify\">
@@ -64,7 +70,7 @@ module Admin::FreshbooksHelper
       </request>"
   end
 
-  # Specifying event seems to fail.
+  # Specifying event seems to fail, so it is left out.
   # <event>\"#{callback}\"</event>
   def callback_list_message
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -98,29 +104,51 @@ module Admin::FreshbooksHelper
   def callback_create(event)
     puts "**************** inside callback_create **************"
     response_hash = freshbooks_call(callback_create_message(event))
-    puts "****************** response_hash *********************"
-    puts response_hash
-    puts "****************** callback_id ***********************"
+    puts "response_hash: " + response_hash.inspect
     callback_id = response_hash['response']['callback_id']
-    puts callback_id
+    puts "callback_id: " + callback_id
+    puts "*****************************************************"
     Rails.cache.write 'callback_id', callback_id
     flash[:notice] = display_response(response_hash)
   end
 
   # Callback verify method
   def callback_verify(verifier)
-    puts "**************** inside callback.verify *************"
+    puts "**************** inside callback_verify *************"
     callback_id = Rails.cache.read 'callback_id'
-    puts "******************** callback_id ********************"
-    puts callback_id
+    callback_id ||= callback_id_retrieve
+    puts "callback_id: " + callback_id
     puts "*****************************************************"
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
   end
 
-  # Perform two tests comparing Freshbooks items and Products( web products)
-  # in order to identify discrepancies which indicate webhooks are not
-  # performing correctly.
+  # Method to retrieve callback_id from Freshbooks api. This is necessary if
+  # callback request was made from a server other than the one hosting
+  # skunkwerx-performance.com. This is also useful in the case that Rails.cache
+  # fails.
+  def callback_id_retrieve
+    puts "****************** inside callback_id_retrieve ************"
+    # Find the callback_id of the most recent callback.
+    doc = Document.new callbacks_display.to_xml
+    callback_ids = REXML::XPath.match(doc, '//callback-id')
+    callback_ids.first.text
+  end
+
+  def delete_all_webhooks
+    callback_list = freshbooks_call(callback_list_message)
+    doc = Document.new callback_list.to_xml
+    callback_list.each do |callback|
+      callback_ids = REXML::XPath.match( doc, '//callback-id')
+      callback_ids.map { |e| e.text.to_i }.each do |id|
+        response_hash = freshbooks_call(callback_delete_message(id))
+      end
+    end
+  end
+
+  # Compare Freshbooks items and Skunkwerx web products
+  # in order to identify discrepancies which indicate
+  # webhooks are not performing correctly.
   def check_items_against_products(product_items, new_products)
     message = ""
     if new_products.any?
@@ -135,7 +163,7 @@ module Admin::FreshbooksHelper
 
   # Receive item.create request and get product attributes.
   def item_create(object_id)
-    puts "**************** inside item.create ****************"
+    puts "**************** inside item_create ****************"
     puts "******************* params *************************"
     puts params
     puts "****************************************************"
@@ -143,7 +171,28 @@ module Admin::FreshbooksHelper
     puts "*************** response_hash **********************"
     puts response_hash
     puts "****************************************************"
-    Product.create(response_hash['response']['item'])
+    unless response_hash['response']['item']['tax2_id'].nil?
+      Product.create(response_hash['response']['item'])
+    end
+  end
+
+  def item_delete(object_id)
+    puts "*************** inside item_***********************"
+    product = Product.find_by_item_id(object_id)
+    product.delete if product
+    puts "Product.last: " + Product.last.inspect
+  end
+
+  def item_update(object_id)
+    puts "**************** inside item_update *****************"
+    product = Product.find_by_item_id(object_id)
+    puts "product: " + product.inspect
+    response_hash = freshbooks_call(item_get_message(object_id))
+    puts "response_hash: " + response_hash.inspect
+    unless response_hash['response']['item']['tax2_id'].nil?
+      product.update_attributes(response_hash['response']['item'])
+    end
+    puts "errors: " + product.errors.to_s
   end
 
   # Set the request URL
@@ -176,9 +225,10 @@ module Admin::FreshbooksHelper
     product_items = []
     # Track newly created items for sync descrepancy assesment.
     new_products = []
-    # Split items into malone_tunes and products and save to database.
+    # Split items into malone_tunes and products then save
+    # to database.
     items.each do |item|
-      if item["name"].match("Malone")  ###### /Malone/.match item["name"]
+      if item["name"].match("Malone")
         # malone_tunes_items += item
         MaloneTune.create(item)
       else
@@ -221,6 +271,7 @@ module Admin::FreshbooksHelper
   # are not on the Freshbooks database they will be removed.
   # This condition would result if webhooks failed.
   def dead_products_delete(items)
+    puts "************ inside dead_products_delete ************"
     # List of item ids for Freshbooks items both Malone and Skunkwerx.
     items_ids = items.map { |i| i["item_id"].to_i }
     # Remove dead Products

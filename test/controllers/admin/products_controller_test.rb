@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pry'
 
 class Admin::ProductsControllerTest < ActionController::TestCase
   setup do
@@ -12,18 +11,15 @@ class Admin::ProductsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:products)
-# binding.pry
     assert_select '.items td.description dt', Product.last.name
     assert_select '.items tr', Product.all.count
     assert_select '.unit_cost', /\$[,\d]+\.\d\d/
   end
 
   test "should get edit and assign image" do
-# binding.pry
     sign_in(@admin)
     get :edit, id: @product
     assert_response :success
-# binding.pry
     assert_select '.image_url [value=?]', 'Add Photo'
   end
 

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe "AuthenticationPages" do
   describe "GET /login" do

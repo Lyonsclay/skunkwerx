@@ -1,12 +1,10 @@
 require 'spec_helper'
 require 'capybara/rspec'
-require 'pry'
 
 describe "AdminPages" do
   describe "GET /admin" do
     it "should redirect to login with no current session" do
       get admin_path
-# binding.pry
       expect(response).to redirect_to '/admin/login'
     end
   end

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe Admin::FreshbooksController do
   let(:admin) { create(:admin) }

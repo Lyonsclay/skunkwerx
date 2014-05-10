@@ -1,5 +1,3 @@
-require 'pry'
-
 class Admin::PasswordResetsController < ApplicationController
   layout 'admin/application'
 
@@ -18,15 +16,11 @@ class Admin::PasswordResetsController < ApplicationController
   end
 
   def edit
-# binding.pry
     @admin = find_admin
   end
 
   def update
-    # On success redirect to admin home
-# binding.pry
     admin = find_admin
-# binding.pry
     password = params[:admin][:password]
     password_confirmation = params[:admin][:password_confirmation]
     admin.update_attributes(password: password, password_confirmation: password_confirmation)

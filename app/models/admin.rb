@@ -1,5 +1,3 @@
-require 'pry'
-
 class Admin < ActiveRecord::Base
   before_save { self.email = email.downcase }
   validates :name, length: { maximum: 50 }

@@ -1,5 +1,3 @@
-require 'pry'
-
 class Admin::MaloneTunesController < ApplicationController
   layout 'admin/application'
   before_filter :authorize

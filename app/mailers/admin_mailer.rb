@@ -1,5 +1,3 @@
-require 'pry'
-
 class AdminMailer < ActionMailer::Base
   default from: ENV['MAILER_USERNAME']
 

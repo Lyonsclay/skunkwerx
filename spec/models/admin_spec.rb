@@ -1,8 +1,6 @@
 require 'spec_helper'
-require 'pry'
 
 describe Admin do
-
   before do
     @admin = FactoryGirl.create(:admin)
   end
@@ -16,7 +14,6 @@ describe Admin do
   it { should respond_to(:password_confirmation)}
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
-
   it { should be_valid }
 
   describe "when password is not present" do

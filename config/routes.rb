@@ -20,6 +20,7 @@ Skunkwerx::Application.routes.draw do
     resources :malone_tunes, only: [:index, :show]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
+    post 'freshbooks/webhooks_delete', to: 'freshbooks#webhooks_delete', as: :webhooks_delete
   end
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks

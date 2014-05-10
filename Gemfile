@@ -65,3 +65,6 @@ gem 'rails_12factor', group: :production
 gem 'paperclip'
 gem 'aws-sdk'
 
+# For fast caching in production
+gem 'dalli'
+
