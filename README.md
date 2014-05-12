@@ -1,4 +1,5 @@
 ![Skunkwerx Logo](app/assets/images/Skunkwerx\ Logo.jpg)
+
 [Skunkwerx Performance](http://www.skunkwerx-performance.com/) Complete specialized care for your TDI diesel powered VW or Audi now on the web.
 
 [![Build Status](https://travis-ci.org/Lyonsclay/skunkwerx.svg?branch=master)](https://travis-ci.org/Lyonsclay/skunkwerx)
@@ -172,5 +173,7 @@ Then there is getting 100% test coverage.
 [Railscasts](http://railscasts.com/episodes/275-how-i-test)
 
 [Pragmatic Programmers](http://pragprog.com/book/rails4/agile-web-development-with-rails-4)
+
+[![Coverage Status](https://coveralls.io/repos/Lyonsclay/skunkwerx/badge.png)](https://coveralls.io/r/Lyonsclay/skunkwerx)
 
 <tt>rake doc:app</tt>
