@@ -27,7 +27,7 @@ describe "Describe Freshbooks webhooks", webhooks: true do
 
   describe "Request webhooks" do
     it "requests an item.create webhook" do
-      # Get admin_freshbooks_path proviedes controller methods
+      # Get admin_freshbooks_path provides controller methods
       # and variables such as flash which is neccesary for
       # callback create.
       get admin_freshbooks_path
