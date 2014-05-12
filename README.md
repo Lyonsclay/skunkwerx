@@ -1,5 +1,7 @@
-![Skunkwerx Logo](http://www.skunkwerx-performance.com/assets/images/Skunkwerx Logo.jpg)
+![Skunkwerx Logo](http://www.skunkwerx-performance.com/assets/images/Skunkwerx\ Logo.jpg)
 [Skunkwerx Performance](http://www.skunkwerx-performance.com/) Complete specialized care for your TDI diesel powered VW or Audi now on the web.
+
+[![Build Status](https://travis-ci.org/Lyonsclay/skunkwerx.svg?branch=master)](https://travis-ci.org/Lyonsclay/skunkwerx)
 
 Developer: [Lyonsclay](http://wonkitnow.tumblr.com).
 
@@ -11,13 +13,23 @@ Ruby (2.1.1)
 
 Rails (4.0.2)
 
-***Skunkwerx Performance*** This app has been built for Skunkwerx Performance Automotive LLC. It serves the purpose of providing a basic customer interface for arranging automotive service and web sales for products related to performance enhancement.
+This app has been built for ***Skunkwerx Performance Automotive LLC***. It serves the purpose of providing a basic customer interface for arranging automotive service and web sales for products related to performance enhancement.
 
-Building this app is an opportunity to practice skills I have learned at **[Dev Bootcamp]**(http://devbootcamp.com/learn-more/) Chicago. In principal I have opted for as many hand made solutions as possible. I tried to cut down on the number of external dependecies and tried to focus on learning root technology and not how to use specific gems. When that didn't seem advisable I used gems or frameworks that were high profile and proven solutions.
+Building this app is an opportunity to practice skills I have learned at **[Dev Bootcamp](http://devbootcamp.com/learn-more/)** Chicago. In principal I have opted for as many hand made solutions as possible. I tried to cut down on the number of external dependecies and tried to focus on learning root technology and not how to use specific gems. When that didn't seem advisable I used gems or frameworks that were high profile and proven solutions.
 
 I created an extensive admin portal encoded in it's own namespace. This is a custom built solution that has high integration with **FreshBooks** accounting and a scraper that gathers products from a partner website and includes them in Skunkwerx listed products.
 
-All products listed by Skunkwerx are backed by the Freshbooks database and integration with the Skunkwerx postgres ActiveRecord database is a key feature of this web app. The process gives the product owner the ability to manage product actions through the Freshbooks website interface. The Skunkwerx webapp subscribes to any updates( **[webhooks]**(http://en.wikipedia.org/wiki/Webhook) ) in Fresbooks products resulting in parity between the two databases.
+All products listed by Skunkwerx are backed by the Freshbooks database and integration with the Skunkwerx postgres ActiveRecord database is a key feature of this web app. The process gives the product owner the ability to manage product actions through the Freshbooks website interface. The Skunkwerx webapp subscribes to any updates( [webhooks](http://en.wikipedia.org/wiki/Webhook) ) in Fresbooks products resulting in parity between the two databases.
+
+* [Installation](#installation)
+
+* [Gems](#gems)
+
+* [Styles](#styles)
+
+* [Debugging](#debugging)
+
+* [Conclusion](#conclusion)
 
 ## Installation
 
@@ -59,7 +71,12 @@ In the instance of a webhook request there is the call, the response, and then a
 
 For parsing external websites:
 
-'nokogiri'   'rexml'   'http'   'uri'
+```ruby
+gem "nokogiri"
+gem "rexml"
+gem "http"
+gem "uri"
+```
 
 ###For making api calls and reading responses:
 
@@ -87,15 +104,26 @@ Of particular concern is the reliance on a css hiearchy that the scraper functio
 
 ###For production on Heroku:
 
-'unicorn'   'rails_12factor'   'dalli'
+```ruby
+gem "unicorn"
+gem "rails_12factor"
+gem "dalli"
+```
 
 ###For image management:
 
-'paperclip'   'aws-dk'
+```ruby
+gem "paperclip"
+gem "aws-dk"
+```
 
 ###For testing:
 
-'rspec'   'capybara'   'factorygirl'
+```ruby
+gem "rspec"
+gem "capybara"
+gem "factorygirl"
+```
 
 ## Styles
 
@@ -136,8 +164,5 @@ Then there is getting 100% test coverage.
 [Railscasts](http://railscasts.com/episodes/275-how-i-test)
 
 [Pragmatic Programmers](http://pragprog.com/book/rails4/agile-web-development-with-rails-4)
-
-
-[![Build Status](https://travis-ci.org/Lyonsclay/skunkwerx.svg?branch=master)](https://travis-ci.org/Lyonsclay/skunkwerx)
 
 <tt>rake doc:app</tt>
