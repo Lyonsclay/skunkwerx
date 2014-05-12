@@ -13,7 +13,7 @@ Rails (4.0.2)
 
 ***Skunkwerx Performance*** This app has been built for Skunkwerx Performance Automotive LLC. It serves the purpose of providing a basic customer interface for arranging automotive service and web sales for products related to performance enhancement.
 
-I have used this app as an opportunity to practice skills I have learned at **Dev Bootcamp** Chicago. In principal I have opted for as many hand made solutions as possible. I tried to cut down on the number of external dependecies and tried to focus on learning root technology and not how to use specific gems. When that didn't seem advisable I used gems or frameworks that were high profile and proven solutions.
+Building this app is an opportunity to practice skills I have learned at **[Dev Bootcamp]**(http://devbootcamp.com/learn-more/) Chicago. In principal I have opted for as many hand made solutions as possible. I tried to cut down on the number of external dependecies and tried to focus on learning root technology and not how to use specific gems. When that didn't seem advisable I used gems or frameworks that were high profile and proven solutions.
 
 I created an extensive admin portal encoded in it's own namespace. This is a custom built solution that has high integration with **FreshBooks** accounting and a scraper that gathers products from a partner website and includes them in Skunkwerx listed products.
 
