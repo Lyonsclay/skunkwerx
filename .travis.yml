@@ -6,4 +6,5 @@ addons:
 script: bundle exec rspec spec
 before_script:
   - cp config/database.yml.travis config/database.yml
+  - psql -U postgres -c "create extension postgis"
 bundler_args: --without production
