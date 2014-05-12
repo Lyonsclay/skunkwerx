@@ -1,11 +1,5 @@
 language: ruby
 rvm:
   - "2.1.0"
-addons:
-  postgresql: "9.3.2"
 script:
-  - bundle exec rake db:drop db:create db:migrate spec
-before_script:
-  - cp config/database.yml.travis config/database.yml
-  - psql -U postgres -c "create extension postgis"
-bundler_args: --without production
+  - bundle exec rake db:drop db:create db:migrate
