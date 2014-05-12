@@ -194,6 +194,7 @@ DEPENDENCIES
   pry
   rails (= 4.0.2)
   rails_12factor
+  rake
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc

@@ -38,7 +38,7 @@ end
 gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-gem 'unicorn'
+gem 'unicorn', group: :production
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -67,4 +67,7 @@ gem 'aws-sdk'
 
 # For fast caching in production
 gem 'dalli'
+
+# Travis CI runs rake by default to execute your tests. Please note that you need to add rake to your Gemfile.
+gem 'rake', group: :test
 
