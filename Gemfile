@@ -68,3 +68,6 @@ gem 'aws-sdk'
 # For fast caching in production
 gem 'dalli'
 
+# Travis CI runs rake by default to execute your tests. Please note that you need to add rake to your Gemfile.
+gem 'rake', groput: :test
+
