@@ -11,21 +11,12 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
-
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
 
 # Ignore Freshbooks authorization token
 /app/assets/javascripts/freshbooks.js
-
-/freshbooks_test.rb
-
-# freshbooks.xml
-
-# malone_html.html
-
-# malone_tuning_test.rb
 
 /.env
 
@@ -35,7 +26,7 @@
 # Temporary file for constructing xml strings.
 /message_construct
 
-# Malone Tunes scraper
-/malone_tunes_free_run.rb
-
 public/assets/**
+
+#Coveralls token.
+/.coveralls.yml
