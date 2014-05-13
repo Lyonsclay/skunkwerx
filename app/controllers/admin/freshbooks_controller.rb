@@ -7,6 +7,7 @@ class Admin::FreshbooksController < ApplicationController
   before_filter :authorize, except: :webhooks
 
   def index
+    session[:sync_discrepancy] = ""
     @callbacks = callbacks_display
   end
 
