@@ -68,3 +68,5 @@ gem 'aws-sdk'
 # For fast caching in production
 gem 'dalli'
 
+# Gives ability to use ActiveRecord data store rather than Cookies
+gem 'activerecord-session_store'
