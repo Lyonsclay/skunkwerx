@@ -38,7 +38,7 @@ Building this app has been opportunity to practice skills I have learned at **[D
 
 I created an extensive admin portal encoded in it's own namespace. This is a custom built solution that has high integration with **[FreshBooks](http://www.freshbooks.com/index-st.php)** accounting and a scraper that gathers products from a partner website and includes them in Skunkwerx listed products.
 
-All products listed by Skunkwerx are backed by the Freshbooks database and integration with the Skunkwerx postgres ActiveRecord database is a key feature of this web app. The process gives the product owner the ability to manage product actions through the Freshbooks website interface. The Skunkwerx webapp subscribes to any updates( [webhooks](http://en.wikipedia.org/wiki/Webhook) ) in Fresbooks products resulting in parity between the two databases.
+All products listed by Skunkwerx are backed by the Freshbooks database and integration with the Skunkwerx PostgreSQL/ActiveRecord database is a key feature of this web app. The process gives the product owner the ability to manage product actions through the Freshbooks website interface. The Skunkwerx webapp subscribes to any updates( [webhooks](http://en.wikipedia.org/wiki/Webhook) ) in Fresbooks products resulting in parity between the two databases.
 
 ## Installation
 
@@ -70,11 +70,26 @@ Run tests that implement webhooks with **[FreshBooks API](http://developers.fres
 WEBHOOKS=run rspec
 ```
 
-Testing is everything and I continue to strive for TDD, BDD, and 100% test coverage. I utilized both Rspec and Test::Unit to get a feel for both processes. First of all, I was glad to find out that both frameworks can work in the same Rails app. I found Test::Unit easier to use and learn, but Rspec had additional features that allowed me to flag tests that were making live calls to websites, apis, and the Skunkwerx app itself.
+Testing is everything and I continue to strive for [TDD](http://en.wikipedia.org/wiki/Test-driven_development), [BDD](http://en.wikipedia.org/wiki/Behavior-driven_development), and 100% test coverage. I utilized both Rspec and Test::Unit to get a feel for both processes. First of all, I was glad to find out that both frameworks can work in the same Rails app. I found Test::Unit easier to use and learn, but Rspec had additional features that allowed me to flag tests that were making live calls to websites, apis, and the Skunkwerx app itself.
 
-I made the perhaps unusual decision to place certain methods that perform integration with the client’s Freshbooks account through their public API into the rspec test suite. Rather than give certain admin users roles to define their access to methods it felt natural to place these actions  out of the mvp venue and closer to the heart of maintenance( testing ) that the developer alone has access to and utility of. This also allows me to run a few tests from a local environment in order to easily monitor the health of the overall app.
+I made the, perhaps unusual, decision to place certain methods that integrate with the client’s Freshbooks account through the Freshbooks API into the Rspec test suite. Rather than give certain admin users roles to define their access to methods it felt natural to place these actions out of the mvp venue and closer to the heart of maintenance, that being testing, where the developer alone has access to and utility of . This also allows me to run a few tests from a local environment in order to easily monitor the health of the overall app.
 
-In the instance of a webhook request there is the call, the response, and then a verification routine. The call is being made from the local machine through an rspec test. However, the response and verification routine are being directed at app's deployed domain name skunkwerx-performance.com. I discovered that the test of a response actually occurred before the verification routine completed and therefore gave a false result to tests that relied on the verification. I embedded a routine to
+In the instance of a webhook request there is the call, the response, and then a verification routine. The call is being made from the local machine through an Rspec test. However, the response and verification routine are directed to the app's deployed domain name skunkwerx-performance.com. I discovered that the test of a response actually occurred before the verification routine completed and therefore gave a false result to tests that relied on the verification. I embedded a routine that effectively delayed the test of verification.
+
+from spec/support/features/callback_helpers.rb
+```ruby
+num = 0
+# This until loop provides small delay for app at
+# skunkwerx-performance.com to receive verify callback,
+# and authenticate verify callback with Freshbooks API.
+until callback_verify == "1" || num == 10 do
+  num += 1
+  doc = Document.new callbacks_display.to_xml
+  callbacks = REXML::XPath.match(doc, '//callback/event')
+  callback = callbacks.keep_if { |c| c.text == method }
+  callback_verify = callback.first.next_element.text
+end
+```
 
 ## Gems
 
