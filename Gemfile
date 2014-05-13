@@ -74,3 +74,5 @@ gem 'rake', group: :test
 # Coveralls
 gem 'coveralls', require: false
 
+# Gives ability to use ActiveRecord data store rather than Cookies
+gem 'activerecord-session_store'
