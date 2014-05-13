@@ -1,5 +1,7 @@
 language: ruby
+service_name: travis-ci
 rvm:
   - "2.1.0"
+bundler_args: --without production
 script:
   - bundle exec rake db:drop db:create db:migrate
