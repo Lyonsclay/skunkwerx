@@ -3,6 +3,7 @@ class Admin::ProductsController < ApplicationController
   before_filter :authorize
 
   def index
+    session[:sync_discrepancy] = ""
     @products = Product.all
   end
 
