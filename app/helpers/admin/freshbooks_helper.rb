@@ -93,10 +93,6 @@ module Admin::FreshbooksHelper
     end
     # Delete items that are not slated for web sales.
     items.delete_if {|item| item["tax2_id"].nil? }
-    # Strip key "item_id" from item ( not a product attribute ).
-    items.each do |item|
-      item.delete_if {|k,v| k == "item_id" }
-    end
     items
   end
 
