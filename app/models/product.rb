@@ -1,5 +1,6 @@
 class Product < ActiveRecord::Base
-
+  has_many :line_items
+  before_destroy :check_if_has_no_line_items
   validates :name, :description, :quantity, :unit_cost, presence: true
   validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
   validates :name, uniqueness: true
@@ -20,9 +21,6 @@ class Product < ActiveRecord::Base
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
 
-  # Validate the attached image is image/jpg, image/png, etc
-  # validates_attachment_content_type :image, :content_type => /\Aimage\/(gif|jp?g|png)\Z/
-
   validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
@@ -30,4 +28,16 @@ class Product < ActiveRecord::Base
   def self.latest
     Product.order(:updated_at).latest
   end
+
+  private
+
+    # Ensure that there are no line_items referencing this product
+    def check_if_has_no_line_items
+      if line_items.empty?
+        return true
+      else
+        errors.add(:base, 'Line Items present')
+        return false
+      end
+    end
 end
