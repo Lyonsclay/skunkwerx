@@ -22,6 +22,9 @@
 								<dd>
 									<p><%= product.description %></p>
 								</dd>
+								<dd>
+									<%= button_to 'Add to Cart', line_items_path(product_id: product) %>
+								</dd>
 							</dl>
 						</td>
 					</tr>
