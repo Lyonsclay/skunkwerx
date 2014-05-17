@@ -17,37 +17,39 @@
 			<tbody>
 				<% @cart.line_items.each do |item| %>
 				<tr class="cart-data">
-					<td>
+					<td class="checkbox">
 						<%= check_box_tag 'select' %>
 					</td>
 					<td>
 					<table>
-						<tr>
-							<td>
+						<tr style="padding:0" class="description">
+							<td style="border:none;padding:0">
 								<%= image_tag(item.product.image.url, class: 'image_url', size: "75x75") %>
 							</td>
-							<td>
+							<td style="border:none">
 								<%= item.product.name %>
 							</td>
 						</tr>
 					</table>
 					</td>
-					<td>item.quantity</td>
+					<td><%= item.quantity %></td>
 					<td>
-						<%= "$" + item.product.unit_cost.to_s %>
+						<%= "$" + (item.product.unit_cost * item.quantity).to_s %>
 					</td>
 				</tr>
 				<% end %>
 			<tbody>
-			<tfooter>
+			<tfoot class="sub-total">
 				<td></td>
-				<td class="sub-total">Sub-total:</td>
+				<td style="text-align:right">Sub-total:</td>
 				<td></td>
 				<td>$320.57</td>
-			</tfooter>
+			</tfoot>
 		</table>
 	</div>
-
-	<%= link_to 'Checkout', edit_cart_path(@cart) %>
-	<%= link_to 'Continue Shopping', products_index_path %>
+	<div class="buttons">
+		<%= link_to 'Checkout', edit_cart_path(@cart) %>
+		<%= link_to 'Continue Shopping', products_index_path %>
+		<%= link_to 'Empty Cart', "/carts/#{@cart.id}" %>
+	</div>
 </div>
