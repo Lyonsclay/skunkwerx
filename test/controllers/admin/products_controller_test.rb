@@ -4,10 +4,10 @@ class Admin::ProductsControllerTest < ActionController::TestCase
   setup do
     @product = products(:product_one)
     @admin = Admin.create(email: "jack@this.com", password: "foobar", password_confirmation: "foobar")
+    @controller.sign_in(@admin)
   end
 
   test "should get index and assign products" do
-    sign_in(@admin)
     get :index
     assert_response :success
     assert_not_nil assigns(:products)
@@ -17,7 +17,6 @@ class Admin::ProductsControllerTest < ActionController::TestCase
   end
 
   test "should get edit and assign image" do
-    sign_in(@admin)
     get :edit, id: @product
     assert_response :success
     assert_select '.image_url [value=?]', 'Add Photo'

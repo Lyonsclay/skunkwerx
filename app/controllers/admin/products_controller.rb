@@ -15,7 +15,7 @@ class Admin::ProductsController < ApplicationController
     product = Product.find(params[:id])
     product.update(product_params)
     @products = Product.order(:name)
-    render '/admin/products/index'
+    render :index
   end
 
   private
