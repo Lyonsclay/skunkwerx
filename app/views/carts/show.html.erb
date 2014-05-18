@@ -49,7 +49,7 @@
 	</div>
 	<div class="buttons">
 		<%= link_to 'Empty Cart', "/carts/#{@cart.id}", method: :delete, data: { confirm: 'Are you sure?'} %>
-		<%= link_to 'Continue Shopping', products_index_path %>
+		<%= link_to 'Continue Shopping', :back %>
 		<%= link_to 'Checkout', edit_cart_path(@cart) %>
 	</div>
 </div>
