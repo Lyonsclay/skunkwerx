@@ -9,7 +9,7 @@
 			<thead>
 				<tr class="cart-heading">
 					<td>Remove</td>
-					<td align="left">Product(s)</td>
+					<td id="products">Product(s)</td>
 					<td>Qty.</td>
 					<td>Total</td>
 				</tr>
@@ -52,7 +52,6 @@
 	</div>
 	<div class="buttons">
 		<%= link_to 'Empty Cart', "/carts/#{@cart.id}", method: :delete, data: { confirm: 'Are you sure?'} %>
-
 		<%= link_to 'Checkout', edit_cart_path(@cart) %>
 		<%= link_to 'Continue Shopping', shopping %>
 	</div>
