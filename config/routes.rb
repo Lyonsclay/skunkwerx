@@ -1,5 +1,9 @@
 Skunkwerx::Application.routes.draw do
-  resources :line_items
+  resources :line_items do
+    collection do
+      post :remove_multiple
+    end
+  end
 
   resources :carts
 

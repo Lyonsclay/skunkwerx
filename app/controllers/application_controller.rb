@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
   include PasswordResetsHelper
   include Admin::FreshbooksHelper
   include Admin::MaloneTunesHelper
+  include LineItemsHelper
 end
