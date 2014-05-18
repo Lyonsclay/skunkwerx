@@ -12,7 +12,7 @@
 				<% cache [product] do %>
 					<tr class="<%= cycle('odd_line', 'even_line') %>">
 						<td class="image">
-							<%= image_tag(product.image.url, class: 'image_url', size: "150x150") %>
+							<%= image_tag(product.image.url(:medium), class: 'image_url', size: "150x150") %>
 						</td>
 						<td class="description">
 							<dl>
