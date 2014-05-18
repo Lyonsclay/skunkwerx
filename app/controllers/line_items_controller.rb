@@ -64,10 +64,31 @@ class LineItemsController < ApplicationController
     end
   end
 
+  def remove_multiple
+    if params[:line_item_ids]
+      @line_items = LineItem.find(params[:line_item_ids])
+      @line_items.each do |line_item|
+        line_item.destroy if line_item.quantity == 1
+        LineItem.decrement_counter(:quantity, line_item.id)
+      end
+      respond_to do |format|
+        unless current_cart.empty?
+          format.html { redirect_to cart_url(@line_items.first.cart_id) }
+          format.json { head :no_content }
+        else
+          format.html { redirect_to shopping, notice: 'Your cart is currently empty' }
+          format.json { head :no_content }
+        end
+      end
+    else
+      redirect_to current_cart
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_line_item
-      @line_item = LineItem.find(params[:id])
+      @line_item = LineItem.find(params[:line_item_ids])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
