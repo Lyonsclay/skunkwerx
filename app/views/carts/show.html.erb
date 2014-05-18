@@ -24,7 +24,7 @@
 					<table>
 						<tr style="padding:0" class="description">
 							<td style="border:none;padding:0">
-								<%= image_tag(item.product.image.url, class: 'image_url', size: "75x75") %>
+								<%= image_tag(item.product.image.url(:medium), class: 'image_url', size: "75x75") %>
 							</td>
 							<td style="border:none">
 								<%= item.product.name %>
@@ -34,7 +34,7 @@
 					</td>
 					<td><%= item.quantity %></td>
 					<td>
-						<%= "$" + (item.product.unit_cost * item.quantity).to_s %>
+						<%= number_to_currency(item.product.unit_cost * item.quantity)%>
 					</td>
 				</tr>
 				<% end %>
@@ -43,7 +43,7 @@
 				<td></td>
 				<td style="text-align:right">Sub-total:</td>
 				<td></td>
-				<td>$320.57</td>
+				<td><%= number_to_currency @cart.total_price %></td>
 			</tfoot>
 		</table>
 	</div>
