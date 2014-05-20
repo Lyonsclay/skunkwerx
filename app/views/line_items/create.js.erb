@@ -1,2 +1,4 @@
 $('.side').html("<%= escape_javascript render partial: "/carts/mini_cart", formats: [:html], object: current_cart, as: :cart %>")
 $('#notice').html("")
+
+$('#current-item').css({'background-color':'#dfae2d'}).animate({'background-color':'black'}, 1000);
