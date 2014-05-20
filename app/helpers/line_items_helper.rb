@@ -1,7 +1,7 @@
 module LineItemsHelper
 
   def current_cart
-    Cart.find(session[:cart_id])
+    Cart.find(session[:cart_id]) if session[:cart_id]
   end
 
   def shopping
