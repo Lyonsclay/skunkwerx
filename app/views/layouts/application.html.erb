@@ -39,15 +39,16 @@
 			<p>This site is currently under construction. Please call (502) 724-2605.</p>
 			<p>Or email &nbsp;<%#= mail_to("dax@skunkwerx-performance.com") %></p>
 		</div> -->
-		<% if current_cart %>
+
 		<div class="side">
-			<div id="mini-cart">
+			<% if current_cart %>
 					<%= render partial: "/carts/mini_cart", formats: [:html], object: current_cart, as: :cart %>
-			</div>
+			<% end %>
 		</div>
-		<% end %>
+
 	<%= yield %>
-	<br><br><br><br>
+
+		<br><br><br><br>
 	</div>
 </body>
 </html>
