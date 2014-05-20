@@ -35,15 +35,19 @@
 				<li><%= link_to "ABOUT", "/page_under_construction" %></li>
 			</ul>
 		</div>
-
 		<!-- <div class="notice">
 			<p>This site is currently under construction. Please call (502) 724-2605.</p>
 			<p>Or email &nbsp;<%#= mail_to("dax@skunkwerx-performance.com") %></p>
 		</div> -->
-
+		<% if current_cart %>
+		<div class="side">
+			<div id="mini-cart">
+					<%= render partial: "/carts/mini_cart", formats: [:html], object: current_cart, as: :cart %>
+			</div>
+		</div>
+		<% end %>
 	<%= yield %>
-
-
+	<br><br><br><br>
 	</div>
 </body>
 </html>

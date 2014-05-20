@@ -1,0 +1,20 @@
+<div>
+	<table>
+		<thead>
+				<tr class="cart-heading">
+					<td><%= image_tag 'shopping_cart-11.png', class: 'image-url', width: "35%", height: "35%" %></td>
+				</tr>
+		</thead>
+		<tbody>
+			<%= render partial: "/line_items/mini_line_items", collection: cart.line_items, as: :line_item %>
+		<tbody>
+		<tfoot class="sub-total">
+			<tr>
+				<td class="price"><%= number_to_currency cart.total_price %></td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="buttons">
+	<%= link_to 'Checkout', edit_cart_path(cart) %>
+</div>

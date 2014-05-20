@@ -2,57 +2,5 @@
 	<% if notice %>
 	<p id="notice"><%= notice %></p>
 	<% end %>
-	<h2 id="title">Your Shopping Cart</h2>
-	<div class="items">
-	<%= form_tag remove_multiple_line_items_path, method: :post do %>
-		<table class="line-items">
-			<thead>
-				<tr class="cart-heading">
-					<td>Remove</td>
-					<td id="products">Product(s)</td>
-					<td>Qty.</td>
-					<td>Total</td>
-				</tr>
-			</thead>
-			<tbody>
-				<% @cart.line_items.each do |item| %>
-				<tr class="cart-data">
-					<td class="checkbox">
-						<%= check_box_tag 'line_item_ids[]', item.id %>
-					</td>
-					<td>
-					<table>
-						<tr style="padding:0" class="description">
-							<td style="border:none;padding:0">
-								<%= image_tag(item.product.image.url(:medium), class: 'image_url', size: "75x75") %>
-							</td>
-							<td style="border:none">
-								<%= item.product.name %>
-							</td>
-						</tr>
-					</table>
-					</td>
-					<td><%= item.quantity %></td>
-					<td>
-						<%= number_to_currency(item.product.unit_cost * item.quantity)%>
-					</td>
-				</tr>
-				<% end %>
-			<tbody>
-			<tfoot class="sub-total">
-				<td></td>
-				<td style="text-align:right">Sub-total:</td>
-				<td></td>
-				<td><%= number_to_currency @cart.total_price %></td>
-			</tfoot>
-		</table>
-
-	<%= submit_tag "Update", class: 'butons' %>
-	<% end %>
-	</div>
-	<div class="buttons">
-		<%= link_to 'Empty Cart', "/carts/#{@cart.id}", method: :delete, data: { confirm: 'Are you sure?'} %>
-		<%= link_to 'Checkout', edit_cart_path(@cart) %>
-		<%= link_to 'Continue Shopping', shopping %>
-	</div>
+	<%= render @cart %>
 </div>

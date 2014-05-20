@@ -1,8 +1,8 @@
 .carts {
 	margin: auto;
-	margin-top: 80px;
-	margin-left: 175px;
-	width: 740px;
+	margin-top: 60px;
+	margin-left: 240px;
+	width: 600px;
 	background: #66665a;
 	background: #202020;
 	border-radius: 10px;
@@ -124,6 +124,10 @@
 			padding-right: 16px;
 		}
 	}
+
+		input.buttons {
+			margin-top: 0px;
+		}
 }
 
 
