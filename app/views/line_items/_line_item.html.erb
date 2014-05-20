@@ -1,0 +1,21 @@
+<tr class="cart-data">
+	<td class="checkbox">
+		<%= check_box_tag 'line_item_ids[]', line_item.id %>
+	</td>
+	<td>
+	<table>
+		<tr style="padding:0" class="description">
+			<td style="border:none;padding:0">
+				<%= image_tag(line_item.product.image.url(:medium), class: 'image_url', size: "75x75") %>
+			</td>
+			<td style="border:none">
+				<%= line_item.product.name %>
+			</td>
+		</tr>
+	</table>
+	</td>
+	<td><%= line_item.quantity %></td>
+	<td>
+		<%= number_to_currency(line_item.product.unit_cost * line_item.quantity)%>
+	</td>
+</tr>
