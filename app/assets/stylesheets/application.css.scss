@@ -83,7 +83,7 @@ body {
   }
 }
 
-.side {
+#mini-cart {
   position: absolute;
   border: 2px solid #A70301;
   border-radius: 5px;
@@ -92,6 +92,9 @@ body {
   padding-left: 5px;
   padding-bottom: 10px;
   padding-right: 5px;
+  font: 14px "Helvetica Neue", sans-serif;
+  font-weight: 200;
+  color: #dee4d8;
 
   .buttons a {
     color: #A70301;
@@ -104,30 +107,24 @@ body {
     margin-left: 30px;
   }
 
-  #mini-cart {
-    font: 14px "Helvetica Neue", sans-serif;
-    font-weight: 200;
-    color: #dee4d8;
+  td {
+    width: 130px;
+  }
 
-    td {
-      width: 130px;
-    }
+  #products {
+    font-size: 20px;
+  }
 
-    #products {
-      font-size: 20px;
-    }
+  td.price {
+    border-top: 1px solid #dee4d8;
+    text-align: right;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 
-    td.price {
-      border-top: 1px solid #dee4d8;
-      text-align: right;
-      padding-top: 5px;
-      padding-bottom: 5px;
-    }
-
-    .image-url {
-      height: inherit;
-      padding-left: 35px;
-    }
+  .image-url {
+    height: inherit;
+    padding-left: 35px;
   }
 }
 
