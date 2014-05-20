@@ -2,7 +2,7 @@
 	<table>
 		<thead>
 				<tr class="cart-heading">
-					<td><%= image_tag 'shopping_cart-11.png', class: 'image-url', width: "35%", height: "35%" %></td>
+					<td><%= link_to image_tag('shopping_cart-11.png', class: 'image-url', width: "35%", height: "35%"), {controller: "carts", action: "show", id: cart.id } %></td>
 				</tr>
 		</thead>
 		<tbody>
