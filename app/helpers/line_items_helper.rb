@@ -7,7 +7,7 @@ module LineItemsHelper
   def shopping
     # This method will be built out when a LineItem can
     # be associated with a MaloneTune
-    unless current_cart.line_items
+    if current_cart
       unless current_cart.line_items.last.product_id.nil?
         "/products/index"
       end
