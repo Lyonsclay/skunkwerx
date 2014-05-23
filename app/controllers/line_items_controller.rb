@@ -1,7 +1,7 @@
 class LineItemsController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: [:create]
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_line_item, only: [:show, :update, :destroy]
 
   # GET /line_items
   # GET /line_items.json
@@ -12,6 +12,7 @@ class LineItemsController < ApplicationController
   # GET /line_items/1
   # GET /line_items/1.json
   def show
+    @line_item = LineItem.find(params[:id])
   end
 
   # GET /line_items/new
@@ -21,6 +22,7 @@ class LineItemsController < ApplicationController
 
   # GET /line_items/1/edit
   def edit
+    @line_item = LineItem.find(params[:id])
   end
 
   # POST /line_items
@@ -44,6 +46,7 @@ class LineItemsController < ApplicationController
   # PATCH/PUT /line_items/1
   # PATCH/PUT /line_items/1.json
   def update
+    @line_item = LineItem.find(params[:id])
     respond_to do |format|
       if @line_item.update(line_item_params)
         format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }

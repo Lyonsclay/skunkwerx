@@ -25,7 +25,7 @@ class LineItemsControllerTest < ActionController::TestCase
   end
 
   test "should show line_item" do
-    get :show, id: @line_item
+    get :show, id: @line_item, line_item_ids: @line_item
     assert_response :success
   end
 
@@ -35,13 +35,13 @@ class LineItemsControllerTest < ActionController::TestCase
   end
 
   test "should update line_item" do
-    patch :update, id: @line_item, line_item: { product_id: @line_item.product_id }
+    patch :update, id: @line_item, line_item: { product_id: @line_item.product_id }, line_item_ids: @line_item
     assert_redirected_to line_item_path(assigns(:line_item))
   end
 
   test "should destroy line_item" do
     assert_difference('LineItem.count', -1) do
-      delete :destroy, id: @line_item
+      delete :destroy, id: @line_item, line_item_ids: @line_item
     end
     assert_redirected_to line_items_path
   end
