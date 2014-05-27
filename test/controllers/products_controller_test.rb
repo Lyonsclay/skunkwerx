@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class ProductsControllerTest < ActionController::TestCase
-  setup do
-    @product = products(:product_one)
-    @admin = Admin.create(email: "jack@this.com", password: "foobar", password_confirmation: "foobar")
-  end
-
   test "should get index" do
     get :index
     assert_response :success
@@ -13,6 +8,12 @@ class ProductsControllerTest < ActionController::TestCase
     assert_select '.items td.description dt', Product.last.name
     assert_select '.items tr', Product.all.count
     assert_select '.price', /\$[,\d]+\.\d\d/
+  end
+
+  test "markup needed for " do
+    get :index
+    assert_select 'td.description', 2
+    assert_select 'td.description dl dd input[type=submit]', 2
   end
 end
 
