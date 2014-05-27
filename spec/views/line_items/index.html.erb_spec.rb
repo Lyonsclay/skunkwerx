@@ -16,8 +16,8 @@ describe "line_items/index" do
 
   it "renders a list of line_items" do
     render
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "tr>td", :text => nil.to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
+    line_item = @_encapsulated_assigns[:line_items].first
+    assert_select "tr>td>a[href=?]", line_item_path(line_item)
+    assert_select "tr>td>a[href=#{line_item_path(line_item)}]", text: "Show"
   end
 end
