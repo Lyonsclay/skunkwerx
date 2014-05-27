@@ -30,3 +30,6 @@ public/assets/**
 
 #Coveralls token.
 /.coveralls.yml
+
+#Seed file
+/db/seeds.rb
