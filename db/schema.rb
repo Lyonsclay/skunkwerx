@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516200055) do
+ActiveRecord::Schema.define(version: 20140529195020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,12 +54,20 @@ ActiveRecord::Schema.define(version: 20140516200055) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "item_id"
-    t.decimal  "unit_cost",          precision: 8, scale: 2
+    t.decimal  "unit_cost",           precision: 8, scale: 2
     t.integer  "inventory"
     t.string   "folder"
     t.integer  "tax1_id"
     t.string   "tax2_id"
-    t.string   "updated"
+    t.text     "requires"
+    t.text     "recommended"
+    t.string   "year"
+    t.string   "make"
+    t.string   "model"
+    t.string   "engine"
+    t.decimal  "standalone_price"
+    t.decimal  "price_with_purchase"
+    t.string   "power"
   end
 
   create_table "products", force: true do |t|
@@ -78,7 +86,6 @@ ActiveRecord::Schema.define(version: 20140516200055) do
     t.string   "folder"
     t.integer  "tax1_id"
     t.string   "tax2_id"
-    t.string   "updated"
   end
 
   create_table "sessions", force: true do |t|
