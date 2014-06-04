@@ -10,21 +10,9 @@
  *
  *= require_self
  * require_directory .
+ *= require admin/main
 
 /* START_HIGHLIGHT */
 
-.admin_portal {
-  border: 2px dotted pink;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  margin-top: 0px;
-  width: 850px;
-}
-
-.notice {
-	color: red;
-}
 
 /* END_HIGHLIGHT */
