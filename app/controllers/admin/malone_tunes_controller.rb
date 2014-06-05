@@ -18,5 +18,25 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def create
+    @tune_ids = new_malone_tunes_from_params
+    render 'admin/freshbooks/item_create'
   end
+
+  def edit
+    @malone_tune = MaloneTune.find(params[:id])
+  end
+
+  def update
+    malone_tune = MaloneTune.find_by id: params[:id]
+    malone_tune.update(malone_tune_params)
+    redirect_to '/admin/malone_tunes'
+  end
+
+   private
+
+    def malone_tune_params
+      if params[:malone_tune]
+        params.require(:malone_tune).permit!
+      end
+    end
 end
