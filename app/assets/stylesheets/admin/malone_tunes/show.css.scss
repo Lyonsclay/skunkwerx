@@ -65,12 +65,34 @@ ul.menu {
 	}
 }
 
-
-
-label {
+form {
 
 }
 
+textarea {
+
+}
+
+
+label[for="Requires"] {
+	display: inline-block;
+	vertical-align: top;
+	float: left;
+}
+
+label[for="Recommended"] {
+
+	float: right;
+}
+
+textarea#requires {
+	float: left;
+}
+
+textarea#recommended {
+	float: right;
+}
 input[type='checkbox'] {
+	vertical-align: bottom;
 
 }
