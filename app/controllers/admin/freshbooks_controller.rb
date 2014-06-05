@@ -6,6 +6,11 @@ class Admin::FreshbooksController < ApplicationController
   protect_from_forgery except: :webhooks
   before_filter :authorize, except: :webhooks
 
+  def items_create
+binding.pry
+    redirect_to '/admin/malone_tunes'
+  end
+
   def index
     session[:sync_discrepancy] = ""
     @callbacks = callbacks_display
