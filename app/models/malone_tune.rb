@@ -1,7 +1,12 @@
 class MaloneTune < ActiveRecord::Base
-  validates :name, :description, :quantity, :unit_cost, presence: true
-  validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
-  validates :name, uniqueness: true
+  validates :name, :quantity, :unit_cost, presence: true
+  # validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
+  validate :sum_of_prices
+  validates :name, uniqueness: {scope: :engine}
+
+  def sum_of_prices
+    unit_cost + standalone_price + price_with_purchase > 0.01
+  end
 
   # This method associates the attribute ":image" with a file atachment
   has_attached_file :image,
