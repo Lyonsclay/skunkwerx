@@ -2,8 +2,12 @@ class Admin::MaloneTunesController < ApplicationController
   layout 'admin/application'
   before_filter :authorize
 
-  def index
+  def malone_tuning_index
     @models = vehicle_models
+  end
+
+  def index
+    @malone_tunes = MaloneTune.all
   end
 
   def show

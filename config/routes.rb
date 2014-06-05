@@ -1,4 +1,5 @@
 Skunkwerx::Application.routes.draw do
+
   resources :line_items do
     collection do
       post :remove_multiple
@@ -30,6 +31,8 @@ Skunkwerx::Application.routes.draw do
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
     post 'freshbooks/webhooks_delete', to: 'freshbooks#webhooks_delete', as: :webhooks_delete
   end
+
+  get 'malone_tuning_index', to: 'admin/malone_tunes#malone_tuning_index'
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
 
