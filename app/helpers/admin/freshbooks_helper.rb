@@ -93,7 +93,10 @@ module Admin::FreshbooksHelper
     end
     # Delete items that are not slated for web sales.
     items.delete_if {|item| item["tax2_id"].nil? }
-    items
+    # Strip uneeded attribute 'updated' from hashes that
+    # will be used to create ActiveRecord records.
+    items.map { |item| item.except "updated" }
+    # items
   end
 
   # Callback create request
