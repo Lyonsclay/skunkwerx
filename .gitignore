@@ -28,5 +28,10 @@
 
 public/assets/**
 
-#Coveralls token.
+# Coveralls token.
 /.coveralls.yml
+
+# Coveralls reports
+/coveralls/*
+
+
