@@ -5,7 +5,9 @@ class MaloneTune < ActiveRecord::Base
   validates :name, uniqueness: {scope: :engine}
 
   def sum_of_prices
-    unit_cost + standalone_price + price_with_purchase > 0.01
+    # This method assumes that these attributes will be set to a
+    # number greater than 0.01 or nil and not 0.
+    unit_cost || standalone_price || price_with_purchase > 0.01
   end
 
   # This method associates the attribute ":image" with a file atachment
