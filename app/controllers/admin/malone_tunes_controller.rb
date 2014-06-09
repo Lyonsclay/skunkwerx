@@ -19,7 +19,6 @@ class Admin::MaloneTunesController < ApplicationController
 
   def create
     @tune_ids = new_malone_tunes_from_params
-    render 'admin/freshbooks/item_create'
   end
 
   def edit
