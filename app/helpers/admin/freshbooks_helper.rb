@@ -161,12 +161,12 @@ module Admin::FreshbooksHelper
   end
 
   # Receive item.create request and get product attributes.
-  def item_create(object_id)
+  def item_create(item_id)
     puts "**************** inside item_create ****************"
     puts "******************* params *************************"
     puts params
     puts "****************************************************"
-    response_hash = freshbooks_call(item_get_message(object_id))
+    response_hash = freshbooks_call(item_get_message(item_id))
     puts "*************** response_hash **********************"
     puts response_hash
     puts "****************************************************"
@@ -175,18 +175,20 @@ module Admin::FreshbooksHelper
     end
   end
 
-  def item_delete(object_id)
-    puts "*************** inside item_***********************"
-    product = Product.find_by_item_id(object_id)
+  def item_delete(item_id)
+    puts "*************** inside item_delete ******************"
+    product = Product.find_by item_id: item_id
     product.delete if product
+    tune = MaloneTune.find_by item_id: item_id
+    tune.delete if tune
     puts "Product.last: " + Product.last.inspect
   end
 
-  def item_update(object_id)
+  def item_update(item_id)
     puts "**************** inside item_update *****************"
-    product = Product.find_by_item_id(object_id)
+    product = Product.find_by_item_id(item_id)
     puts "product: " + product.inspect
-    response_hash = freshbooks_call(item_get_message(object_id))
+    response_hash = freshbooks_call(item_get_message(item_id))
     puts "response_hash: " + response_hash.inspect
     unless response_hash['response']['item']['tax2_id'].nil?
       product.update_attributes(response_hash['response']['item'])
