@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20140606033039) do
     t.integer  "inventory"
     t.string   "folder"
     t.integer  "tax1_id"
-    t.string   "tax2_id"
+    t.integer  "tax2_id"
     t.text     "requires"
     t.text     "recommended"
     t.string   "year"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20140606033039) do
     t.integer  "inventory"
     t.string   "folder"
     t.integer  "tax1_id"
-    t.string   "tax2_id"
+    t.integer  "tax2_id"
   end
 
   create_table "sessions", force: true do |t|
