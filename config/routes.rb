@@ -30,7 +30,7 @@ Skunkwerx::Application.routes.draw do
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
     post 'freshbooks/webhooks_delete', to: 'freshbooks#webhooks_delete', as: :webhooks_delete
-    post 'freshbooks/item_create', to: 'freshbooks#item_create', as: :item_create
+    post 'freshbooks/tunes_create', to: 'freshbooks#tunes_create', as: :tunes_create
   end
 
   get 'malone_tuning_index', to: 'admin/malone_tunes#malone_tuning_index'

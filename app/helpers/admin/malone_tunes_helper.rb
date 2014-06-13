@@ -115,6 +115,10 @@ module Admin::MaloneTunesHelper
       # Make sure only hash is being passed to dangerous eval method.
       if eval(tune).class == Hash
         tune = eval(tune)
+        # Using a goofy preface to signify tunes that are created for
+        # testing. This will be changed to "Malone" when live.
+        goofy = "Goofy-" + SecureRandom.urlsafe_base64(nil, false)[1..5]
+        tune[:name] = goofy + tune[:name]
         tune[:requires] = params["requires_#{tune_name}"]
         tune[:recommended] = params["recommended_#{tune_name}"]
         # Set quantity to default value of 1 to pass validations,

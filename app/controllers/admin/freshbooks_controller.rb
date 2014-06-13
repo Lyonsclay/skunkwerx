@@ -4,11 +4,13 @@ class Admin::FreshbooksController < ApplicationController
   # before_action :verify_authenticity_token, only: Proc.new { |c| c.request.original_url == 'http://www.freshbooks.com/api/' }
   # skip_before_action :verify_authenticity_token, only: Proc.new { |c| c.request.format == 'application/json' }
   protect_from_forgery except: :webhooks
-  before_filter :authorize, except: :webhooks
+  before_filter :authorize, except: [:webhooks, :tunes_create]
 
-  def items_create
-binding.pry
-    redirect_to '/admin/malone_tunes'
+  def tunes_create
+    unless params["tune_ids"].nil?
+      params["tune_ids"].each { |id| tune_item_create(id.to_i) }
+    end
+    redirect_to '/admin'
   end
 
   def index
