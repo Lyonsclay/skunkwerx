@@ -36,7 +36,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -47,7 +47,7 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+  # config.order = "random"
 
   # Move integrations tests from spec/requests to spec/features
   # Capybara 2.+ requires this folder hiearchy
@@ -65,8 +65,11 @@ RSpec.configure do |config|
 
   config.include Features::CallbackHelpers
 
-  #Don't run tests with external api calls.
+  # Run tests with external api calls.
   config.filter_run_excluding api: true unless ENV['API'] == "run"
-  # Separate test that request and delete actual Freshbooks webhooks.
+  # Run tests that request and delete actual Freshbooks webhooks.
   config.filter_run_excluding webhooks: true unless ENV['WEBHOOKS'] == "run"
+  # Run tests that create and destroy a malone_tune on the
+  # Freshbooks database.
+  config.filter_run_excluding freshbooks_items: true unless ENV['FRESHBOOKS_ITEMS'] == "run"
 end
