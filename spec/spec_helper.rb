@@ -6,6 +6,13 @@ require 'rspec/autorun'
 # require 'coveralls'
 # Coveralls.wear!
 
+require 'rack/utils'
+Capybara.app = Rack::ShowExceptions.new(Skunkwerx::Application)
+Capybara.default_wait_time = 90
+
+module Features
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
