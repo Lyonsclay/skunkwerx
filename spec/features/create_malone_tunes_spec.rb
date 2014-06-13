@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'capybara/rspec'
-# include Features::CallbackHelpers
-# include Admin::MaloneTunesHelper
+include Features::FreshbooksItemsHelpers
 # include SessionsHelper
 
 describe "Describe create new MaloneTunes", api: true do
+  let(:admin) {FactoryGirl.build(:admin)}
   before do
-    admin = FactoryGirl.create(:admin)
+    MaloneTune.delete_all
     visit login_path
     fill_in "Email", with: admin.email
     fill_in "Password", with: admin.password
@@ -24,18 +24,26 @@ describe "Describe create new MaloneTunes", api: true do
     end
   end
 
-  describe "Get show the first listed engine's tunes" do
+  describe "Create and destroy new malone_tune", freshbooks_items: true, js: true do
     before do
       first('tr').click_link('View')
+      sleep 10
+      expect(find('h2', match: :first).text).to have_content("Model Tunes for")
     end
 
-    it "grabs first engine's tunes" do
-      expect(page).to have_text "Model Tunes for"
-    end
-
-    it "select first tune" do
+    it "creates and destroys first tune" do
       first("input[type='checkbox']").set(true)
       expect{ click_button "Submit" }.to change(MaloneTune, :count).by(1)
+      wait_for_ajax
+      expect(find("div.notice")).to have_content("Succesfully sent data:-/")
+      item_id = MaloneTune.order(item_id: :asc).first.item_id
+      # If item_id is set the tune has been created on Freshbooks
+      # database.
+      expect(item_id).not_to be_nil
+      # Get the item_id with the maximum value which in theory should
+      # be the the most recently create malone_tune.
+      response = tune_destroy(item_id)
+      expect(response["response"]["status"]).to eq("ok")
     end
   end
 end
