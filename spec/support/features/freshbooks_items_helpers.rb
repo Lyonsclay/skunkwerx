@@ -1,4 +1,4 @@
-include Admin::FreshbooksHelper
+include FreshbooksHelper
 
 module Features
   module FreshbooksItemsHelpers
@@ -6,4 +6,4 @@ module Features
       freshbooks_call(item_delete_message(item_id))
     end
   end
-en    d
+end
