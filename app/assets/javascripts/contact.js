@@ -1,6 +1,5 @@
-
 // On document load execute code for directions to business.
-$(document).on('ready page:load', function() {
+$(document).on('page:change', function() {
   // Only load script if on contact page.
   if ($('#map_canvas').length){
 

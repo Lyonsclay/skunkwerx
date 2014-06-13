@@ -1,85 +1,101 @@
-<% stylesheet 'admin/malone_tunes/show' %>
+<% stylesheet 'admin/malone_tunes/show.css' %>
 
 <ul class="menu">
 	<li><%= button_to "HOME", admin_path, method: :get %></li>
-	<li><%= button_to "BACK", admin_malone_tunes_path, method: :get %></li>
+	<li><%= button_to "BACK", malone_tuning_index_path, method: :get %></li>
 </ul>
 
 <h2>Model Tunes for <%= @make_model %></h2>
+<h2>Selected tunes will be automatically created in your Freshbooks account.</h2>
 
-<% @model_tunes.each do |tune| %>
-	<% if tune[:name] =~ /Stock/ %>
-		<table class="stock">
-			<tr>
-				<td>
-					<dl>
-						<dd><%= tune[:engine] %></dd>
-					</dl>
-				</td>
-			</tr>
-		</table>
+<%= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
 
-	<% else %>
-		<table class="<%= cycle('list_line_odd', 'list_line_even') %>">
-			<thead>
+	<%= submit_tag "Submit" %>
+	<% @model_tunes.each do |tune| %>
+		<% if tune[:name] =~ /Stock/ %>
+			<table class="stock">
 				<tr>
-					<td class="list_description">
+					<td>
 						<dl>
-							<!-- <dt>Make:&nbsp</dt> -->
-							<dd><b>Tune:</b>&nbsp;&nbsp; <%= tune[:name] %></dd>
-							<dd><b>Engine:</b>&nbsp;&nbsp; <%= tune[:engine] %></dd>
-							<dd><%= tune[:description] %></dd>
-							<dd><%= display_price(tune) %></dd>
-							<br>
-							<dd>
-								<%= check_box_tag 'select' %>
-								<%= label_tag 'select', 'Select This Tune' %>
-							</dd>
+							<dd><%= tune[:engine] %></dd>
 						</dl>
 					</td>
-					<td class="graph">
-					<% unless tune[:graph_url].nil? %>
-						<%= image_tag(tune[:graph_url], size: "300x214" ) %>
-					<% end %>
-					</td>
 				</tr>
-			</thead>
-			<tbody>
+			</table>
 
-			</tbody>
-
-<!-- Requires and recommended graphics. -->
-			<% unless tune[:requires].nil? %>
-				</tbody>
+		<% else %>
+			<table class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<thead>
 					<tr>
-						<th>
-						<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
-						</th>
-						<th>
-						<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
-						</th>
-					</tr>
-					<tr  class="require-recommend">
-						<% if tune[:requires] %>
-							<td>
-							<% tune[:requires].each do |url| %>
-								<%= image_tag(url) %>
-							<% end %>
-							</td>
-							<td>
-							<% tune[:recommended].each do |url| %>
-								<%= image_tag(url) %>
-							<% end %>
-							</td>
+						<td class="list_description">
+							<dl>
+								<!-- <dt>Make:&nbsp</dt> -->
+								<dd><b>Tune:</b>&nbsp;&nbsp; <%= tune[:name] %></dd>
+								<dd><b>Engine:</b>&nbsp;&nbsp; <%= tune[:engine] %></dd>
+								<dd><%= tune[:description] %></dd>
+								<dd><%= display_price(tune) %></dd>
+								<br>
+	 							<dd>
+	 								<% requires_label = ("requires_" + tune[:name]).to_sym %>
+									<%= text_area_tag requires_label %>
+									<%= label_tag requires_label, "Requires" %>
+								</dd>
+								<dd>
+									<% recommended_label = ("recommended_" + tune[:name]).to_sym %>
+									<%= text_area_tag recommended_label %>
+									<%= label_tag recommended_label, "Recommended" %>
+								</dd>
+								<dd>
+									<% id = ("checkbox_" +tune[:name]).to_sym %>
+									<%= check_box_tag id %>
+									<%= hidden_field_tag ("tune_" + tune[:name]).to_sym, tune %>
+									<%= label_tag id, 'Select This Tune' %>
+								</dd>
+							</dl>
+						</td>
+						<td class="graph">
+						<% unless tune[:image].nil? %>
+							<%= image_tag(tune[:image], size: "300x214" ) %>
 						<% end %>
+						</td>
 					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
+				</thead>
+				<tbody>
 
-					</tr>
-				</tfoot>
-			<% end %>
-		</table>
+				</tbody>
+
+	<!-- Requires and recommended graphics. -->
+				<% unless tune[:requires].nil? %>
+					</tbody>
+						<tr>
+							<th>
+							<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
+							</th>
+							<th>
+							<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
+							</th>
+						</tr>
+						<tr  class="require-recommend">
+							<% if tune[:requires] %>
+								<td>
+								<% tune[:requires].each do |url| %>
+									<%= image_tag(url) %>
+								<% end %>
+								</td>
+								<td>
+								<% tune[:recommended].each do |url| %>
+									<%= image_tag(url) %>
+								<% end %>
+								</td>
+							<% end %>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+						</tr>
+					</tfoot>
+				<% end %>
+			</table>
+		<% end %>
 	<% end %>
 <% end %>

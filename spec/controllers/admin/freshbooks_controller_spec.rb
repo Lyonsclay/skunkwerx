@@ -23,7 +23,7 @@ describe Admin::FreshbooksController do
       get :items_sync
       expect(response).to redirect_to '/admin'
       expect(Product.last).not_to eq(nil)
-      expect(flash[:sync_discrepancy]).to include("The following products were newly created")
+      expect(session[:sync_discrepancy]).to include("The following products were newly created")
     end
   end
 

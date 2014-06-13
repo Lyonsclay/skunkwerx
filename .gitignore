@@ -15,9 +15,6 @@
 /log/*.log
 /tmp
 
-# Ignore Freshbooks authorization token
-/app/assets/javascripts/freshbooks.js
-
 /.env
 
 # Ignore api credentials
@@ -28,8 +25,11 @@
 
 public/assets/**
 
-#Coveralls token.
-/.coveralls.yml
-
 #Seed file
 /db/seeds.rb
+
+# Coveralls token.
+/.coveralls.yml
+
+# Coveralls reports
+/coveralls/*
