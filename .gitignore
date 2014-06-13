@@ -15,9 +15,6 @@
 /log/*.log
 /tmp
 
-# Ignore Freshbooks authorization token
-/app/assets/javascripts/freshbooks.js
-
 /.env
 
 # Ignore api credentials
