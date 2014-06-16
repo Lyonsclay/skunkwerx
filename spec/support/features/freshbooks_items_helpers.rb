@@ -1,4 +1,4 @@
-include FreshbooksHelper
+include Admin::FreshbooksHelper
 
 module Features
   module FreshbooksItemsHelpers
