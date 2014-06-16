@@ -1,0 +1,39 @@
+<% stylesheet 'admin/malone_tunes/index' %>
+
+<ul>
+	<li><%= link_to "ADMIN HOME", "/admin" %></li>
+	<li><%= link_to "BACK", "/admin/malone_tunes" %></li>
+</ul>
+
+<h2>Edit Malone Tune</h2>
+
+
+	<%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
+	<table>
+		<tbody>
+			<tr>
+				<td><%= f.label :name %></td>
+				<td><%= f.text_field :name %></td>
+			<tr>
+			<tr>
+				<td><%= f.label :description %></td>
+				<td><%= f.text_area :description %></td>
+			</tr>
+			<tr>
+				<td><%= f.label :image %></td>
+				<td><%= f.file_field :image %></td>
+			</tr>
+			<% MaloneTune.columns.each do |c| %>
+				<% next if ["name", "description", "updated_at", "created_at", "folder", "id"].include? c.name %>
+				<% next if c.name.match /image/ %>
+				<tr>
+					<td><%= f.label c.name %></td>
+					<td><%= f.text_field c.name.to_sym %></td>
+				</tr>
+			<% end %>
+			<tr>
+				<td><%= f.submit "Submit" %></td>
+			</tr>
+		</tbody>
+	</table>
+	<% end %>

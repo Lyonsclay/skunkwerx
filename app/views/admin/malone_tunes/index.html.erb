@@ -1,40 +1,30 @@
+<% stylesheet 'admin/malone_tunes/index' %>
+
 <h1>Listing admin_malone_tunes</h1>
 
 <ul class="menu">
   <li><%= button_to "ADMIN PAGE", admin_path, method: :get %></li>
-  <li><%= button_to "MALONE TUNINGS", malone_tuning_index_path, method: :get %></li>
+  <li><%= button_to "GET MALONE TUNINGS", malone_tuning_index_path, method: :get %></li>
 </ul>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
     <% @malone_tunes.each do |malone_tune| %>
+      <table class="<%= cycle('list_line_odd', 'list_line_even') %>">
       <tr>
-        <td>Name: </td>
-        <td><%= malone_tune.name %></td>
+        <td class="list_description">
+          <dl>
+            <dd><b>Name:</b>&nbsp;&nbsp;<%= malone_tune.name %></dd>
+            <% MaloneTune.columns.each do |c| %>
+              <% next if ["name", "created_at", "updated_at", "id"].include? c.name %>
+              <% next if c.name.match /image/ %>
+              <% unless malone_tune.attributes[c.name].nil? %>
+                  <dd><b><%= c.name %>:</b>&nbsp;&nbsp;<%= malone_tune.attributes[c.name] %></dd>
+              <% end %>
+            <% end %>
+          </dl>
+        <td class="graph"><%= image_tag(malone_tune.image.url(:medium), size: "150x150") %></td>
+        <td><%= link_to 'Edit', edit_admin_malone_tune_path(malone_tune) %><br><br></td>
       </tr>
-      <tr>
-        <td>Engine: </td>
-        <td><%= malone_tune.engine %></td>
-      <
-      <tr>
-        <td>Description: </td>
-        <td><%= malone_tune.description %></td>
-      </tr>
-      <tr>
-        <td>
-      <tr>
-        <td><%= link_to 'Edit', edit_admin_malone_tune_path(malone_tune) %></td>
-      </tr>
-      <br></br>
-    <% end %>
-  </tbody>
-</table>
+    </table>
+  <% end %>
+
 

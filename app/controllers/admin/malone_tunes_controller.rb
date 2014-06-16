@@ -22,7 +22,7 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def edit
-    @malone_tune = MaloneTune.find(params[:id])
+    @malone_tune = MaloneTune.find_by id: params[:id]
   end
 
   def update
