@@ -26,6 +26,7 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def update
+    params[:malone_tune][:image] = nil if params["default_image"] == "1"
     malone_tune = MaloneTune.find_by id: params[:id]
     malone_tune.update(malone_tune_params)
     redirect_to '/admin/malone_tunes'

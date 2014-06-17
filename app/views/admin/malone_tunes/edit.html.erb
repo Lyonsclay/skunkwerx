@@ -19,12 +19,23 @@
 				<td><%= f.label :description %></td>
 				<td><%= f.text_area :description %></td>
 			</tr>
+			<tr class="graph">
+				<td><%= f.label "Current Image" %></td>
+				<td><%= image_tag(@malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %></td>
+			</tr>
+			<% unless @malone_tune.image_file_name.nil? %>
 			<tr>
-				<td><%= f.label :image %></td>
+				<td><%= f.label "Use Default Graphic Instead" %></td>
+				<td><%= check_box_tag "default_image" %></td>
+			</tr>
+			<% end %>
+			<tr>
+				<td><%= f.label "Change Image" %></td>
 				<td><%= f.file_field :image %></td>
 			</tr>
+
 			<% MaloneTune.columns.each do |c| %>
-				<% next if ["name", "description", "updated_at", "created_at", "folder", "id"].include? c.name %>
+				<% next if ["name", "description", "updated_at", "created_at", "id"].include? c.name %>
 				<% next if c.name.match /image/ %>
 				<tr>
 					<td><%= f.label c.name %></td>

@@ -11,7 +11,7 @@
 			<% @malone_tunes.each do |malone_tune| %>
 				<% cache [malone_tune] do %>
 					<tr class="<%= cycle('odd_line', 'even_line') %>">
-						<td class="image">
+						<td class="graph">
 							<%= image_tag(malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %>
 						</td>
 						<td class="description">
