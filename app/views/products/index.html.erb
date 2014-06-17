@@ -26,7 +26,7 @@
 									<p><%= product.description %></p>
 								</dd>
 								<dd>
-									<%= button_to 'Add to Cart', line_items_path(product_id: product), remote: true %>
+									<%= button_to 'Add to Cart', line_items_path(item_id: product.item_id), remote: true %>
 								</dd>
 							</dl>
 						</td>

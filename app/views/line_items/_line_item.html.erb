@@ -6,16 +6,16 @@
 	<table>
 		<tr style="padding:0" class="description">
 			<td style="border:none;padding:0">
-				<%= image_tag(line_item.product.image.url(:medium), class: 'image_url', size: "75x75") %>
+				<%= image_tag(line_item.item.image.url(:medium), class: 'image_url', size: "75x75") %>
 			</td>
 			<td style="border:none">
-				<%= line_item.product.name %>
+				<%= line_item.item.name %>
 			</td>
 		</tr>
 	</table>
 	</td>
 	<td><%= line_item.quantity %></td>
 	<td>
-		<%= number_to_currency(line_item.product.unit_cost * line_item.quantity)%>
+		<%= number_to_currency(line_item.item.unit_cost * line_item.quantity)%>
 	</td>
 </tr>

@@ -1,4 +1,5 @@
 class MaloneTune < ActiveRecord::Base
+  has_many :line_items
   validates :name, :quantity, :unit_cost, presence: true
   # validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
   validate :sum_of_prices

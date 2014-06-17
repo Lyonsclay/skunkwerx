@@ -5,6 +5,7 @@
 	<td>
 	<% end %>
 		<%= line_item.quantity %>x
-		<%= line_item.product.name %>
+		<%= line_item.product.name if line_item.product %>
+		<%= line_item.malone_tune.name if line_item.malone_tune %>
 	</td>
 </tr>
