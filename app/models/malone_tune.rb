@@ -17,6 +17,7 @@ class MaloneTune < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300#'
     },
+    default_url: ':style/tune_missing.png',
     bucket: 'skunkwerx',
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']

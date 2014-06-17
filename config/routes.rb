@@ -1,5 +1,7 @@
 Skunkwerx::Application.routes.draw do
 
+  get 'malone_tunes/index_deploy'
+
   resources :line_items do
     collection do
       post :remove_multiple

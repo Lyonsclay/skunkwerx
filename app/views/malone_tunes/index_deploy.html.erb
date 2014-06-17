@@ -1,0 +1,40 @@
+<div class="products">
+	<% if notice %>
+	<p id="notice"><%= notice %></p>
+	<% end %>
+	<div id="title">
+		<p>Malone Tunings</p>
+	</div>
+	<div class="items">
+	<table>
+		<% cache(@malone_tunes) do %>
+			<% @malone_tunes.each do |malone_tune| %>
+				<% cache [malone_tune] do %>
+					<tr class="<%= cycle('odd_line', 'even_line') %>">
+						<td class="image">
+							<%= image_tag(malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %>
+						</td>
+						<td class="description">
+							<dl>
+								<dt>
+									<%= malone_tune.name %>
+								</dt>
+								<dt class="price">
+									<%= sprintf("$%0.02f", malone_tune.unit_cost) %>
+								</dt>
+								<dd>
+									<p><%= malone_tune.description %></p>
+								</dd>
+								<dd>
+									<%= button_to 'Add to Cart', line_items_path(tune_item_id: malone_tune.item_id), remote: true %>
+								</dd>
+							</dl>
+						</td>
+					</tr>
+				<% end %>
+			<% end %>
+		<% end %>
+	</table>
+	</div>
+</div>
+
