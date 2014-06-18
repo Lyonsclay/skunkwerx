@@ -64,6 +64,7 @@ RSpec.configure do |config|
   config.before(:each) { reset_email }
 
   config.include Features::CallbackHelpers
+  config.include Features::WebhooksTestHelpers
 
   # Run tests with external api calls.
   config.filter_run_excluding api: true unless ENV['API'] == "run"
