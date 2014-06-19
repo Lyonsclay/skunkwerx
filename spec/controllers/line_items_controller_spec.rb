@@ -109,7 +109,7 @@ describe LineItemsController do
 
       it "assigns the requested line_item as @line_item" do
         line_item = LineItem.create! valid_attributes
-        put :update, id: line_item.id, line_item: { product_id: @product.id }, line_item_ids: line_item.id
+        put :update, id: line_item.id, line_item: { item_id: @product.item_id }, line_item_ids: line_item.id
 
         assigns(:line_item).should eq(line_item)
       end
@@ -118,7 +118,7 @@ describe LineItemsController do
         line_item = LineItem.create! valid_attributes
         line_item.product = @product
         line_item.cart = Cart.create
-        put :update, { id: line_item.id, line_item: { product_id: @product.id }, line_item_ids: line_item.id }
+        put :update, { id: line_item.id, line_item: { item_id: @product.item_id }, line_item_ids: line_item.id }
         response.should redirect_to(line_item)
       end
     end
