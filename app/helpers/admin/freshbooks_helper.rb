@@ -180,7 +180,7 @@ module Admin::FreshbooksHelper
     puts response_hash
     puts "****************************************************"
     unless response_hash['response']['item']['tax2_id'].nil?
-      if response_hash["name"].match("Malone")
+      if response_hash['response']['item']['name'].match("Malone")
         MaloneTune.create(response_hash['response']['item'])
       else
         Product.create(response_hash['response']['item'])
