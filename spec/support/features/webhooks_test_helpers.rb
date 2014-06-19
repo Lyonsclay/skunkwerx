@@ -1,25 +1,30 @@
 require 'spec_helper'
-require 'net/https'
-require 'uri'
-# For parsing XML
-require 'rexml/document'
-# Import into the top level namespace for convenience
-include REXML
+require 'nokogiri'
+require 'open-uri'
 
 module Features
   module WebhooksTestHelpers
-    def skunkwerks_get_products(name)
-      uri = URI.parse(ENV['SKUNKWERX_URL'] + '/products/index')
-      http = Net::HTTP.new(uri.host, uri.port)
-      puts "******************* Net::HTTP **********************"
-      http.use_ssl = true
-      # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      request = Net::HTTP::Get.new(uri.request_uri)
-      # request.basic_auth ENV['FRESHBOOKS_KEY'], 'X'
-      request.body = message
-      response = http.request(request)
-      Hash.from_xml response.body
-    binding.pry
+    def skunkwerx_get_products
+      doc = Nokogiri::HTML(open(ENV['SKUNKWERX_URL'] + '/products/index'))
+      product_names = doc.xpath("//tr//p").map { |p| p.content }
+    end
+
+    def skunkwerx_create_product(name)
+      product = Product.new
+      product.name = name
+      product.description = "It happens to be so great!"
+      product.unit_cost = "21.99"
+      freshbooks_call(item_create_message(product))
+    end
+
+    def skunkwerx_destroy_product(item_id)
+      item_delete(item_id)
+    end
+
+    def skunkwerx_get_item_id(name)
+      items = get_items
+      items.select { |item| item["name"] == name }
+      items.first["item_id"]
     end
   end
 end
