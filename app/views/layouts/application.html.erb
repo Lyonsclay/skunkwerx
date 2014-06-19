@@ -45,7 +45,10 @@
 
 		<%= yield %>
 
-		<br><br><br><br>
+		# Produces xml properly formatted br tags.
+		<% 4.times do %>
+			<%= tag("br") %>
+		<% end %>
 	</div>
 </body>
 </html>
