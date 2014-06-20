@@ -171,8 +171,8 @@ module Admin::FreshbooksHelper
 
   # This routine retrieves item's attributes stripping the unused.
   def item_get(item_id)
-    response_hash = freshbooks_call(item_get_message(item_id))
-    response_hash.except *["updated", "folder"]
+    item_hash = freshbooks_call(item_get_message(item_id))['response']['item']
+    item_hash.except *["updated", "folder"]
   end
 
   # Receive item.create request and get product attributes.
@@ -181,15 +181,15 @@ module Admin::FreshbooksHelper
     puts "******************* params *************************"
     puts "***" + params.inspect
     puts "****************************************************"
-    response_hash = item_get(item_id)
-    puts "*************** response_hash **********************"
-    puts "***" + response_hash.inspect
+    item_hash = item_get(item_id)
+    puts "*************** item_hash **********************"
+    puts "***" + item_hash.inspect
     puts "****************************************************"
-    unless response_hash['response']['item']['tax2_id'].nil?
-      if response_hash['response']['item']['name'].match("Malone")
-        MaloneTune.create(response_hash['response']['item'])
+    unless item_hash['tax2_id'].nil?
+      if item_hash['name'].match("Malone")
+        MaloneTune.create(item_hash)
       else
-        Product.create(response_hash['response']['item'])
+        Product.create(item_hash)
       end
     end
     puts "*****************************************************"
