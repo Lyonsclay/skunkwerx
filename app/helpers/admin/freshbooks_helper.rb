@@ -169,13 +169,19 @@ module Admin::FreshbooksHelper
     message
   end
 
+  # This routine retrieves item's attributes stripping the unused.
+  def item_get(item_id)
+    response_hash = freshbooks_call(item_get_message(item_id))
+    response_hash.except *["updated", "folder"]
+  end
+
   # Receive item.create request and get product attributes.
   def item_create(item_id)
     puts "**************** inside item_create ****************"
     puts "******************* params *************************"
     puts "***" + params
     puts "****************************************************"
-    response_hash = freshbooks_call(item_get_message(item_id))
+    response_hash = item_get(item_id)
     puts "*************** response_hash **********************"
     puts "***" + response_hash
     puts "****************************************************"
