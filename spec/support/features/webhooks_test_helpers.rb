@@ -18,7 +18,7 @@ module Features
     end
 
     def skunkwerx_destroy_product(item_id)
-      item_delete(item_id)
+      freshbooks_call(item_delete_message(item_id))
     end
 
     def skunkwerx_get_item_id(name)
