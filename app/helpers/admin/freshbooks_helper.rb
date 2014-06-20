@@ -179,11 +179,11 @@ module Admin::FreshbooksHelper
   def item_create(item_id)
     puts "**************** inside item_create ****************"
     puts "******************* params *************************"
-    puts "***" + params
+    puts "***" + params.inspect
     puts "****************************************************"
     response_hash = item_get(item_id)
     puts "*************** response_hash **********************"
-    puts "***" + response_hash
+    puts "***" + response_hash.inspect
     puts "****************************************************"
     unless response_hash['response']['item']['tax2_id'].nil?
       if response_hash['response']['item']['name'].match("Malone")
