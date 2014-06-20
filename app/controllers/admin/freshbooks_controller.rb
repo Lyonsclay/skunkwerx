@@ -34,37 +34,46 @@ class Admin::FreshbooksController < ApplicationController
     redirect_to '/admin'
   end
 
-  # Post webhooks is the only call Freshbooks API will make to Skunkwerx website.
+  # !!!Post webhooks is the only call Freshbooks API will make to Skunkwerx website.
   # This method must handle callback verify on callback creation and any callbacks
   # that Freshbooks will make.
   def webhooks
     puts "*************** inside webhooks ************************"
-    puts "params: " + params.inspect
+    puts "***params: " + params.inspect
     puts "*********************************************************"
     # Check to insure valid freshbooks api request.
     if params[:system] == "https://skunkwerxperformanceautomotivellc.freshbooks.com"
       puts "**************** inside params[:system] ***************"
       key = find_key("name")
-      puts "params: " + params.inspect
-      puts "key: " + key
+      puts "***params: " + " - " + params.inspect + " - "
+      puts "***key: " + "\"" + key + "\""
       # Callback Verify action for all webhook methods;
       if params[key] == "callback.verify"
         puts "****************** inside callback.verify **************"
-        puts "params[:verifier]: " + params[:verifier]
+        puts "***params[:verifier]: " + params[:verifier]
         puts "********************************************************"
         callback_verify(params[:verifier])
       end
       # Freshbooks sends notification on item create, update and destroy.
       if params[key] == "item.create"
+        puts "********************* inside item.create **************"
+        puts "***params[:object_id] : " + params[:object_id]
         item_create(params[:object_id])
+        puts "******************************************************"
       end
+
       if params[key] == "item.update"
         puts "********************* inside item.update **************"
+        puts "***params[:object_id] : " + params[:object_id]
         item_update(params[:object_id])
+        puts "******************************************************"
       end
+
       if params[key] == "item.delete"
         puts "********************* inside item.delete ***************"
+        puts "***params[:object_id] : " + params[:object_id]
         item_delete(params[:object_id])
+        puts "******************************************************"
       end
       # Send response status ok.
       head 200
