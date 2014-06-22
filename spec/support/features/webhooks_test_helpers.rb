@@ -9,7 +9,7 @@ module Features
       product_names = doc.xpath("//tr//p").map { |p| p.content }
     end
 
-    def skunkwerx_create_product(name)
+    def freshbooks_create_product(name)
       product = Product.new
       product.name = @name
       product.description = "It happens to be so great!"
@@ -21,15 +21,24 @@ module Features
       "<?xml version=\"1.0\" encoding=\"utf-8\"?><request method=\"item.update\"><item><item_id>#{item_id}</item_id><description>#{description}</description></item></request>"
     end
 
-    def skunkwerx_update_product(description)
+    def freshbooks_update_product(description)
       freshbooks_call(item_update_message(description))
     end
 
-    def skunkwerx_destroy_product
-      freshbooks_call(item_delete_message(item_id))
+    def freshbooks_destroy_products(item_ids)
+      item_ids.each do |item_id|
+        freshbooks_call(item_delete_message(item_id))
+      end
     end
 
-    def skunkwerx_get_item_id
+    def get_goofy_item_ids
+      items = get_items
+      goofy_items = items.select { |i| i["name"].match /Goofy/ }
+      goofy_items.map { |i| i["item_id"] }
+    end
+
+
+    def freshbooks_get_item_id
       items = get_items
       items.select { |item| item["name"] == @name }
       items.first["item_id"]

@@ -70,7 +70,6 @@ RSpec.configure do |config|
   config.filter_run_excluding api: true unless ENV['API'] == "run"
   # Run tests that request and delete actual Freshbooks webhooks.
   config.filter_run_excluding webhooks: true unless ENV['WEBHOOKS'] == "run"
-  # Run tests that create and destroy a malone_tune on the
-  # Freshbooks database.
+  # Run tests that create and destroy an item on the Freshbooks database.
   config.filter_run_excluding freshbooks_items: true unless ENV['FRESHBOOKS_ITEMS'] == "run"
 end
