@@ -32,7 +32,6 @@ describe "Get products from Skunkwerx index" do
   it "Updates new product" do
     description = "Actually it's not so great."
     response_hash = skunkwerx_update_product(description)
-binding.pry
     # Get description from Skunkwerx website.
     expect(skunkwerx_get_item_description).to eq(description)
   end
