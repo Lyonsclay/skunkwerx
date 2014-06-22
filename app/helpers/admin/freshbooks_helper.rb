@@ -171,7 +171,9 @@ module Admin::FreshbooksHelper
 
   # This routine retrieves item's attributes stripping the unused.
   def item_get(item_id)
+    puts "****************** inside item_get ********************"
     item_hash = freshbooks_call(item_get_message(item_id))['response']['item']
+    puts "************ item_get send item_hash stripped **********"
     item_hash.except *["updated", "folder"]
   end
 
@@ -182,8 +184,8 @@ module Admin::FreshbooksHelper
     puts "***" + params.inspect
     puts "****************************************************"
     item_hash = item_get(item_id)
-    puts "*************** item_hash **********************"
-    puts "***" + item_hash.inspect
+    puts "************* return to item_create ****************"
+    puts "***item_hash: " + item_hash.inspect
     puts "****************************************************"
     unless item_hash['tax2_id'].nil?
       if item_hash['name'].match("Malone")
@@ -200,8 +202,8 @@ module Admin::FreshbooksHelper
     product = Product.find_by item_id: item_id
     product.delete if product
     tune = MaloneTune.find_by item_id: item_id
-    tune.delete if tune
     puts "***Product.last: " + Product.last.inspect
+    tune.delete if tune
     puts "****************************************************"
   end
 
