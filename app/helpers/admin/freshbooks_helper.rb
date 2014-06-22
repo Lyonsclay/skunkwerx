@@ -212,7 +212,7 @@ module Admin::FreshbooksHelper
     item = Product.find_by item_id: item_id
     item ||= MaloneTune.find_by item_id: item_id
     puts "***item: " + item.inspect
-    response_hash = freshbooks_call(item_get_message(item_id))
+    response_hash = item_get(item_id)
     puts "***response_hash: " + response_hash.inspect
     unless response_hash['response']['item']['tax2_id'].nil?
       item.update_attributes(response_hash['response']['item'])
