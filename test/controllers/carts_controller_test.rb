@@ -4,7 +4,7 @@ class CartsControllerTest < ActionController::TestCase
   setup do
     product = products(:product_one)
     @cart = Cart.create
-    @cart.line_items << LineItem.create(product_id: product.id)
+    @cart.line_items << LineItem.create(item_id: product.item_id)
   end
 
   test "should get index" do
