@@ -10,6 +10,8 @@ Skunkwerx::Application.routes.draw do
 
   resources :carts
 
+  resources :orders, only: [:new, :create]
+
   # get "products/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
