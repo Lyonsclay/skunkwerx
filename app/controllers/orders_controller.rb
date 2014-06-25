@@ -12,9 +12,23 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
-    @order << @cart.line_items
-    redirect_to request.referer
+    @order = Order.create(order_params)
+    @order.line_items << @cart.line_items
+    respond_to do |format|
+      if @order.save
+        # Must obtain path from shopping before destroy cart.
+        # After destroy cart line_items are still associated
+        # with an order, but line_item.order_id is nil.
+        path = shopping
+        Cart.destroy(session[:cart_id])
+        session[:cart_id] = nil
+        format.html { redirect_to path, notice: 'Thank you for your order.' }
+        format.json { render action: 'show', status: :created, location: @order }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
