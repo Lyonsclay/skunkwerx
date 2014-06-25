@@ -5,14 +5,16 @@ module LineItemsHelper
   end
 
   def shopping
-    # This method will be built out when a LineItem can
-    # be associated with a MaloneTune
     if current_cart
-      unless current_cart.line_items.last.product.nil?
-        "/products/index"
-      else
-        "/malone_tunes/index_deploy"
+      unless current_cart.line_items.empty?
+        if current_cart.line_items.order(:created_at).last.product
+          "/products/index"
+        elsif current_cart.line_items.order(:created_at).last.malone_tune
+          "/malone_tunes/index_deploy"
+        end
       end
+    else
+      "/"
     end
   end
 end
