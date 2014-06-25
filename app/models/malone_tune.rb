@@ -31,4 +31,8 @@ class MaloneTune < ActiveRecord::Base
   def self.latest
     Product.order(:updated_at).latest
   end
+
+  def price
+    unit_cost || standalone_price || price_with_purchase
+  end
 end
