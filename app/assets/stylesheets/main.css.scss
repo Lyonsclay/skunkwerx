@@ -54,10 +54,11 @@ body {
 
   a {
     font-size: 18px;
+    color: #dee4d8;
     color: #A70301;
     font-family: "Nunito";
-    text-decoration:none;
-    border: 2px solid;
+    text-decoration: none;
+    border: 2px solid #A70301;
     padding: 0px;
     padding-left: 4px;
     padding-right: 4px;
@@ -75,22 +76,22 @@ body {
   border-radius: 5px;
   margin-left: 20px;
   margin-top: 50px;
-  padding-left: 5px;
+  padding-left: 7px;
   padding-bottom: 10px;
-  padding-right: 5px;
+  padding-right: 7px;
   font: 14px "Helvetica Neue", sans-serif;
   font-weight: 200;
   color: #dee4d8;
 
   .buttons a {
-    color: #A70301;
+    color: #dee4d8;
     font-family: "Nunito";
-    text-decoration:none;
-    border: 2px solid;
+    text-decoration: none;
+    border: 2px solid #A70301;
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 5px;
-    margin-left: 30px;
+    margin-left: 65px;
   }
 
   td {
@@ -105,7 +106,7 @@ body {
     border-top: 1px solid #dee4d8;
     text-align: right;
     padding-top: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 15px;
   }
 
   .image-url {
