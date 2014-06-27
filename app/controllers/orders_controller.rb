@@ -16,13 +16,13 @@ class OrdersController < ApplicationController
     @order.line_items << @cart.line_items
     respond_to do |format|
       if @order.save
-        # Must obtain path from shopping before destroy cart.
-        # After destroy cart line_items are still associated
-        # with an order, but line_item.order_id is nil.
-        path = shopping
+        # Must obtain destination path from shopping before
+        # destroy cart. After destroy cart line_items are still
+        # associated with an order, but line_item.order_id is nil.
+        previous_path = shopping
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-        format.html { redirect_to path, notice: 'Thank you for your order.' }
+        format.html { redirect_to previous_path, notice: 'Thank you for your order.' }
         format.json { render action: 'show', status: :created, location: @order }
       else
         format.html { render action: 'new' }
@@ -32,7 +32,7 @@ class OrdersController < ApplicationController
   end
 
   private
-
+    # Strong params
     def order_params
       if params[:order]
         params.require(:order).permit(:name, :address, :email, :payment_type)

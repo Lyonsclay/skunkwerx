@@ -4,6 +4,9 @@ module LineItemsHelper
     Cart.find(session[:cart_id]) if session[:cart_id]
   end
 
+  # This method determines path of previous page for redirection.
+  # Used in cart and order actions, and therefore will evaluate to
+  # products/index or malone_tunes/index.
   def shopping
     if current_cart
       unless current_cart.line_items.empty?
