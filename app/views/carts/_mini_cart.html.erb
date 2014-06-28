@@ -2,12 +2,13 @@
 	<table>
 		<thead>
 				<tr class="cart-heading">
-					<td><%= link_to image_tag('shopping_cart-11.png', class: 'image-url', width: "35%", height: "35%"), {controller: "carts", action: "show", id: cart.id } %></td>
+					<td><%= link_to image_tag('shopping_cart-11.png', class: 'image-url', width: "40%", height: "40%"), {controller: "carts", action: "show", id: cart.id } %></td>
 				</tr>
 		</thead>
 		<tbody>
 			<%= render partial: "/line_items/mini_line_items", collection: cart.line_items, as: :line_item %>
-		<tbody>
+			<tr><td></td></tr>
+		</tbody>
 		<tfoot class="sub-total">
 			<tr>
 				<td class="price"><%= number_to_currency cart.total_price %></td>

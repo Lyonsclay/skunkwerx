@@ -4,7 +4,9 @@
 	<% else %>
 	<td>
 	<% end %>
-		<%= line_item.quantity %>x
+		<div class="quantity">
+			<%= line_item.quantity %>
+		</div>
 		<%= line_item.product.name if line_item.product %>
 		<%= line_item.malone_tune.name if line_item.malone_tune %>
 	</td>

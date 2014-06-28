@@ -95,7 +95,16 @@ body {
   }
 
   td {
-    width: 130px;
+    width: 140px;
+  }
+
+  .quantity {
+    display: inline-block;
+    width: 10px;
+    border: 1px solid #dee4d8;
+    border-radius: 4px;
+    padding-left: 2px;
+    paddin-right: 2px;
   }
 
   #products {
@@ -103,7 +112,7 @@ body {
   }
 
   td.price {
-    border-top: 1px solid #dee4d8;
+    border-top: 2px solid #A70301;
     text-align: right;
     padding-top: 5px;
     padding-bottom: 15px;
