@@ -13,16 +13,33 @@
 		color: #A70301;
 	}
 
-	#title p {
+	#title {
+		width: 600px;
+		height: 80px;
 	  font: 28px "Helvetica Neue", sans-serif;
 	  font-weight: 200;
 		/*color: #A70301;*/
 		color: Chocolate;
 		color: #dee4d8;
-		padding-left: 100px;
-		margin-bottom: 0px;
-		margin-top: 15px;
-		margin-bottom: 15px;
+		margin-top: 10px;
+
+		p {
+			float: left;
+			margin-top: 10px;
+			margin-left: 15px;
+		}
+
+		nav {
+			margin-top: 15px;
+			font-size: 22px;
+			color: Chocolate;
+			float: right;
+		}
+
+		a {
+			color: #dee4d8;
+		}
+
 	}
 
 	.items {

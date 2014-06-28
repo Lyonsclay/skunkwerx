@@ -78,3 +78,6 @@ gem 'coveralls', require: false
 
 # Gives ability to use ActiveRecord data store rather than Cookies
 gem 'activerecord-session_store'
+
+# Pagination gem
+gem 'kaminari'
