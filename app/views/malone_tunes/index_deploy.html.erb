@@ -1,40 +1,21 @@
-<div class="products">
+<div class="items">
 	<% if notice %>
 	<p id="notice"><%= notice %></p>
 	<% end %>
 	<div id="title">
 		<p>Malone Tunings</p>
 	</div>
-	<div class="items">
 	<table>
 		<% cache(@malone_tunes) do %>
-			<% @malone_tunes.each do |malone_tune| %>
-				<% cache [malone_tune] do %>
-					<tr class="<%= cycle('odd_line', 'even_line') %>">
-						<td class="graph">
-							<%= image_tag(malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %>
-						</td>
-						<td class="description">
-							<dl>
-								<dt>
-									<%= malone_tune.name %>
-								</dt>
-								<dt class="price">
-									<%= sprintf("$%0.02f", malone_tune.unit_cost) %>
-								</dt>
-								<dd>
-									<p><%= malone_tune.description %></p>
-								</dd>
-								<dd>
-									<%= button_to 'Add to Cart', line_items_path(item_id: malone_tune.item_id), remote: true %>
-								</dd>
-							</dl>
-						</td>
-					</tr>
+			<% @malone_tunes.each do |item| %>
+				<% cache [item] do %>
+					<% if item.image.url.match /missing/ %>
+						<%= render 'item_default_image', item: item %>
+					<% else %>
+						<%= render 'item_big_image', item: item %>
+					<% end %>
 				<% end %>
 			<% end %>
 		<% end %>
 	</table>
-	</div>
 </div>
-

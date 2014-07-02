@@ -1,0 +1,32 @@
+<tr class="border">
+	<td>
+		<dl>
+			<dt>
+				<%= item.name %>
+			</dt>
+			<dd>
+				<p><%= item.description %></p>
+			</dd>
+		</dl>
+	</td>
+	<td id='price_button'>
+		<ul class='float_top'>
+			<li class='price'>
+				<%= sprintf("$%0.02f", item.unit_cost) %>
+			</li>
+		</ul>
+		<ul class='float_bottom'>
+			<li>
+				<%= button_to 'Add to Cart', line_items_path(item_id: item.item_id), remote: true %>
+			</li>
+		</ul>
+	</td>
+</tr>
+<tr class="no_border">
+	<td class="graph">
+		<%= image_tag(item.image.url(:medium), class: 'image_url', size: "300x300") %>
+	</td>
+	<td class="options">
+		<%= link_to "option" %>
+	</td>
+</tr>
