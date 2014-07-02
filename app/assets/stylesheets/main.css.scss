@@ -71,17 +71,38 @@ body {
 }
 
 #mini-cart {
-  position: absolute;
+  margin: auto;
+  float: right;
+  margin-right: 100px;
+  width: 225px;
   border: 2px solid #A70301;
   border-radius: 5px;
-  margin-left: 20px;
   margin-top: 50px;
   padding-left: 7px;
   padding-bottom: 10px;
+  padding-top: 10px;
   padding-right: 7px;
   font: 14px "Helvetica Neue", sans-serif;
   font-weight: 200;
   color: #dee4d8;
+
+  table {
+    border-collapse: collapse;
+    width: 215px;
+  }
+
+  thead {
+    border-bottom: 1px solid #dee4d8;
+  }
+
+  thead tr td {
+    padding-bottom: 3px;
+    font-weight: 500;
+  }
+
+  tbody tr td {
+    padding-top: 4px;
+  }
 
   .buttons a {
     color: #dee4d8;
@@ -91,42 +112,40 @@ body {
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 5px;
-    margin-left: 65px;
+    margin-left: 144px;
   }
 
-  td {
-    width: 140px;
+  .buttons {
+    margin-top: 10px;
   }
 
   .quantity {
-    display: inline-block;
-    width: 10px;
-    border: 1px solid #dee4d8;
-    border-radius: 4px;
-    padding-left: 2px;
-    paddin-right: 2px;
+    font-weight: 500;
+    margin-right: 20px;
+    padding-left: 6px;
   }
 
-  #products {
-    font-size: 20px;
+  .name {
+    padding-right: 15px;
+  }
+
+  .sub-total td {
+    border-top: 2px solid #A70301;
+    padding-top: 3px;
   }
 
   td.price {
-    border-top: 2px solid #A70301;
-    text-align: right;
-    padding-top: 5px;
-    padding-bottom: 15px;
+    margin-right: 20px;
   }
 
   .image-url {
     height: inherit;
-    padding-left: 35px;
+    margin-left: 60px;
   }
 }
 
 .content {
   position: relative;
-  border: 2px none blue;
   left: 0;
   right: 0;
   margin: auto;
