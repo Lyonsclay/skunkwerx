@@ -27,8 +27,6 @@
 		}
 	}
 
-
-
 	.items {
 
 		margin: auto;
@@ -61,11 +59,19 @@
 				color: #dee4d8;
 			}
 
+			dd {
+				padding-right: 10px;
+			}
+
 			dt {
 				display: inline;
 			}
 
 			dt.price {
+				float: right;
+			}
+
+			input {
 				float: right;
 			}
 		}
