@@ -1,5 +1,9 @@
 <h2 id="title">Your Shopping Cart</h2>
-<div class="items">
+<div class="buttons">
+	<%= link_to 'Empty Cart', "/carts/#{cart.id}", method: :delete, data: { confirm: 'Are you sure?'} %>
+	<%= link_to 'Continue Shopping', shopping %>
+	<%= link_to 'Checkout', edit_cart_path(cart) %>
+</div>
 <%= form_tag remove_multiple_line_items_path, method: :post do %>
 	<table class="line-items">
 		<thead>
@@ -20,11 +24,4 @@
 			<td><%= number_to_currency cart.total_price %></td>
 		</tfoot>
 	</table>
-
 <% end %>
-</div>
-<div class="buttons">
-	<%= link_to 'Empty Cart', "/carts/#{cart.id}", method: :delete, data: { confirm: 'Are you sure?'} %>
-	<%= link_to 'Checkout', edit_cart_path(cart) %>
-	<%= link_to 'Continue Shopping', shopping %>
-</div>
