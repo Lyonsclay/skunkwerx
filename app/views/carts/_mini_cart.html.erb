@@ -11,9 +11,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
 			<%= render partial: "/line_items/mini_line_items", collection: cart.line_items, as: :line_item %>
-			</tr>
 			<tr><td></td></tr>
 		</tbody>
 		<tfoot class="sub-total">
@@ -24,9 +22,9 @@
 			</tr>
 		</tfoot>
 	</table>
-<% unless request.fullpath.match /orders\/new/ %>
-<div class="buttons">
-	<%= link_to 'Checkout', new_order_path(cart) %>
-</div>
-<% end %>
+	<% unless request.fullpath.match /orders\/new/ %>
+	<div class="buttons">
+		<%= link_to 'Checkout', new_order_path(cart) %>
+	</div>
+	<% end %>
 </div>
