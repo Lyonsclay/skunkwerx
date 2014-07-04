@@ -11,14 +11,6 @@
 	<%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
 	<table>
 		<tbody>
-			<tr>
-				<td><%= f.label :name %></td>
-				<td><%= f.text_field :name %></td>
-			<tr>
-			<tr>
-				<td><%= f.label :description %></td>
-				<td><%= f.text_area :description %></td>
-			</tr>
 			<tr class="graph">
 				<td><%= f.label "Current Image" %></td>
 				<td><%= image_tag(@malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %></td>
@@ -33,13 +25,16 @@
 				<td><%= f.label "Change Image" %></td>
 				<td><%= f.file_field :image %></td>
 			</tr>
-
 			<% MaloneTune.columns.each do |c| %>
-				<% next if ["name", "description", "updated_at", "created_at", "id"].include? c.name %>
-				<% next if c.name.match /image/ %>
+				<% next if /(at|id|folder|image)/.match c.name %>
 				<tr>
 					<td><%= f.label c.name %></td>
-					<td><%= f.text_field c.name.to_sym %></td>
+					<% size = @malone_tune.send(c.name).to_s.size %>
+					<% if size < 40 %>
+					<td><%= f.text_field c.name.to_sym, size: size %></td>
+					<% else %>
+					<td><%= f.text_area c.name.to_sym %></td>
+					<% end %>
 				</tr>
 			<% end %>
 			<tr>
