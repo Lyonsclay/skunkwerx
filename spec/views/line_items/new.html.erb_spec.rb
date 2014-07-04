@@ -11,7 +11,7 @@ describe "line_items/new" do
   it "renders new line_item form" do
     render
     assert_select "form[action=?][method=?]", line_items_path, "post" do
-      assert_select "input#line_item_product_id[name=?]", "line_item[product_id]"
+      assert_select "input#line_item_item_id[name=?]", "line_item[item_id]"
       assert_select "input#line_item_cart_id[name=?]", "line_item[cart_id]"
     end
   end

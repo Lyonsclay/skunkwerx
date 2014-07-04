@@ -1,40 +1,19 @@
-<div class="products">
+<div class="items">
 	<% if notice %>
 	<p id="notice"><%= notice %></p>
 	<% end %>
 	<div id="title">
 		<p>Skunkwerx Products</p>
+		<%= paginate @products %>
 	</div>
-	<div class="items">
 	<table>
 		<% cache(@products) do %>
-			<% @products.each do |product| %>
-				<% cache [product] do %>
-					<tr class="<%= cycle('odd_line', 'even_line') %>">
-						<td class="image">
-							<%= image_tag(product.image.url(:medium), class: 'image_url', size: "150x150") %>
-						</td>
-						<td class="description">
-							<dl>
-								<dt>
-									<%= product.name %>
-								</dt>
-								<dt class="price">
-									<%= sprintf("$%0.02f", product.unit_cost) %>
-								</dt>
-								<dd>
-									<p><%= product.description %></p>
-								</dd>
-								<dd>
-									<%= button_to 'Add to Cart', line_items_path(product_id: product), remote: true %>
-								</dd>
-							</dl>
-						</td>
-					</tr>
+			<% @products.each do |item| %>
+				<% cache [item] do %>
+					<%= render '/malone_tunes/item_default_image', item: item %>
 				<% end %>
 			<% end %>
 		<% end %>
 	</table>
-	</div>
 </div>
 

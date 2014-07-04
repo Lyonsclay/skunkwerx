@@ -5,6 +5,6 @@ class AddFreshbooksAttributesToProducts < ActiveRecord::Migration
     add_column :products, :inventory, :integer
     add_column :products, :folder, :string
     add_column :products, :tax1_id, :integer
-    add_column :products, :tax2_id, :string
+    add_column :products, :tax2_id, :integer
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516200055) do
+ActiveRecord::Schema.define(version: 20140625144626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,15 +33,17 @@ ActiveRecord::Schema.define(version: 20140516200055) do
   end
 
   create_table "line_items", force: true do |t|
-    t.integer  "product_id"
+    t.integer  "item_id"
     t.integer  "cart_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity",   default: 1
+    t.integer  "order_id"
   end
 
   add_index "line_items", ["cart_id"], name: "index_line_items_on_cart_id", using: :btree
-  add_index "line_items", ["product_id"], name: "index_line_items_on_product_id", using: :btree
+  add_index "line_items", ["item_id"], name: "index_line_items_on_item_id", using: :btree
+  add_index "line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
 
   create_table "malone_tunes", force: true do |t|
     t.string   "name"
@@ -54,16 +56,33 @@ ActiveRecord::Schema.define(version: 20140516200055) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "item_id"
-    t.decimal  "unit_cost",          precision: 8, scale: 2
+    t.decimal  "unit_cost",           precision: 8, scale: 2
     t.integer  "inventory"
     t.string   "folder"
     t.integer  "tax1_id"
-    t.string   "tax2_id"
-    t.string   "updated"
+    t.integer  "tax2_id"
+    t.text     "requires"
+    t.text     "recommended"
+    t.string   "year"
+    t.string   "make"
+    t.string   "model"
+    t.string   "engine"
+    t.string   "power"
+    t.decimal  "price_with_purchase"
+    t.decimal  "standalone_price"
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "name"
+    t.text     "address"
+    t.string   "email"
+    t.string   "payment_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "products", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.text     "description"
     t.integer  "quantity"
     t.datetime "created_at"
@@ -75,10 +94,8 @@ ActiveRecord::Schema.define(version: 20140516200055) do
     t.integer  "item_id"
     t.decimal  "unit_cost",          precision: 8, scale: 2
     t.integer  "inventory"
-    t.string   "folder"
     t.integer  "tax1_id"
-    t.string   "tax2_id"
-    t.string   "updated"
+    t.integer  "tax2_id"
   end
 
   create_table "sessions", force: true do |t|

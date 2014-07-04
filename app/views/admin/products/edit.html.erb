@@ -8,8 +8,10 @@
 		<%= f.file_field :image %>
 		<%= f.submit 'Add Photo' %>
 	</div>
-
 <% end %>
+
+<%= image_tag(@product.image.url(:medium), size: "150x150") %>
+<%= button_to "Use Default Graphic", { controller: 'admin/products', action: 'update', params: { "product" => { "image" => nil }}}, method: :put %>
 <p>
 	name:&nbsp
 	<%= @product.name %>

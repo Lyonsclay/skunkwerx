@@ -10,7 +10,7 @@ include Admin::FreshbooksHelper
 # The byproduct of these tests is that they perform the tasks
 # described. Therefore this routine resets all webhooks that
 # the Skunkwerx app is subscribing to.
-describe "Describe Freshbooks webhooks", webhooks: true do
+describe "Describe create and destroy Freshbooks webhooks", webhooks: true do
   before do
     admin = FactoryGirl.create(:admin)
     SessionsHelper.stub(:current_admin).and_return(admin)
@@ -27,7 +27,7 @@ describe "Describe Freshbooks webhooks", webhooks: true do
 
   describe "Request webhooks" do
     it "requests an item.create webhook" do
-      # Get admin_freshbooks_path proviedes controller methods
+      # Get admin_freshbooks_path provides controller methods
       # and variables such as flash which is neccesary for
       # callback create.
       get admin_freshbooks_path

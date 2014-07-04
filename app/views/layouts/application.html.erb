@@ -2,21 +2,18 @@
 <html>
 <head>
   <title>Skunkwerx</title>
-
-  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false", "contact" %>
-
   <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
+  <!-- Used for menu_bar buttons. -->
+  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Nunito' %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false", "data-turbolnks-track" => true %>
+
   <!-- loads controller specific scripts only on refresh -->
   <%#= javascript_include_tag params[:controller] %>
-  <%= csrf_meta_tags %>
-
   <!-- Used for logo in graphics composition. -->
 	<!--  <link href='http://fonts.googleapis.com/css?family=Stalinist+One' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'> -->
-  <!-- Used for menu_bar buttons. -->
-  <%= stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Nunito' %>
-
+  <%= csrf_meta_tags %>
 </head>
 <body>
 	<div class="main">
@@ -39,16 +36,20 @@
 			<p>This site is currently under construction. Please call (502) 724-2605.</p>
 			<p>Or email &nbsp;<%#= mail_to("dax@skunkwerx-performance.com") %></p>
 		</div> -->
-
+		<% if request.fullpath.match /(products|index_deploy|carts|orders)/ %>
 		<div class="side">
 			<% if current_cart %>
 					<%= render partial: "/carts/mini_cart", formats: [:html], object: current_cart, as: :cart %>
 			<% end %>
 		</div>
+		<% end %>
 
-	<%= yield %>
+		<%= yield %>
 
-		<br><br><br><br>
+		<!-- Produces xml properly formatted br tags. -->
+		<% 4.times do %>
+			<%= tag("br") %>
+		<% end %>
 	</div>
 </body>
 </html>

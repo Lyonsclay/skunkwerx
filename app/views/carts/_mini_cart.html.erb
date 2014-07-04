@@ -1,21 +1,30 @@
 <div id="mini-cart">
+	<div class="cart-heading">
+		<%= link_to image_tag('shopping_cart-11.png', class: 'image-url', width: "40%", height: "40%"), {controller: "carts", action: "show", id: cart.id } %>
+	</div>
 	<table>
 		<thead>
-				<tr class="cart-heading">
-					<td><%= link_to image_tag('shopping_cart-11.png', class: 'image-url', width: "35%", height: "35%"), {controller: "carts", action: "show", id: cart.id } %></td>
-				</tr>
+			<tr class="categories">
+				<td>Qty</td>
+				<td>Name</td>
+				<td>Price</td>
+			</tr>
 		</thead>
 		<tbody>
 			<%= render partial: "/line_items/mini_line_items", collection: cart.line_items, as: :line_item %>
-		<tbody>
+			<tr><td></td></tr>
+		</tbody>
 		<tfoot class="sub-total">
 			<tr>
+				<td></td>
+				<td></td>
 				<td class="price"><%= number_to_currency cart.total_price %></td>
 			</tr>
 		</tfoot>
 	</table>
-
-<div class="buttons">
-	<%= link_to 'Checkout', edit_cart_path(cart) %>
-</div>
+	<% unless request.fullpath.match /orders\/new/ %>
+	<div class="buttons">
+		<%= link_to 'Checkout', new_order_path(cart) %>
+	</div>
+	<% end %>
 </div>

@@ -10,8 +10,8 @@ module Admin::MaloneTunesHelper
     # { make: "", model: "", href: "" }
     models = []
 
-    # Get a Nokogiri::HTML::Document for page.
-    doc =  Nokogiri::HTML(open(@@base))
+  # Get a Nokogiri::HTML::Document for page.
+  doc =  Nokogiri::HTML(open(@@base, read_timeout: 120))
     # Define Nokogiri::XML::NodeSet
     node_set = doc.xpath('//li[.//a[@href = "/ecu-tuning"]]/ul/li')
     node_set.each do |node|
@@ -58,23 +58,26 @@ module Admin::MaloneTunesHelper
         tune_attributes[:name] = tune.css('.views-field-field-collection-tune').text.strip
       end
       tune_attributes.update(power: tune.css('.views-field-field-collection-power').text.strip)
-      tune_attributes.update(price: tune.css('.views-field-field-collection-price-cad-').text.strip)
+      tune_attributes.update(unit_cost: tune.css('.views-field-field-collection-price-cad-').text.strip)
       tune_attributes.update(standalone_price: tune.css('.views-field-field-price').text.strip)
       tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
       tunes << tune_attributes
     end
     # Get additional attributes from main content including image URLs.
+    # First check for presence of main content entries.
     tunes_details = doc.css('.view-engine').last.css('div.views-row')
-    tunes_details.each do |tune|
-      tune_name = tune.children[1].text.strip
-      tune_attributes = tunes.find { |a| tune_name =~ /#{a[:name]}/ }
-      tune_attributes[:name] = tune.children[1].text.strip
-      tune_attributes.update(description: tune.css('div.views-field-field-stage-description p').text)
-      unless tune.css('a').first.nil?
-        tune_attributes.update(graph_url: tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
+    unless tunes_details.first.children[1].text.strip.empty?
+      tunes_details.each do |tune|
+        tune_name = tune.children[1].text.strip
+        tune_attributes = tunes.find { |a| tune_name =~ /#{a[:name]}/ } || {}
+        tune_attributes[:name] = tune.children[1].text.strip
+        tune_attributes.update(description: tune.css('div.views-field-field-stage-description p').text)
+        unless tune.css('a').first.nil?
+          tune_attributes.update(image: tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
+        end
+        tune_attributes.update(requires: requires_urls(tune))
+        tune_attributes.update(recommended: recommended_urls(tune))
       end
-      tune_attributes.update(requires: requires_urls(tune))
-      tune_attributes.update(recommended: recommended_urls(tune))
     end
     tunes
   end
@@ -93,11 +96,50 @@ module Admin::MaloneTunesHelper
   # This method formats them for display in the
   # admin/malone_tunes/show view.
   def display_price(tune)
-    price = "Price: " + tune[:price] unless tune[:price].empty?
+    price = "Price: " + tune[:unit_cost] unless tune[:unit_cost].empty?
     unless tune[:standalone_price].empty?
       price = "Standalone Price: " + tune[:standalone_price]
       price += "       Price With Purchase: " + tune[:price_with_purchase] unless tune[:price_with_purchase].empty?
     end
     price
   end
+
+  def new_malone_tunes_from_params
+    # Find Malone tunes that have been selected with checkbox.
+    @new_malone_tunes_ids = []
+    keys = params.keys.select { |key| params[key] == "1" }
+    keys.each do |key|
+      # String is frozen must be duplicated with dup to operate on.
+      tune_name = key.dup.sub(/^checkbox_/, '')
+      tune = params["tune_#{tune_name}"]
+      # Make sure only hash is being passed to dangerous eval method.
+      if eval(tune).class == Hash
+        tune = eval(tune)
+        # Using a goofy preface to signify tunes that are created for
+        # testing. This will be changed to "Malone" when live.
+        goofy = "Goofy-" + SecureRandom.urlsafe_base64(nil, false)[1..5]
+        tune[:name] = goofy + tune[:name]
+        tune[:requires] = params["requires_#{tune_name}"]
+        tune[:recommended] = params["recommended_#{tune_name}"]
+        # Set quantity to default value of 1 to pass validations,
+        # however, it's worth considering not using quantity for tunes.
+        tune[:quantity] = 1
+        # Must convert string representation of price to decimal.
+        tune[:unit_cost] = price_to_decimal tune[:unit_cost]
+        tune[:standalone_price] = price_to_decimal tune[:standalone_price]
+        tune[:price_with_purchase] = price_to_decimal tune[:price_with_purchase]
+        new_tune = MaloneTune.create(tune)
+        @new_malone_tunes_ids << new_tune.id if new_tune.persisted?
+        puts "********************* new_tune.errors *************************"
+        puts new_tune.errors.inspect
+      end
+    end
+    @new_malone_tunes_ids
+  end
+
+  def price_to_decimal(price)
+    price.sub(/^\$/, '').to_d
+  end
 end
+
+

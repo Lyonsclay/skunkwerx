@@ -1,9 +1,7 @@
 .carts {
-	margin: auto;
-	margin-top: 60px;
-	margin-left: 240px;
-	width: 600px;
-	background: #66665a;
+	margin-top: 66px;
+	margin-left: 170px;
+	width: 435px;
 	background: #202020;
 	border-radius: 10px;
 	padding: 10px 10px 15px 15px;
@@ -15,15 +13,12 @@
 	}
 
 	#title {
+		height: 40px;
 	  font: 28px "Helvetica Neue", sans-serif;
 	  font-weight: 200;
-		/*color: #A70301;*/
-		color: Chocolate;
 		color: #dee4d8;
 		padding-left: 80px;
-		margin-bottom: 0px;
 		margin-top: 15px;
-		margin-bottom: 15px;
 	}
 
 	.cart-heading {
@@ -56,10 +51,6 @@
 
 		input[type=checkbox] {
 			/*visibility: hidden;*/
-		}
-
-		.checkbox {
-
 		}
 	}
 
@@ -100,7 +91,6 @@
 	}
 
 	.sub-total {
-		align: center;
 		background: #4a4c36;
 
 		td {
@@ -113,7 +103,8 @@
 	}
 
 	.buttons {
-		margin-top: 30px;
+		margin-top: 15px;
+		margin-bottom: 10px;
 
 		a {
 			font: 18px "Helvetica Neue", sans-serif;

@@ -78,6 +78,15 @@ module Admin::FreshbooksHelper
       </request>"
   end
 
+  def item_create_message(tune)
+    # Assign default quantity and inventory.
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?><request method=\"item.create\"><item><name>#{tune.name}</name><description>#{tune.description}</description><unit_cost>#{tune.unit_cost}</unit_cost><quantity>1</quantity><tax2_id>17823</tax2_id></item></request>"
+  end
+
+  def item_delete_message(item_id)
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?><request method=\"item.delete\"><item_id>#{item_id}</item_id></request>"
+  end
+
   #####################################################
   # ## Methods that perform Freshbooks api requests; ##
 
@@ -93,7 +102,10 @@ module Admin::FreshbooksHelper
     end
     # Delete items that are not slated for web sales.
     items.delete_if {|item| item["tax2_id"].nil? }
-    items
+    # Strip uneeded attributes 'updated' and 'folder' from hashes
+    # that will be used to create ActiveRecord records.
+    items.map { |item| item.except *["updated", "folder"] }
+    # items
   end
 
   # Callback create request
@@ -102,10 +114,9 @@ module Admin::FreshbooksHelper
     response_hash = freshbooks_call(callback_create_message(event))
     puts "response_hash: " + response_hash.inspect
     callback_id = response_hash['response']['callback_id']
-    puts "callback_id: " + callback_id
-    puts "*****************************************************"
     Rails.cache.write 'callback_id', callback_id
     flash[:notice] = display_response(response_hash)
+    puts "******************************************************"
   end
 
   # Callback verify method
@@ -113,10 +124,10 @@ module Admin::FreshbooksHelper
     puts "**************** inside callback_verify *************"
     callback_id = Rails.cache.read 'callback_id'
     callback_id ||= callback_id_retrieve
-    puts "callback_id: " + callback_id
-    puts "*****************************************************"
+    puts "***callback_id: " + callback_id
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
+    puts "*****************************************************"
   end
 
   # Method to retrieve callback_id from Freshbooks api. This is necessary if
@@ -129,6 +140,7 @@ module Admin::FreshbooksHelper
     doc = Document.new callbacks_display.to_xml
     callback_ids = REXML::XPath.match(doc, '//callback-id')
     callback_ids.first.text
+    puts "*****************************************************"
   end
 
   def delete_all_webhooks
@@ -157,38 +169,57 @@ module Admin::FreshbooksHelper
     message
   end
 
+  # This routine retrieves item's attributes stripping the unused.
+  def item_get(item_id)
+    puts "****************** inside item_get ********************"
+    item_hash = freshbooks_call(item_get_message(item_id))['response']['item']
+    puts "***item_hash: " + item_hash.inspect
+    puts "************ item_get send item_hash stripped **********"
+    item_hash.except *["updated", "folder"]
+  end
+
   # Receive item.create request and get product attributes.
-  def item_create(object_id)
+  def item_create(item_id)
     puts "**************** inside item_create ****************"
     puts "******************* params *************************"
-    puts params
+    puts "***" + params.inspect
     puts "****************************************************"
-    response_hash = freshbooks_call(item_get_message(object_id))
-    puts "*************** response_hash **********************"
-    puts response_hash
+    item_hash = item_get(item_id)
+    puts "************* return to item_create ****************"
+    puts "***item_hash: " + item_hash.inspect
     puts "****************************************************"
-    unless response_hash['response']['item']['tax2_id'].nil?
-      Product.create(response_hash['response']['item'])
+    unless item_hash['tax2_id'].nil?
+      if item_hash['name'].match("Malone")
+        MaloneTune.create(item_hash)
+      else
+        Product.create(item_hash)
+      end
     end
+    puts "*****************************************************"
   end
 
-  def item_delete(object_id)
-    puts "*************** inside item_***********************"
-    product = Product.find_by_item_id(object_id)
+  def item_delete(item_id)
+    puts "*************** inside item_delete ******************"
+    product = Product.find_by item_id: item_id
     product.delete if product
-    puts "Product.last: " + Product.last.inspect
+    tune = MaloneTune.find_by item_id: item_id
+    puts "***Product.last: " + Product.last.inspect
+    tune.delete if tune
+    puts "****************************************************"
   end
 
-  def item_update(object_id)
+  def item_update(item_id)
     puts "**************** inside item_update *****************"
-    product = Product.find_by_item_id(object_id)
-    puts "product: " + product.inspect
-    response_hash = freshbooks_call(item_get_message(object_id))
-    puts "response_hash: " + response_hash.inspect
-    unless response_hash['response']['item']['tax2_id'].nil?
-      product.update_attributes(response_hash['response']['item'])
+    item = Product.find_by item_id: item_id
+    item ||= MaloneTune.find_by item_id: item_id
+    puts "***item: " + item.inspect
+    item_hash = item_get(item_id)
+    puts "***item_hash: " + item_hash.inspect
+    unless item_hash['tax2_id'].nil?
+      item.update_attributes(item_hash)
     end
-    puts "errors: " + product.errors.to_s
+    puts "***errors: " + item.errors.to_s
+    puts "*****************************************************"
   end
 
   # Set the request URL
@@ -209,6 +240,7 @@ module Admin::FreshbooksHelper
   end
 
   def display_response(response_hash)
+    puts "*********** from display_response ***********"
     puts "**************** response_hash **************"
     puts response_hash
     puts "*********************************************"
@@ -274,6 +306,27 @@ module Admin::FreshbooksHelper
     Product.where.not(item_id: items_ids).delete_all
     # Remove dead MaloneTunes
     MaloneTune.where.not(item_id: items_ids).delete_all
+    puts "*********************************************************************"
+  end
+
+  def tune_item_create(id)
+    malone_tune = MaloneTune.find(id) if MaloneTune.find(id)
+    new_item = freshbooks_call(item_create_message(malone_tune))
+    # Receive item_id from Freshbooks.
+    item_id = new_item["response"]["item_id"].to_i
+    # Update malone_tune item_id and default tax2_id.
+    # tax2_id is used to indicate that an item is selected for web sales.
+    malone_tune.update_attributes(item_id: item_id)
+    puts "********************** tune_item_create *****************************"
+    puts "***new_item: #{new_item}"
+    flash[:notice] = "#{malone_tune.name} with item_id: #{item_id} created on Freshbooks database!"
+    puts "*********************************************************************"
+  end
+
+  def tune_item_delete(item_id)
+    puts "***************** tune_item_delete *************"
+    flash[:notice] = freshbooks_call(item_delete(item_id))
+    puts "***Response: #{flash[:notice]}"
   end
 
   def find_key(key)

@@ -1,0 +1,75 @@
+.checkout_form {
+	width: 305px;
+	font: 14px "Helvetica Neue", sans-serif;
+	color: #dee4d8;
+	margin-top: 57px;
+	margin-left: 100px;
+
+	fieldset {
+		border: 2px solid #A70301;
+		border-radius: 5px;
+	}
+
+	fieldset legend {
+		margin-left: 0px;
+		font-weight: 100;
+		letter-spacing: 1.5px;
+		font-size: 20px;
+		color: #dfae2d;
+		border-radius: 5px;
+	}
+
+	.field {
+		margin-top: 8px;
+		display: inline-block;
+	}
+
+	label {
+		padding-left: 0px;
+		width: 70px;
+		float: left;
+		clear: left;
+		text-align: left;
+		}
+
+	input {
+		float: right;
+		color: #dee4d8;
+		background: black;
+		border: 2px solid #A70301;
+		border-radius: 5px;
+	}
+
+	input[type=submit] {
+		letter-spacing: 1px;
+		margin-right: 8px;
+		margin-top: 10px;
+		float: right;
+		font: 14px "Helvetica Neue", sans-serif;
+		font-weight: 200;
+		background: black;
+		color: #dee4d8;
+		text-decoration: none;
+		padding-left: 8px;
+		padding-right: 8px;
+		border: 2px solid #A70301;
+		border-radius: 5px;
+	}
+
+	textarea {
+		float: right;
+		color: #dee4d8;
+ 		background: black;
+		border: 2px solid #A70301;
+		border-radius: 5px;
+	}
+
+	select {
+		margin-left: 30px;
+		float: right;
+		color: #dee4d8;
+		background: black;
+		border: 2px solid #A70301;
+		border-radius: 5px;
+	}
+}

@@ -1,26 +1,30 @@
 <% stylesheet 'admin/malone_tunes/index' %>
 
-<h2> Select models to view tunings to add to Skunkwerx web sales </h2>
+<h1>Listing admin_malone_tunes</h1>
 
-<table>
-<% @models.each do |model| %>
-	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-		<td class="list_description">
-			<dl>
-				<!-- <dt>Make:&nbsp</dt> -->
-				<dd><%= model[:make] %>
-				<% unless model[:model].nil? %>
-					<!-- <dt>Model:&nbsp</dt> -->
-					<%= model[:model] %></dd>
-				<% end %>
-			</dl>
-		</td>
-		<td class="list_actions">
-			<%= link_to 'View', admin_malone_tune_path(id: @models.index(model), model: model) %><br/>
-			<%#= link_to 'Edit', edit_malone_tunes_path(model) %><br/>
-			<%#= link_to 'Remove', delete_malone_tunes_path(model) %><br/>
-		</td>
-	</tr>
-<% end %>
-</table>
-<br/>
+<ul class="menu">
+  <li><%= button_to "ADMIN PAGE", admin_path, method: :get %></li>
+  <li><%= button_to "GET MALONE TUNINGS", malone_tuning_index_path, method: :get %></li>
+</ul>
+
+    <% @malone_tunes.each do |malone_tune| %>
+      <table class="<%= cycle('list_line_odd', 'list_line_even') %>">
+      <tr>
+        <td class="list_description">
+          <dl>
+            <dd><b>Name:</b>&nbsp;&nbsp;<%= malone_tune.name %></dd>
+            <% MaloneTune.columns.each do |c| %>
+              <% next if ["name", "created_at", "updated_at", "id"].include? c.name %>
+              <% next if c.name.match /image/ %>
+              <% unless malone_tune.attributes[c.name].nil? %>
+                  <dd><b><%= c.name %>:</b>&nbsp;&nbsp;<%= malone_tune.attributes[c.name] %></dd>
+              <% end %>
+            <% end %>
+          </dl>
+        <td class="graph"><%= image_tag(malone_tune.image.url(:medium), size: "150x150") %></td>
+        <td><%= link_to 'Edit', edit_admin_malone_tune_path(malone_tune) %><br><br></td>
+      </tr>
+    </table>
+  <% end %>
+
+

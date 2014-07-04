@@ -23,6 +23,7 @@ class Admin::ProductsControllerTest < ActionController::TestCase
   end
 
   test "should assign image to product" do
+    sign_in(@admin)
     image = fixture_file_upload 'Doggie.gif'
     patch :update, id: @product, product: { image: image }
     assert_template :index

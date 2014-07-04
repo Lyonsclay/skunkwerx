@@ -1,0 +1,21 @@
+<div class="items">
+	<% if notice %>
+	<p id="notice"><%= notice %></p>
+	<% end %>
+	<div id="title">
+		<p>Malone Tunings</p>
+	</div>
+	<table>
+		<% cache(@malone_tunes) do %>
+			<% @malone_tunes.each do |item| %>
+				<% cache [item] do %>
+					<% if item.image.url.match /missing/ %>
+						<%= render 'item_default_image', item: item %>
+					<% else %>
+						<%= render 'item_big_image', item: item %>
+					<% end %>
+				<% end %>
+			<% end %>
+		<% end %>
+	</table>
+</div>

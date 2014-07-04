@@ -3,6 +3,15 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+# require 'coveralls'
+# Coveralls.wear!
+
+require 'rack/utils'
+Capybara.app = Rack::ShowExceptions.new(Skunkwerx::Application)
+Capybara.default_wait_time = 90
+
+module Features
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -38,7 +47,7 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+  # config.order = "random"
 
   # Move integrations tests from spec/requests to spec/features
   # Capybara 2.+ requires this folder hiearchy
@@ -55,9 +64,12 @@ RSpec.configure do |config|
   config.before(:each) { reset_email }
 
   config.include Features::CallbackHelpers
+  config.include Features::WebhooksTestHelpers
 
-  #Don't run tests with external api calls.
+  # Run tests with external api calls.
   config.filter_run_excluding api: true unless ENV['API'] == "run"
-  # Separate test that request and delete actual Freshbooks webhooks.
+  # Run tests that request and delete actual Freshbooks webhooks.
   config.filter_run_excluding webhooks: true unless ENV['WEBHOOKS'] == "run"
+  # Run tests that create and destroy an item on the Freshbooks database.
+  config.filter_run_excluding freshbooks_items: true unless ENV['FRESHBOOKS_ITEMS'] == "run"
 end

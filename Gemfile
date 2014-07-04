@@ -39,7 +39,7 @@ end
 gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-gem 'unicorn'
+gem 'unicorn', group: :production
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
@@ -68,7 +68,16 @@ gem 'paperclip'
 gem 'aws-sdk'
 
 # For fast caching in production
-gem 'dalli'
+gem 'dalli', group: :production
+
+# Travis CI runs rake by default to execute your tests. Please note that you need to add rake to your Gemfile.
+gem 'rake', group: :test
+
+# Coveralls
+gem 'coveralls', require: false
 
 # Gives ability to use ActiveRecord data store rather than Cookies
 gem 'activerecord-session_store'
+
+# Pagination gem
+gem 'kaminari'

@@ -3,9 +3,10 @@
 <head>
   <title>Skunkwerx Admin Page</title>
   <%= stylesheet_link_tag "admin/application", media: "all", "data-turbolinks-track" => true %>
-  <%= yield(:head) %>
+  <%= yield(:head_stylesheet) %>
+  <%= javascript_include_tag "admin/application", "data-turbolinks-track" => true %>
+  <%= yield(:head_javascript) %>
   <%#= stylesheet_link_tag "admin/malone_tunes/show", media: "all" %>
-  <%#= javascript_include_tag "admin/application", "data-turbolinks-track" => false %>
   <!-- loads controller specific scripts only on refresh -->
   <%#= javascript_include_tag params[:controller] %>
   <%= csrf_meta_tags %>

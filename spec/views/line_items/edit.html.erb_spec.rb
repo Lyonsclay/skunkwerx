@@ -18,7 +18,7 @@ describe "line_items/edit" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form[action=?][method=?]", line_item_path(@line_item), "post" do
 
-      assert_select "input#line_item_product_id[name=?]", "line_item[product_id]"
+      assert_select "input#line_item_item_id[name=?]", "line_item[item_id]"
       assert_select "input#line_item_cart_id[name=?]", "line_item[cart_id]"
     end
   end

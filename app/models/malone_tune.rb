@@ -1,7 +1,15 @@
 class MaloneTune < ActiveRecord::Base
-  validates :name, :description, :quantity, :unit_cost, presence: true
-  validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
-  validates :name, uniqueness: true
+  has_many :line_items
+  validates :name, :quantity, :unit_cost, presence: true
+  # validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
+  validate :sum_of_prices
+  validates :name, uniqueness: {scope: :engine}
+
+  def sum_of_prices
+    # This method assumes that these attributes will be set to a
+    # number greater than 0.01 or nil and not 0.
+    unit_cost || standalone_price || price_with_purchase > 0.01
+  end
 
   # This method associates the attribute ":image" with a file atachment
   has_attached_file :image,
@@ -10,6 +18,7 @@ class MaloneTune < ActiveRecord::Base
       square: '200x200#',
       medium: '300x300#'
     },
+    default_url: ':style/tune_missing.png',
     bucket: 'skunkwerx',
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
@@ -21,5 +30,9 @@ class MaloneTune < ActiveRecord::Base
   # For caching
   def self.latest
     Product.order(:updated_at).latest
+  end
+
+  def price
+    unit_cost || standalone_price || price_with_purchase
   end
 end

@@ -4,6 +4,7 @@ product_one:
   unit_cost: 42.50
   quantity: 20
   image_file_name: skittles.png
+  item_id: 88
 
 product_two:
   name: nam_nam
@@ -11,4 +12,5 @@ product_two:
   unit_cost: 18.75
   quantity: 12
   image_file_name: skittles!.png
+  item_id: 102
 

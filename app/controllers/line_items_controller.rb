@@ -28,8 +28,9 @@ class LineItemsController < ApplicationController
   # POST /line_items
   # POST /line_items.json
   def create
-    product = Product.find(params[:product_id])
-    @line_item = @cart.add_product(product.id)
+    product = Product.find_by item_id: params[:item_id]
+    product ||= MaloneTune.find_by item_id: params[:item_id]
+    @line_item = @cart.add_product(product.item_id)
 
     respond_to do |format|
       if @line_item.save
