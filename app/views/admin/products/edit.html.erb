@@ -1,6 +1,6 @@
 <h1>Skunkwerx Admin Pages</h1>
 <ul>
-	<li><%= link_to "HOME", "/admin" %></li>
+	<%= link_to "HOME", "/admin" %>
 </ul>
 <%= form_for [:admin, @product], html: { multipart: true } do |f| %>
 	<div class="image_url">

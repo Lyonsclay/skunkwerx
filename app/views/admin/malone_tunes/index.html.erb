@@ -3,8 +3,8 @@
 <h1>Listing admin_malone_tunes</h1>
 
 <ul class="menu">
-  <li><%= button_to "ADMIN PAGE", admin_path, method: :get %></li>
-  <li><%= button_to "GET MALONE TUNINGS", malone_tuning_index_path, method: :get %></li>
+  <%= button_to "ADMIN PAGE", admin_path, method: :get %>
+  <%= button_to "GET MALONE TUNINGS", malone_tuning_index_path, method: :get %>
 </ul>
 
     <% @malone_tunes.each do |malone_tune| %>
