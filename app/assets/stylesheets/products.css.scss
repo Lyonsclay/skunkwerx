@@ -4,11 +4,10 @@
 		color: #A70301;
 	}
 
-	#title {
-		height: 90px;
-	  font: 28px "Helvetica Neue", sans-serif;
-	  font-weight: 200;
-		color: #dee4d8;
+	form {
+		input {
+			border-radius: 5px;
+		}
 
 		p {
 			padding-top: 10px;

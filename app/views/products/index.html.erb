@@ -4,8 +4,12 @@
 	<% end %>
 	<div id="title">
 		<p>Skunkwerx Products</p>
-		<%= paginate @products %>
+		<%= form_tag products_index_path, method: :get do %>
+			<%= text_field_tag :search, params[:search] %>
+			<%= submit_tag "Search", name: nil %>
+		<% end %>
 	</div>
+	<p><%= paginate @products %></p>
 	<table>
 		<% cache(@products) do %>
 			<% @products.each do |item| %>
