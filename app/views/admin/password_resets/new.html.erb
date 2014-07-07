@@ -1,6 +1,6 @@
 <h1>Password Reset</h1>
 <ul>
-	<li><%= link_to "HOME", "/admin" %></li>
+	<%= button_to "ADMIN PAGE", "/admin", method: :get %>
 </ul>
 <%= form_tag(admin_password_resets_path, method: :post) do %>
 	<%= label_tag :email %>

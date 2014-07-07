@@ -1,13 +1,12 @@
 <h1>Admin Freshbooks Page</h1>
 <div class="menu_bar">
 	<ul>
-		<li><%= link_to "HOME", "/admin" %></li>
+		<li><%= button_to "ADMIN PAGE", "/admin", method: :get %></li>
 		<li><%= button_to "Sync Freshbooks Items", "/admin/freshbooks/items_sync" %></li>
-		<!-- <li><%#= button_to "Create Freshbooks Item Create Webhook", "/admin/freshbooks/callback_item_create" %></li> -->
-		<li><%= button_to "Initiate Item Create Webhook", { controller: "admin/freshbooks", action: "webhook_create", method: "item.create" } %></li>
-		<li><%= button_to "Initiate Item Update Webhook", { controller: "admin/freshbooks", action: "webhook_create", method: "item.update" } %></li>
-		<li><%= button_to "Initiate Item Delete Webhook", { controller: "admin/freshbooks", action: "webhook_create", method: "item.delete" } %></li>
-		<li><%= button_to "Delete All Webhooks", { controller: "admin/freshbooks", action: "webhooks_delete" } %></li>
+		<!-- <li><%#= button_to "Initiate Item Create Webhook", { controller: "admin/freshbooks", action: "webhook_create", method: "item.create" } %></li>
+		<li><%#= button_to "Initiate Item Update Webhook", { controller: "admin/freshbooks", action: "webhook_create", method: "item.update" } %></li>
+		<li><%#= button_to "Initiate Item Delete Webhook", { controller: "admin/freshbooks", action: "webhook_create", method: "item.delete" } %></li>
+		<li><%#= button_to "Delete All Webhooks", { controller: "admin/freshbooks", action: "webhooks_delete" } %></li> -->
 	</ul>
 	<h4 class="callbacks">Callbacks: <%= @callbacks %></h4>
 </div>

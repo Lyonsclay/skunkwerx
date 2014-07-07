@@ -29,6 +29,16 @@ class Product < ActiveRecord::Base
     Product.order(:updated_at).latest
   end
 
+  def self.search(search)
+    if search
+      # Method #where returns ActiveRecord::Relation which is chainable with
+      # other query methods including gem 'kaminari' method #page.
+      where('lower(name) LIKE ?', "%#{search.downcase}%")
+    else
+      find(:all)
+    end
+  end
+
   private
 
     # Ensure that there are no line_items referencing this product

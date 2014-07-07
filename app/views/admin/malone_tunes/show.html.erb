@@ -1,8 +1,8 @@
 <% stylesheet 'admin/malone_tunes/show.css' %>
 
 <ul class="menu">
-	<li><%= button_to "ADMIN HOME", admin_path, method: :get %></li>
-	<li><%= button_to "BACK", malone_tuning_index_path, method: :get %></li>
+	<%= button_to "ADMIN PAGE", admin_path, method: :get %>
+	<%= button_to "BACK", malone_tuning_index_path, method: :get %>
 </ul>
 
 <h2>Model Tunes for <%= @make_model %></h2>

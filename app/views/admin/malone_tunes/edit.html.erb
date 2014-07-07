@@ -1,8 +1,8 @@
 <% stylesheet 'admin/malone_tunes/index' %>
 
 <ul>
-	<li><%= link_to "ADMIN HOME", "/admin" %></li>
-	<li><%= link_to "BACK", "/admin/malone_tunes" %></li>
+	<%= link_to "ADMIN PAGE", "/admin" %>
+	<%= link_to "BACK", "/admin/malone_tunes" %>
 </ul>
 
 <h2>Edit Malone Tune</h2>
@@ -25,13 +25,16 @@
 				<td><%= f.label "Change Image" %></td>
 				<td><%= f.file_field :image %></td>
 			</tr>
-
 			<% MaloneTune.columns.each do |c| %>
-				<% next if /(at|id|folder)/.match c.name %>
-				<% next if c.name.match /image/ %>
+				<% next if /(at|id|folder|image)/.match c.name %>
 				<tr>
 					<td><%= f.label c.name %></td>
-					<td><%= f.text_field c.name.to_sym %></td>
+					<% size = @malone_tune.send(c.name).to_s.size %>
+					<% if size < 40 %>
+					<td><%= f.text_field c.name.to_sym, size: size %></td>
+					<% else %>
+					<td><%= f.text_area c.name.to_sym %></td>
+					<% end %>
 				</tr>
 			<% end %>
 			<tr>
