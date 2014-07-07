@@ -1,7 +1,18 @@
-	#notice {
-		font: 20px "Helvetica Neue", sans-serif;
-		font-weight: 200;
-		color: #A70301;
+#notice {
+	font: 20px "Helvetica Neue", sans-serif;
+	font-weight: 200;
+	color: #A70301;
+}
+
+#title {
+	display: inline-flex;
+	height: 70px;
+  font: 28px "Helvetica Neue", sans-serif;
+  font-weight: 200;
+	color: #dee4d8;
+
+	p {
+		padding-left: 15px;
 	}
 
 	form {
@@ -9,74 +20,80 @@
 			border-radius: 5px;
 		}
 
-		p {
-			padding-top: 10px;
+		margin-top: 24px;
+		margin-left: 55px;
+		float: right;
+	}
+}
+
+nav a {
+  font: 22px "Helvetica Neue", sans-serif;
+  font-weight: 300;
+  letter-spacing: 2px;
+	color: #dee4d8;
+}
+
+nav {
+	display: inline;
+	margin-right: 35px;
+	margin-bottom: 5px;
+  font: 22px "Helvetica Neue", sans-serif;
+  font-weight: 300;
+	color: Chocolate;
+	float: right;
+}
+
+.items {
+
+	margin: auto;
+	margin-top: 66px;
+	margin-left: 160px;
+	width: 530px;
+	background: #202020;
+	border-radius: 10px;
+	padding: 0px;
+
+	table {
+		border-collapse: collapse;
+
+		td.image {
 			padding-left: 10px;
+			padding-right: 10px;
 		}
 
-		nav {
-			margin-right: 15px;
-			font-size: 22px;
-			color: Chocolate;
+		tr td {
+			border-top: 0px solid Brown;
+			padding-bottom: 15px;
+			padding-top: 15px;
+			margin-bottom: 20px;
+			vertical-align: top;
+		}
+
+		tr dl {
+			font: 18px "Helvetica Neue", sans-serif;
+			font-weight: 200;
+			color: #dee4d8;
+		}
+
+		dd {
+			padding-right: 10px;
+		}
+
+		dt {
+			display: inline;
+		}
+
+		dt.price {
 			float: right;
 		}
 
-		a {
-			color: #dee4d8
+		input {
+			float: right;
 		}
 	}
-
-	.items {
-
-		margin: auto;
-		margin-top: 66px;
-		margin-left: 150px;
-		width: 530px;
-		background: #202020;
-		border-radius: 10px;
-		padding: 0px;
-
-		table {
-			border-collapse: collapse;
-
-			td.image {
-				padding-left: 10px;
-				padding-right: 10px;
-			}
-
-			tr td {
-				border-top: 0px solid Brown;
-				padding-bottom: 15px;
-				padding-top: 15px;
-				margin-bottom: 20px;
-				vertical-align: top;
-			}
-
-			tr dl {
-				font: 18px "Helvetica Neue", sans-serif;
-				font-weight: 200;
-				color: #dee4d8;
-			}
-
-			dd {
-				padding-right: 10px;
-			}
-
-			dt {
-				display: inline;
-			}
-
-			dt.price {
-				float: right;
-			}
-
-			input {
-				float: right;
-			}
-		}
-	}
-	tr.odd_line {
-		/*background: DimGray;*/
-	}
+}
+tr.odd_line {
+	/*background: DimGray;*/
+}
 
 
