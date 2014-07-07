@@ -73,8 +73,8 @@ body {
 #mini-cart {
   margin: auto;
   float: right;
-  margin-right: 100px;
-  width: 225px;
+  margin-right: 110px;
+  width: 210px;
   border: 2px solid #A70301;
   border-radius: 5px;
   margin-top: 50px;
@@ -88,7 +88,7 @@ body {
 
   table {
     border-collapse: collapse;
-    width: 215px;
+    width: 210px;
   }
 
   thead {
@@ -106,13 +106,14 @@ body {
 
   .buttons a {
     color: #dee4d8;
-    font-family: "Nunito";
+    font: 14px  "Nunito";
     text-decoration: none;
     border: 2px solid #A70301;
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 5px;
-    margin-left: 144px;
+    float: right;
+    margin-right: 5px;
   }
 
   .buttons {
