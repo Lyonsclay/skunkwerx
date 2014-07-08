@@ -12,7 +12,11 @@
 	color: #dee4d8;
 
 	p {
-		padding-left: 15px;
+		height: 28px;
+		margin-left: 15px;
+		border: 1px solid #dee4d8;
+		border-radius: 10px;
+		padding: 0px 5px 5px 5px;
 	}
 
 	form {
@@ -44,7 +48,6 @@ nav {
 }
 
 .items {
-
 	margin: auto;
 	margin-top: 66px;
 	margin-left: 160px;
@@ -56,17 +59,55 @@ nav {
 	table {
 		border-collapse: collapse;
 
-		td.image {
-			padding-left: 10px;
-			padding-right: 10px;
+		.border {
+			padding-top: 15px;
+			border-top: 2px solid Brown;
+			vertical-align: top;
 		}
 
-		tr td {
+		.float_top {
+
+		}
+
+		tr {
+			font: 18px "Helvetica Neue", sans-serif;
+			font-weight: 200;
+			display: block;
+			margin-left: 10px;
 			border-top: 0px solid Brown;
-			padding-bottom: 15px;
-			padding-top: 15px;
-			margin-bottom: 20px;
+		}
+
+		td.description {
+			font: 18px "Helvetica Neue", sans-serif;
+			font-weight: 200;
+			color: #dee4d8;
 			vertical-align: top;
+			padding-bottom: 15px;
+		}
+
+		td ul {
+			list-style-type: none;
+		}
+
+		dl {
+			width: 340px;
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+
+		p {
+			margin-bottom: 0px;
+			padding-bottom: 20px;
+		}
+
+		.image_url {
+			padding-left: 10px;
+			padding-right: 10px;
+			padding-bottom: 10px;
+		}
+
+		td.graph {
+			padding-bottom: 0px;
 		}
 
 		tr dl {
@@ -77,6 +118,7 @@ nav {
 
 		dd {
 			padding-right: 10px;
+			margin-left: 15px;
 		}
 
 		dt {
@@ -85,15 +127,22 @@ nav {
 
 		dt.price {
 			float: right;
+			padding-right: 12px;
+		}
+
+		li.price {
+			font: 18px "Helvetica Neue", sans-serif;
+			font-weight: 200;
+			color: #dee4d8;
 		}
 
 		input {
+
 			float: right;
+			margin-right: 0px;
 		}
 	}
 }
-tr.odd_line {
-	/*background: DimGray;*/
-}
+
 
 
