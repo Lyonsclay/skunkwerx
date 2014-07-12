@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140625144626) do
+ActiveRecord::Schema.define(version: 20140712141903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "admins", force: true do |t|
     t.string   "email"
@@ -63,13 +64,11 @@ ActiveRecord::Schema.define(version: 20140625144626) do
     t.integer  "tax2_id"
     t.text     "requires"
     t.text     "recommended"
-    t.string   "year"
-    t.string   "make"
-    t.string   "model"
     t.string   "engine"
     t.string   "power"
     t.decimal  "price_with_purchase"
     t.decimal  "standalone_price"
+    t.hstore   "vehicles"
   end
 
   create_table "orders", force: true do |t|
