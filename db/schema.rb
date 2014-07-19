@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140712141903) do
+ActiveRecord::Schema.define(version: 20140715145841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(version: 20140712141903) do
     t.datetime "updated_at"
   end
 
+  create_table "engines", force: true do |t|
+    t.string   "engine"
+    t.string   "years",      array: true
+    t.integer  "model_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "engines", ["model_id"], name: "index_engines_on_model_id", using: :btree
+
   create_table "line_items", force: true do |t|
     t.integer  "item_id"
     t.integer  "cart_id"
@@ -45,6 +55,14 @@ ActiveRecord::Schema.define(version: 20140712141903) do
   add_index "line_items", ["cart_id"], name: "index_line_items_on_cart_id", using: :btree
   add_index "line_items", ["item_id"], name: "index_line_items_on_item_id", using: :btree
   add_index "line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
+
+  create_table "makes", force: true do |t|
+    t.string   "make"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "makes", ["make"], name: "index_makes_on_make", using: :btree
 
   create_table "malone_tunes", force: true do |t|
     t.string   "name"
@@ -68,8 +86,16 @@ ActiveRecord::Schema.define(version: 20140712141903) do
     t.string   "power"
     t.decimal  "price_with_purchase"
     t.decimal  "standalone_price"
-    t.hstore   "vehicles"
   end
+
+  create_table "models", force: true do |t|
+    t.string   "model"
+    t.integer  "make_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "models", ["make_id"], name: "index_models_on_make_id", using: :btree
 
   create_table "orders", force: true do |t|
     t.string   "name"
