@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.effect-blind
 //= require turbolinks
+//= require "admin/malone_tunes"
+
 
 

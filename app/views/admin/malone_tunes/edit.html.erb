@@ -1,4 +1,5 @@
 <% stylesheet 'admin/malone_tunes/index' %>
+<% stylesheet 'admin/malone_tunes/edit' %>
 
 <ul>
 	<%= link_to "ADMIN PAGE", "/admin" %>
@@ -7,39 +8,57 @@
 
 <h2>Edit Malone Tune</h2>
 
+<%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
+<table>
+	<tbody>
+		<tr class="graph">
+			<td><%= f.label "Current Image" %></td>
+			<td><%= image_tag(@malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %></td>
+		</tr>
+		<% unless @malone_tune.image_file_name.nil? %>
+		<tr>
+			<td><%= f.label "Use Default Graphic Instead" %></td>
+			<td><%= check_box_tag "default_image" %></td>
+		</tr>
+		<% end %>
+		<tr>
+			<td><%= f.label "Change Image" %></td>
+			<td><%= f.file_field :image %></td>
+		</tr>
+		<% MaloneTune.columns.each do |c| %>
+			<% next if /(at|id|folder|image|vehicle|inventory)/.match c.name %>
+			<tr>
+				<td><%= f.label c.name %></td>
+				<% size = @malone_tune.send(c.name).to_s.size %>
+				<% if size < 40 %>
+				<td><%= f.text_field c.name.to_sym, size: size + 5 %></td>
+				<% else %>
+				<td><%= f.text_area c.name.to_sym, cols: "30", rows: "8" %></td>
+				<% end %>
+			</tr>
+		<% end %>
+		<tr>
+			<td>
+			<%= f.label "Select Vehicle" %>
+			<!-- <td><%#= select("vehicle", "make", Vehicle.connection.execute("SELECT DISTINCT ON (make) make id FROM vehicles").values) %></td> -->
+			</td>
+		  <td>
+		  <%= f.label "Make" %>
+			<%= collection_select("make", "id", Make.distinct(:make), "id", "make",  include_blank: true) %>
+			<%= f.label "Model" %>
+			<%= grouped_collection_select("model", "id", Make.distinct(:make), "models", "make", "id", "model", include_blank: true) %>
+			<%= f.label "Engine" %>
+			<%= grouped_collection_select( "engine", "id", Model.distinct(:model), "engines", "model", "years", "engine", include_blank: true) %>
+			<%= f.label "Years" %>
+			<%= collection_select("years", "id", Engine.all, "id", "years") %>
+			<input id="engine_selected" name="new_engine" type="hidden">
+			</td>
+		</tr>
 
-	<%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
-	<table>
-		<tbody>
-			<tr class="graph">
-				<td><%= f.label "Current Image" %></td>
-				<td><%= image_tag(@malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %></td>
-			</tr>
-			<% unless @malone_tune.image_file_name.nil? %>
-			<tr>
-				<td><%= f.label "Use Default Graphic Instead" %></td>
-				<td><%= check_box_tag "default_image" %></td>
-			</tr>
-			<% end %>
-			<tr>
-				<td><%= f.label "Change Image" %></td>
-				<td><%= f.file_field :image %></td>
-			</tr>
-			<% MaloneTune.columns.each do |c| %>
-				<% next if /(at|id|folder|image)/.match c.name %>
-				<tr>
-					<td><%= f.label c.name %></td>
-					<% size = @malone_tune.send(c.name).to_s.size %>
-					<% if size < 40 %>
-					<td><%= f.text_field c.name.to_sym, size: size %></td>
-					<% else %>
-					<td><%= f.text_area c.name.to_sym %></td>
-					<% end %>
-				</tr>
-			<% end %>
-			<tr>
-				<td><%= f.submit "Submit" %></td>
-			</tr>
-		</tbody>
-	</table>
-	<% end %>
+		<tr>
+			<td><%= f.submit "Submit" %></td>
+		</tr>
+	</tbody>
+</table>
+<% end %>
+<br><br><br><br>
