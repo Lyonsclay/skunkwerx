@@ -1,4 +1,4 @@
 class Engine < ActiveRecord::Base
-  belongs_to :model
-  belongs_to :malone_tune
+  has_many :engine_tunes
+  has_many :malone_tunes, through: :engine_tunes
 end
