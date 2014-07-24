@@ -29,6 +29,23 @@ class Admin::MaloneTunesController < ApplicationController
     params[:malone_tune][:image] = nil if params["default_image"] == "1"
     malone_tune = MaloneTune.find_by id: params[:id]
     malone_tune.update(malone_tune_params)
+    unless params[:add_from_list][:engine].empty?
+      engine = Engine.find_by_sql(["SELECT * FROM engines WHERE engine=? AND model_id IN (SELECT models.id FROM models WHERE id=?)", params[:add_from_list][:engine], params[:add_from_list][:model][:id]]).first
+      malone_tune.engines << engine
+    end
+    vehicle = params[:add_vehicle]
+    unless vehicle[:make].empty?
+      make = Make.find_or_create_by(make: vehicle[:make])
+      model = make.models.find_or_create_by(model: vehicle[:model])
+      engine = model.engines.find_or_create_by(engine: vehicle[:engine])
+      engine.years += (vehicle[:years][:start].to_i..vehicle[:years][:end].to_i).to_a
+      engine.years.uniq!
+      engine.save
+      malone_tune.engines << engine
+    end
+    if params[:engine_delete]
+      params[:engine_delete].each { |id| Engine.find(id.to_i).delete }
+    end
     redirect_to '/admin/malone_tunes'
   end
 
