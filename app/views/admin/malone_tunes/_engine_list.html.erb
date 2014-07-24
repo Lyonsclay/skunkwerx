@@ -1,0 +1,16 @@
+<% @malone_tune.engines.each do |e| %>
+	<tr>
+		<td>
+			<%= "Works for:" %>
+		</td>
+		<td>
+			<%= e.model.make.make + "   " %>
+			<%= e.model.model + "   " %>
+			<%= e.engine + "   " %>
+			<%= e.years.first + "-" + e.years.last %>
+			<br>
+			<%= check_box_tag "engine_delete[]", e.id %>
+			<%= " Delete" %>
+		</td>
+	</tr>
+<% end %>

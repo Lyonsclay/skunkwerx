@@ -37,24 +37,9 @@
 				<% end %>
 			</tr>
 		<% end %>
-		<tr>
-			<td>
-			<%= f.label "Select Vehicle" %>
-			<!-- <td><%#= select("vehicle", "make", Vehicle.connection.execute("SELECT DISTINCT ON (make) make id FROM vehicles").values) %></td> -->
-			</td>
-		  <td>
-		  <%= f.label "Make" %>
-			<%= collection_select("make", "id", Make.distinct(:make), "id", "make",  include_blank: true) %>
-			<%= f.label "Model" %>
-			<%= grouped_collection_select("model", "id", Make.distinct(:make), "models", "make", "id", "model", include_blank: true) %>
-			<%= f.label "Engine" %>
-			<%= grouped_collection_select( "engine", "id", Model.distinct(:model), "engines", "model", "years", "engine", include_blank: true) %>
-			<%= f.label "Years" %>
-			<%= collection_select("years", "id", Engine.all, "id", "years") %>
-			<input id="engine_selected" name="new_engine" type="hidden">
-			</td>
-		</tr>
-
+		<%= render "engine_list" %>
+		<%= render "add_vehicle_from_list" %>
+		<%= render "add_new_vehicle" %>
 		<tr>
 			<td><%= f.submit "Submit" %></td>
 		</tr>
