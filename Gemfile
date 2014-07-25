@@ -48,7 +48,7 @@ gem 'unicorn', group: :production
 # gem 'debugger', group: [:development, :test]
 gem 'pry'
 
-group :development, :test do
+group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'rspec-rails'

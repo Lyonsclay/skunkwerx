@@ -1,11 +1,10 @@
-require 'spec_helper'
-require 'capybara/rspec'
+require 'rails_helper'
 
-describe "AdminPages" do
-  describe "GET /admin" do
-    it "should redirect to login with no current session" do
-      get admin_path
-      expect(response).to redirect_to '/admin/login'
+feature "AdminPages" do
+  feature "GET /admin" do
+    scenario "should redirect to login with no current session" do
+      visit admin_path
+      expect(status_code).to eq 200
     end
   end
 end
@@ -25,7 +24,7 @@ describe "Admin pages" do
       fill_in('Email', with: admin.email)
       fill_in('Password', with: admin.password)
       click_button "Log in"
-      page.status_code.should be (200)
+      expect(status_code).to eq 200
     end
   end
 end

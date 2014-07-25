@@ -1,13 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "carts/show" do
+RSpec.describe "carts/show", :type => :view do
   before(:each) do
-    @cart = assign(:cart, stub_model(Cart))
+    @cart = assign(:cart, Cart.create!())
   end
 
   it "renders attributes in <p>" do
-    render_template cart_url(@cart)
-
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
+    render
   end
 end

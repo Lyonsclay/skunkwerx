@@ -1,34 +1,34 @@
-require "spec_helper"
+require "rails_helper"
 
-describe LineItemsController do
+RSpec.describe LineItemsController, :type => :routing do
   describe "routing" do
 
     it "routes to #index" do
-      get("/line_items").should route_to("line_items#index")
+      expect(:get => "/line_items").to route_to("line_items#index")
     end
 
     it "routes to #new" do
-      get("/line_items/new").should route_to("line_items#new")
+      expect(:get => "/line_items/new").to route_to("line_items#new")
     end
 
     it "routes to #show" do
-      get("/line_items/1").should route_to("line_items#show", :id => "1")
+      expect(:get => "/line_items/1").to route_to("line_items#show", :id => "1")
     end
 
     it "routes to #edit" do
-      get("/line_items/1/edit").should route_to("line_items#edit", :id => "1")
+      expect(:get => "/line_items/1/edit").to route_to("line_items#edit", :id => "1")
     end
 
     it "routes to #create" do
-      post("/line_items").should route_to("line_items#create")
+      expect(:post => "/line_items").to route_to("line_items#create")
     end
 
     it "routes to #update" do
-      put("/line_items/1").should route_to("line_items#update", :id => "1")
+      expect(:put => "/line_items/1").to route_to("line_items#update", :id => "1")
     end
 
     it "routes to #destroy" do
-      delete("/line_items/1").should route_to("line_items#destroy", :id => "1")
+      expect(:delete => "/line_items/1").to route_to("line_items#destroy", :id => "1")
     end
 
   end

@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin::FreshbooksController do
   # Create FactoryGirl admin
-  let(:admin) { create(:admin) }
+  let(:admin) { FactoryGirl.create(:admin) }
   before(:each) do
     Product.delete_all
   end

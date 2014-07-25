@@ -4,7 +4,7 @@ include Features::FreshbooksItemsHelpers
 # include SessionsHelper
 
 describe "Describe create new MaloneTunes", api: true do
-  let(:admin) {FactoryGirl.build(:admin)}
+  let!(:admin) {FactoryGirl.create(:admin)}
   before do
     MaloneTune.delete_all
     visit login_path

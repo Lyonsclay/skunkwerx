@@ -1,23 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "line_items/index" do
+RSpec.describe "line_items/index", :type => :view do
   before(:each) do
     assign(:line_items, [
-      stub_model(LineItem,
-        :product => nil,
-        :cart => nil
-      ),
-      stub_model(LineItem,
-        :product => nil,
-        :cart => nil
-      )
+      LineItem.create!(),
+      LineItem.create!()
     ])
   end
 
   it "renders a list of line_items" do
     render
-    line_item = @_encapsulated_assigns[:line_items].first
-    assert_select "tr>td>a[href=?]", line_item_path(line_item)
-    assert_select "tr>td>a[href=#{line_item_path(line_item)}]", text: "Show"
   end
 end

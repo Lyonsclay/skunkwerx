@@ -1,18 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "line_items/new" do
+RSpec.describe "line_items/new", :type => :view do
   before(:each) do
-    assign(:line_item, stub_model(LineItem,
-      :product => nil,
-      :cart => nil
-    ).as_new_record)
+    assign(:line_item, LineItem.new())
   end
 
   it "renders new line_item form" do
     render
+
     assert_select "form[action=?][method=?]", line_items_path, "post" do
-      assert_select "input#line_item_item_id[name=?]", "line_item[item_id]"
-      assert_select "input#line_item_cart_id[name=?]", "line_item[cart_id]"
     end
   end
 end
