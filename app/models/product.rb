@@ -34,7 +34,7 @@ class Product < ActiveRecord::Base
       # Method #where returns ActiveRecord::Relation which is chainable with
       # other query methods including gem 'kaminari' method #page.
       # where('lower(name) LIKE ?', "%#{search.downcase}%")
-      where("name @@ :q or content @@ :q", q: search)
+      where("name @@ :q or description @@ :q", q: search)
     else
       find(:all)
     end
