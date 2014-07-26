@@ -53,6 +53,7 @@ RSpec.configure do |config|
 
   config.include Features::CallbackHelpers
   config.include Features::WebhooksTestHelpers
+  config.include Features::FreshbooksItemsHelpers
 
   # Run tests with external api calls.
   config.filter_run_excluding api: true unless ENV['API'] == "run"
