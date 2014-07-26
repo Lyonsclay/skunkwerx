@@ -1,7 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'capybara/rspec'
 include Features::FreshbooksItemsHelpers
-# include SessionsHelper
 
 describe "Describe create new MaloneTunes", api: true do
   let!(:admin) {FactoryGirl.create(:admin)}
