@@ -104,6 +104,8 @@ module Admin::MaloneTunesHelper
     price
   end
 
+  # Get and augment params for tunes that have been selected.
+  # Create MaloneTune for each selected tune from params.
   def new_malone_tunes_from_params
     # Find Malone tunes that have been selected with checkbox.
     @new_malone_tunes_ids = []

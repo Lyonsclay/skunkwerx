@@ -247,6 +247,8 @@ module Admin::FreshbooksHelper
     response_hash
   end
 
+  # Manualy synchronize Freshbooks Items with Skunkwerx Products and
+  # Malone Tunes.
   def freshbooks_sync
     items = get_items
     # malone_tunes_items = []
@@ -314,7 +316,7 @@ module Admin::FreshbooksHelper
     new_item = freshbooks_call(item_create_message(malone_tune))
     # Receive item_id from Freshbooks.
     item_id = new_item["response"]["item_id"].to_i
-    # Update malone_tune item_id and default tax2_id.
+    # Update malone_tune item_id.
     # tax2_id is used to indicate that an item is selected for web sales.
     malone_tune.update_attributes(item_id: item_id)
     puts "********************** tune_item_create *****************************"
