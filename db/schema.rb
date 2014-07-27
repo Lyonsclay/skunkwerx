@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726215853) do
+ActiveRecord::Schema.define(version: 20140726225431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,32 @@ ActiveRecord::Schema.define(version: 20140726215853) do
   add_index "makes", ["make"], name: "index_makes_on_make", using: :btree
 
   create_table "malone_tunes", force: true do |t|
+    t.string   "name",               limit: 50
+    t.text     "description"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "item_id"
+    t.decimal  "unit_cost",                     precision: 8, scale: 2
+    t.integer  "inventory"
+    t.integer  "tax1_id"
+    t.integer  "tax2_id"
+  end
+
+  create_table "models", force: true do |t|
+    t.string   "model"
+    t.integer  "make_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "models", ["make_id"], name: "index_models_on_make_id", using: :btree
+
+  create_table "options", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "quantity"
@@ -87,15 +113,6 @@ ActiveRecord::Schema.define(version: 20140726215853) do
     t.integer  "tax1_id"
     t.integer  "tax2_id"
   end
-
-  create_table "models", force: true do |t|
-    t.string   "model"
-    t.integer  "make_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "models", ["make_id"], name: "index_models_on_make_id", using: :btree
 
   create_table "orders", force: true do |t|
     t.string   "name"
