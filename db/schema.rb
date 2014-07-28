@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726225431) do
+ActiveRecord::Schema.define(version: 20140727003335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "admins", force: true do |t|
     t.string   "email"
@@ -98,7 +97,7 @@ ActiveRecord::Schema.define(version: 20140726225431) do
   add_index "models", ["make_id"], name: "index_models_on_make_id", using: :btree
 
   create_table "options", force: true do |t|
-    t.string   "name"
+    t.string   "name",               limit: 50
     t.text     "description"
     t.integer  "quantity"
     t.datetime "created_at"
@@ -108,7 +107,7 @@ ActiveRecord::Schema.define(version: 20140726225431) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "item_id"
-    t.decimal  "unit_cost",          precision: 8, scale: 2
+    t.decimal  "unit_cost",                     precision: 8, scale: 2
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"
