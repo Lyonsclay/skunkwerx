@@ -1,5 +1,5 @@
-module Features
-  module CallbackHelpers
+module FreshbooksCallbacks
+
     def callback_delete_message(callback_id)
       "<?xml version=\"1.0\" encoding=\"utf-8\"?>
         <request method=\"callback.delete\">
@@ -32,6 +32,21 @@ module Features
         callback_verify = callback.first.next_element.text
       end
       callback_verify
+    end
+  end
+
+  def get_callbacks_list
+    freshbooks_call(callback_list_message)["response"]["callbacks"]["callback"]
+  end
+
+  def delete_unverified_callbacks
+    # get ids for unverified callbacks
+    unverified_ids = get_callbacks_list.map { |c| c["callback_id"] if c["verified"] == "0" }.compact
+
+    # send callback delete message for every unverified callback
+    unverified_ids.each do |id|
+      response_hash = freshbooks_call(callback_delete_message(id))
+      puts response_hash
     end
   end
 end
