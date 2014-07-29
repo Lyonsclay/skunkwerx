@@ -34,7 +34,7 @@ class Admin::FreshbooksController < ApplicationController
     redirect_to '/admin'
   end
 
-  # !!!Post webhooks is the only call Freshbooks API will make to Skunkwerx website.
+  # !!!Post webhooks is the only Skunkwerx url Freshbooks API will call.
   # This method must handle callback verify on callback creation and any callbacks
   # that Freshbooks will make.
   def webhooks
