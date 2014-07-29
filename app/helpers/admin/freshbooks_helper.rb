@@ -269,12 +269,12 @@ module Admin::FreshbooksHelper
         end
       end
     end
-    session[:sync_discrepancy] = check_items_against_products(product_items, new_products)
+    flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
     # Fail-safe if item.delete callback doesn't work.
     if Product.count > product_items.count
       dead_products_delete(product_items)
     end
-    if session[:sync_discrepancy].empty?
+    if flash[:sync_discrepancy].empty?
       flash[:notice] = "Products are up to date"
     end
   end
