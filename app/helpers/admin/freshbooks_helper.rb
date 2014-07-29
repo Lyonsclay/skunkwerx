@@ -114,8 +114,6 @@ module Admin::FreshbooksHelper
     response_hash = freshbooks_call(callback_create_message(event))
     puts "response_hash: " + response_hash.inspect
     callback_id = response_hash['response']['callback_id']
-    puts "**** Rails.cache.write callback_id *******************"
-    Rails.cache.write 'callback_id', callback_id
     flash[:notice] = display_response(response_hash)
     puts "******************************************************"
   end
@@ -123,8 +121,6 @@ module Admin::FreshbooksHelper
   # Callback verify method
   def callback_verify(verifier)
     puts "**************** inside callback_verify *************"
-    # callback_id = Rails.cache.read 'callback_id'
-    # callback_id ||= callback_id_retrieve
     callback_id = params["object_id"]
     puts "***callback_id: " + callback_id.to_s
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
