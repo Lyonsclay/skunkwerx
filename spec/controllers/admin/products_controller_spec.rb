@@ -1,7 +1,8 @@
 require 'spec_helper'
+include SessionsHelper
 
 describe Admin::ProductsController do
-  let(:admin) { create(:admin) }
+  let(:admin) { FactoryGirl.create(:admin) }
 
   describe "GET " do
     it "fails to render index form" do
@@ -10,7 +11,7 @@ describe Admin::ProductsController do
     end
 
     it "renders the index form" do
-      controller.stub(:current_admin).and_return(true)
+      sign_in(admin)
       get :index
       expect(response).to render_template("index")
     end

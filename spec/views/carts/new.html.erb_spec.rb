@@ -1,14 +1,13 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "carts/new" do
+RSpec.describe "carts/new", :type => :view do
   before(:each) do
-    assign(:cart, stub_model(Cart).as_new_record)
+    assign(:cart, Cart.new())
   end
 
   it "renders new cart form" do
     render
 
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form[action=?][method=?]", carts_path, "post" do
     end
   end

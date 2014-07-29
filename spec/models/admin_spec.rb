@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Admin do
   before do
@@ -47,7 +47,7 @@ describe Admin do
       let(:admin_for_invalid_password) { found_admin.authenticate("invalid") }
 
       it { should_not eq admin_for_invalid_password }
-      specify { expect(admin_for_invalid_password).to be_false }
+      it { expect(admin_for_invalid_password).to eq false }
     end
   end
 
@@ -64,9 +64,7 @@ describe Admin do
   describe "remember token" do
     before { @admin.save }
 
-    # Equivalent;
-    # it { expect(@admin.remember_token).not_to be_blank }
-    its(:remember_token) { should_not be_blank }
+    it { expect(@admin.remember_token).not_to be_blank }
   end
 
   describe "#send_password_reset" do

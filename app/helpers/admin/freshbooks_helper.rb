@@ -114,6 +114,7 @@ module Admin::FreshbooksHelper
     response_hash = freshbooks_call(callback_create_message(event))
     puts "response_hash: " + response_hash.inspect
     callback_id = response_hash['response']['callback_id']
+    puts "**** Rails.cache.write callback_id *******************"
     Rails.cache.write 'callback_id', callback_id
     flash[:notice] = display_response(response_hash)
     puts "******************************************************"
@@ -122,9 +123,10 @@ module Admin::FreshbooksHelper
   # Callback verify method
   def callback_verify(verifier)
     puts "**************** inside callback_verify *************"
-    callback_id = Rails.cache.read 'callback_id'
-    callback_id ||= callback_id_retrieve
-    puts "***callback_id: " + callback_id
+    # callback_id = Rails.cache.read 'callback_id'
+    # callback_id ||= callback_id_retrieve
+    callback_id = params["object_id"]
+    puts "***callback_id: " + callback_id.to_s
     response_hash = freshbooks_call(callback_verify_message(callback_id, verifier))
     flash[:notice] = display_response(response_hash)
     puts "*****************************************************"
@@ -247,6 +249,8 @@ module Admin::FreshbooksHelper
     response_hash
   end
 
+  # Manualy synchronize Freshbooks Items with Skunkwerx Products and
+  # Malone Tunes.
   def freshbooks_sync
     items = get_items
     # malone_tunes_items = []
@@ -267,12 +271,12 @@ module Admin::FreshbooksHelper
         end
       end
     end
-    session[:sync_discrepancy] = check_items_against_products(product_items, new_products)
+    flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
     # Fail-safe if item.delete callback doesn't work.
     if Product.count > product_items.count
       dead_products_delete(product_items)
     end
-    if session[:sync_discrepancy].empty?
+    if flash[:sync_discrepancy].empty?
       flash[:notice] = "Products are up to date"
     end
   end
@@ -314,7 +318,7 @@ module Admin::FreshbooksHelper
     new_item = freshbooks_call(item_create_message(malone_tune))
     # Receive item_id from Freshbooks.
     item_id = new_item["response"]["item_id"].to_i
-    # Update malone_tune item_id and default tax2_id.
+    # Update malone_tune item_id.
     # tax2_id is used to indicate that an item is selected for web sales.
     malone_tune.update_attributes(item_id: item_id)
     puts "********************** tune_item_create *****************************"
