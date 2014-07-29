@@ -3,15 +3,7 @@ class MaloneTune < ActiveRecord::Base
   has_many :engine_tunes
   has_many :engines, -> { uniq }, through: :engine_tunes
   validates :name, :quantity, :unit_cost, presence: true
-  # validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
-  validate :sum_of_prices
-  validates :name, uniqueness: {scope: :engine}
-
-  def sum_of_prices
-    # This method assumes that these attributes will be set to a
-    # number greater than 0.01 or nil and not 0.
-    unit_cost || standalone_price || price_with_purchase > 0.01
-  end
+  validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
 
   # This method associates the attribute ":image" with a file atachment
   has_attached_file :image,
