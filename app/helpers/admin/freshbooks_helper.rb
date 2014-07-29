@@ -328,9 +328,5 @@ module Admin::FreshbooksHelper
     flash[:notice] = freshbooks_call(item_delete(item_id))
     puts "***Response: #{flash[:notice]}"
   end
-
-  def find_key(key)
-    params.keys.detect {|k| k.match(/#{key}/) }
-  end
 end
 
