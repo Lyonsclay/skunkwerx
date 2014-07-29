@@ -51,7 +51,6 @@ RSpec.configure do |config|
   config.include(MailerMacros)
   config.before(:each) { reset_email }
 
-  config.include Features::CallbackHelpers
   config.include Features::WebhooksTestHelpers
   config.include Features::FreshbooksItemsHelpers
 
