@@ -8,9 +8,9 @@
 <h2>Model Tunes for <%= @make_model %></h2>
 <h2>Selected tunes will be automatically created in your Freshbooks account.</h2>
 
-<%= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
+<%#= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
 
-	<%= submit_tag "Submit" %>
+	<%#= submit_tag "Submit" %>
 	<% @model_tunes.each do |tune| %>
 		<% if tune[:name] =~ /Stock/ %>
 			<table class="stock">
@@ -35,22 +35,23 @@
 								<dd><%= tune[:description] %></dd>
 								<dd><%= display_price(tune) %></dd>
 								<br>
+								<%= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
 	 							<dd>
-	 								<% requires_label = ("requires_" + tune[:name]).to_sym %>
-									<%= text_area_tag requires_label %>
-									<%= label_tag requires_label, "Requires" %>
+									<%= text_area_tag :requires %>
+									<%= label_tag :requires, "Requires" %>
 								</dd>
 								<dd>
-									<% recommended_label = ("recommended_" + tune[:name]).to_sym %>
-									<%= text_area_tag recommended_label %>
-									<%= label_tag recommended_label, "Recommended" %>
+									<%= text_area_tag :recommended %>
+									<%= label_tag :recommended, "Recommended" %>
+									<%#= button_to "Create", { controller: "/admin/malone_tunes", action: "create", tune: tune } %>
 								</dd>
 								<dd>
-									<% id = ("checkbox_" +tune[:name]).to_sym %>
-									<%= check_box_tag id %>
-									<%= hidden_field_tag ("tune_" + tune[:name]).to_sym, tune %>
-									<%= label_tag id, 'Select This Tune' %>
+									<% tune.each do |k,v| %>
+									<%= hidden_field_tag :"tune[#{k}]", v %>
+									<% end %>
 								</dd>
+								<%= submit_tag "Submit" %>
+								<% end %>
 							</dl>
 						</td>
 						<td class="graph">
@@ -98,4 +99,4 @@
 			</table>
 		<% end %>
 	<% end %>
-<% end %>
+
