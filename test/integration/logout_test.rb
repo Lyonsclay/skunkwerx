@@ -38,7 +38,7 @@ class LoginTest < ActionDispatch::IntegrationTest
         sess.extend(CustomDsl)
         u = admin(admin)
         sess.https!
-        sess.post "/admin/sessions", session: { username: u.email, password: "foobar" }
+        sess.post "/admin/sessions", session: { email: u.email, password: "foobar" }
         sess.assert_response :success
         sess.https!(false)
       end
