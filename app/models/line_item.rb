@@ -6,8 +6,8 @@ class LineItem < ActiveRecord::Base
   def total_price
     total = product.unit_cost * quantity if product
     if malone_tune
-      if malone_tune.price
-        total = malone_tune.price * quantity
+      if malone_tune.unit_cost
+        total = malone_tune.unit_cost * quantity
       end
     else
       total = 0
