@@ -11,5 +11,5 @@ ready = ->
 		tune_ids: tuneIDS
 		(data) -> $('.notice').append "Succesfully sent data:-/"
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
+# $(document).ready(ready)
+# $(document).on('page:load', ready)
