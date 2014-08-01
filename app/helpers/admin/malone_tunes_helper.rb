@@ -117,6 +117,9 @@ module Admin::MaloneTunesHelper
       # Make sure only hash is being passed to dangerous eval method.
       if eval(tune).class == Hash
         tune = eval(tune)
+        tune_notes = tune
+        tune.slice! *[:name, :unit_cost, :description]
+        malone_tune = tune.except *[:engine, :standalone_price, :price_with_purchase, :power]
         # Using a goofy preface to signify tunes that are created for
         # testing. This will be changed to "Malone" when live.
         goofy = "Goofy-" + SecureRandom.urlsafe_base64(nil, false)[1..5]
@@ -130,8 +133,8 @@ module Admin::MaloneTunesHelper
         tune[:unit_cost] = price_to_decimal tune[:unit_cost]
         tune[:standalone_price] = price_to_decimal tune[:standalone_price]
         tune[:price_with_purchase] = price_to_decimal tune[:price_with_purchase]
-        new_tune = MaloneTune.create(tune)
-        @new_malone_tunes_ids << new_tune.id if new_tune.persisted?
+        new_tune = MaloneTune.new(tune)
+        # @new_malone_tunes_ids << new_tune.id if new_tune.persisted?
         puts "********************* new_tune.errors *************************"
         puts new_tune.errors.inspect
       end
@@ -144,14 +147,15 @@ module Admin::MaloneTunesHelper
   end
 
   # Functions for malone_tunes/update.
-  def add_engine_from_list
-     unless params[:add_from_list][:engine].empty?
+  def add_engine_from_list(malone_tune)
+    # Check for selection of at least three attributes??
+    if params[:add_from_list].count >= 3
       engine = Engine.find_by_sql(["SELECT * FROM engines WHERE engine=? AND model_id IN (SELECT models.id FROM models WHERE id=?)", params[:add_from_list][:engine], params[:add_from_list][:model][:id]]).first
       malone_tune.engines << engine
     end
   end
 
-  def create_and_add_new_engine
+  def create_and_add_new_engine(malone_tune)
     vehicle = params[:add_vehicle]
     unless vehicle[:make].empty?
       make = Make.find_or_create_by(make: vehicle[:make])
@@ -164,9 +168,9 @@ module Admin::MaloneTunesHelper
     end
   end
 
-  def delete_engines
+  def delete_engines(malone_tune)
     if params[:engine_delete]
-      params[:engine_delete].each { |id| Engine.find(id.to_i).delete }
+      params[:engine_delete].each { |id| malone_tune.engines.find(id.to_i).delete }
     end
   end
 end
