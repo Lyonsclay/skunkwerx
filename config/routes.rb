@@ -31,13 +31,14 @@ Skunkwerx::Application.routes.draw do
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
     resources :malone_tunes
+    resources :malone_tunings
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
     post 'freshbooks/webhooks_delete', to: 'freshbooks#webhooks_delete', as: :webhooks_delete
     post 'freshbooks/tunes_create', to: 'freshbooks#tunes_create', as: :tunes_create
   end
 
-  get 'malone_tuning_index', to: 'admin/malone_tunes#malone_tuning_index'
+  get 'malone_tunings_vehicles', to: 'admin/malone_tunings#vehicle_index'
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
 
