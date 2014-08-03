@@ -12,19 +12,24 @@ class CreateMaloneTuneTest < ActionDispatch::IntegrationTest
   end
 
   test "Get malone_tuning_index" do
-    # get "/malone_tuning_index"
-    # assert_response :success
+    get "/malone_tunings_vehicles"
+    assert_response :success
   end
 
   test "Select tune for edit" do
-    get "/malone_tuning_index"
+    get "/malone_tunings_vehicles"
     edit_url = css_select("a").first.attributes["href"]
-    get edit_url # get '/show'
+    get edit_url # get '/admin/malone_tunings' ( :index )
     assert_response :success
-    select_tune = css_select("form")[2].attributes
-binding.pry
+    select_tune = css_select("input[value='Submit']").first.parent.attributes
+    puts "************************ select_tune:"
+    puts select_tune
     # assigns
-    # post select_tune["action"], { tune: select_tune["tune"] }
+    # get '/admin/malone_tunings/:id' ( :show )
+    get select_tune["action"], { tune: select_tune["tune"] }
+    assert_response :success
+
+binding.pry
 #     visit malone_tuning_index_path
 # binding.pry
 #     first("a", text: "View").click
