@@ -4,7 +4,6 @@
 
 <ul class="menu">
   <%= button_to "ADMIN PAGE", admin_path, method: :get %>
-  <%= button_to "GET MALONE TUNINGS", malone_tuning_index_path, method: :get %>
 </ul>
 
     <% @malone_tunes.each do |malone_tune| %>
@@ -22,7 +21,7 @@
             <% end %>
           </dl>
         <td class="graph"><%= image_tag(malone_tune.image.url(:medium), size: "150x150") %></td>
-        <td><%= link_to 'Edit', edit_admin_malone_tune_path(malone_tune) %><br><br></td>
+        <td><%= link_to 'Edit', admin_malone_tunings_path(malone_tune) %><br><br></td>
       </tr>
     </table>
   <% end %>

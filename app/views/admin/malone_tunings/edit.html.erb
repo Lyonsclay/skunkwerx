@@ -1,0 +1,101 @@
+<% stylesheet 'admin/malone_tunes/show.css' %>
+
+<ul class="menu">
+	<%= button_to "ADMIN PAGE", admin_path, method: :get %>
+</ul>
+
+<h2>Model Tunes for <%= @make_model %></h2>
+<h2>Selected tunes will be automatically created in your Freshbooks account.</h2>
+
+<%#= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
+
+	<%#= submit_tag "Submit" %>
+	<% @model_tunes.each do |tune| %>
+		<% if tune[:name] =~ /Stock/ %>
+			<table class="stock">
+				<tr>
+					<td>
+						<dl>
+							<dd><h3><%= 'Stock Engine  :  ' + tune[:engine] %></h3></dd>
+						</dl>
+					</td>
+				</tr>
+			</table>
+
+		<% else %>
+			<table class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<thead>
+					<tr>
+						<td class="list_description">
+							<dl>
+								<!-- <dt>Make:&nbsp</dt> -->
+								<dd><b>Tune:</b>&nbsp;&nbsp; <%= tune[:name] %></dd>
+								<dd><b>Engine:</b>&nbsp;&nbsp; <%= tune[:engine] %></dd>
+								<dd><%= tune[:description] %></dd>
+								<dd><%= display_price(tune) %></dd>
+								<br>
+								<%= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
+	 							<dd>
+									<%= text_area_tag :requires %>
+									<%= label_tag :requires, "Requires" %>
+								</dd>
+								<dd>
+									<%= text_area_tag :recommended %>
+									<%= label_tag :recommended, "Recommended" %>
+									<%#= button_to "Create", { controller: "/admin/malone_tunes", action: "create", tune: tune } %>
+								</dd>
+								<dd>
+									<% tune.each do |k,v| %>
+									<%= hidden_field_tag :"tune[#{k}]", v %>
+									<% end %>
+								</dd>
+								<%= submit_tag "Submit" %>
+								<% end %>
+							</dl>
+						</td>
+						<td class="graph">
+						<% unless tune[:image].nil? %>
+							<%= image_tag(tune[:image], size: "300x214" ) %>
+						<% end %>
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+
+	<!-- Requires and recommended graphics. -->
+				<% unless tune[:requires].nil? %>
+					</tbody>
+						<tr>
+							<th>
+							<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
+							</th>
+							<th>
+							<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
+							</th>
+						</tr>
+						<tr  class="require-recommend">
+							<% if tune[:requires] %>
+								<td>
+								<% tune[:requires].each do |url| %>
+									<%= image_tag(url) %>
+								<% end %>
+								</td>
+								<td>
+								<% tune[:recommended].each do |url| %>
+									<%= image_tag(url) %>
+								<% end %>
+								</td>
+							<% end %>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+						</tr>
+					</tfoot>
+				<% end %>
+			</table>
+		<% end %>
+	<% end %>
+
