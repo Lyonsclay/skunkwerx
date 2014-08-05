@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  engine: MyString
+  power: MyString
+  description: MyText
+  unit_cost: 9.99
+  standalone_price: 9.99
+  price_with_purchase: 9.99
+
+two:
+  name: MyString
+  engine: MyString
+  power: MyString
+  description: MyText
+  unit_cost: 9.99
+  standalone_price: 9.99
+  price_with_purchase: 9.99

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140727003335) do
+ActiveRecord::Schema.define(version: 20140804001149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,21 @@ ActiveRecord::Schema.define(version: 20140727003335) do
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"
+  end
+
+  create_table "malone_tunings", force: true do |t|
+    t.text     "name"
+    t.string   "engine"
+    t.string   "power"
+    t.string   "graph_url"
+    t.text     "description"
+    t.string   "unit_cost"
+    t.string   "standalone_price"
+    t.string   "price_with_purchase"
+    t.string   "requires_urls",       default: [], array: true
+    t.string   "recommended_urls",    default: [], array: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "models", force: true do |t|
