@@ -64,17 +64,3 @@ ul.menu {
 		display: inline-block;
 	}
 }
-
-label[for="Requires"] {
-	display: inline-block;
-	vertical-align: top;
-	float: left;
-}
-
-label[for="Recommended"] {
-	float: right;
-}
-
-input[type='checkbox'] {
-	vertical-align: bottom;
-}
