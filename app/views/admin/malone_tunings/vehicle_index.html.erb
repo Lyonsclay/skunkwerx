@@ -20,9 +20,8 @@
 			</dl>
 		</td>
 		<td class="list_actions">
-			<%= button_to 'Select', admin_malone_tunings_path(id: @models.index(model), model: model) %><br/>
-			<%#= link_to 'Edit', edit_malone_tunes_path(model) %><br/>
-			<%#= link_to 'Remove', delete_malone_tunes_path(model) %><br/>
+			<%= button_to 'Select', { action: :create, model: model } %>
+			<br/><br/>
 		</td>
 	</tr>
 <% end %>
