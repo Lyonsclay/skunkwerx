@@ -26,7 +26,7 @@
 public/assets/**
 
 #Seed file
-/db/seeds.rb
+#/db/seeds.rb
 
 # Coveralls token.
 /.coveralls.yml

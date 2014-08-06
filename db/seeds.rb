@@ -6,4 +6,33 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Admin.create(email: 'clay.morton@gmail.com', password: 'foobar', password_confirmation: 'foobar')
+Admin.create(email: 'cool@gmail.com', password: 'foobar', password_confirmation: 'foobar')
+
+makes = %w( Audi Volkswagen Honda Toyota Jeep )
+
+audi = %w( A3 A5 A6 TT Q5 )
+
+volkswagen = %w( Quattro Beatle Jetta Golf Passat)
+
+honda = %w( Civic Accord CR-V Odyssey Passport )
+
+toyota = %w( Corolla Camry RAV4 Prius Sienna )
+
+jeep = %w( Wrangler Cherokee Patriot Compass Commander )
+
+models = [audi, volkswagen, honda, toyota, jeep]
+
+engines = %w( 1.2l 2.2l 3.8l V6 V8 )
+
+5.times do |n|
+  make = Make.create(make: makes[n])
+  5.times do |t|
+    make.models << Model.create(model: models[n][t])
+  end
+  make.models.each do |m|
+    m.engines << Engine.create(engine: engines[0..2].sample, years: [rand(30) + 1985, rand(30) + 1985].sort)
+    m.engines << Engine.create(engine: engines[3..4].sample, years: [rand(30) + 1985, rand(30) + 1985].sort)
+  end
+end
+
+
