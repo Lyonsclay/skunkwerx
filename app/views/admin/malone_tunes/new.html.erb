@@ -8,36 +8,35 @@
 
 <h2>Edit Malone Tune</h2>
 
-<%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
+<%= form_for [:admin, @malone_tuning], html: {multipart: true} do |f| %>
 <table>
 	<tbody>
 		<tr class="graph">
 			<td><%= f.label "Current Image" %></td>
-			<td><%= image_tag(@malone_tune.image.url(:medium), class: 'image_url', size: "150x150") %></td>
+			<td><%= image_tag(@malone_tuning.graph_url, class: 'image_url', size: "150x150") %></td>
 		</tr>
-		<% unless @malone_tune.image_file_name.nil? %>
-		<tr>
-			<td><%= f.label "Use Default Graphic Instead" %></td>
-			<td><%= check_box_tag "default_image" %></td>
-		</tr>
+		<% unless @malone_tuning.graph_url.nil? %>
+			<tr>
+				<td><%= f.label "Use Default Graphic Instead" %></td>
+				<td><%= check_box_tag "default_image" %></td>
+			</tr>
 		<% end %>
 		<tr>
 			<td><%= f.label "Change Image" %></td>
 			<td><%= f.file_field :image %></td>
 		</tr>
-		<% MaloneTune.columns.each do |c| %>
+		<% MaloneTuning.columns.each do |c| %>
 			<% next if /(at|id|folder|image|vehicle|inventory)/.match c.name %>
 			<tr>
 				<td><%= f.label c.name %></td>
-				<% size = @malone_tune.send(c.name).to_s.size %>
+				<% size = @malone_tuning.send(c.name).to_s.size %>
 				<% if size < 40 %>
-				<td><%= f.text_field c.name.to_sym, size: size + 5 %></td>
+					<td><%= f.text_field c.name.to_sym, size: size + 5 %></td>
 				<% else %>
-				<td><%= f.text_area c.name.to_sym, cols: "30", rows: "8" %></td>
+					<td><%= f.text_area c.name.to_sym, cols: "30", rows: "8" %></td>
 				<% end %>
 			</tr>
 		<% end %>
-		<%= render "engine_list" %>
 		<%= render "add_vehicle_from_list" %>
 		<%= render "add_new_vehicle" %>
 		<tr>
