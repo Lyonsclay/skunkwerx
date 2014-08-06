@@ -37,13 +37,11 @@
 								<dd><b>Unit Cost:</b>&nbsp;&nbsp; <%= tuning.unit_cost %></dd>
 								<br>
                 <dd>
-  							<%= form_tag(edit_admin_malone_tuning_path(tuning), method: 'get') do %>
-									<% MaloneTuning.columns.each do |c| %>
-									 <%= hidden_field_tag :"#{c.name}", tuning.attributes[c.name] %>
-                  <% end %>
+  							<%= form_tag(new_admin_malone_tune_path(tuning), method: 'get') do %>
+
 								  <%= submit_tag "Create as Tune" %>
 								<% end %>
-                <%= form_tag(edit_admin_malone_tuning_path(tuning)) do |f| %>
+                <%= form_tag(new_admin_malone_tune_path(tuning)) do |f| %>
 
                   <% MaloneTuning.columns.each do |c| %>
                     <%= hidden_field_tag :"#{c.name}", tuning.attributes[c.name] %>
