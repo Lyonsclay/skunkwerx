@@ -16,7 +16,7 @@ binding.pry
   end
 
   def new
-    binding.pry
+    @malone_tuning = MaloneTuning.find(params[:format])
   end
 
   def update
