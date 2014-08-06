@@ -9,17 +9,14 @@ module Admin::MaloneTuningsHelper
     # Build array of models with a hash of attributes.
     # { make: "", model: "", href: "" }
     models = []
-
-  # Get a Nokogiri::HTML::Document for page.
-  doc =  Nokogiri::HTML(open(@@base, read_timeout: 120))
+    # Get a Nokogiri::HTML::Document for page.
+    doc =  Nokogiri::HTML(open(@@base, read_timeout: 120))
     # Define Nokogiri::XML::NodeSet
     node_set = doc.xpath('//li[.//a[@href = "/ecu-tuning"]]/ul/li')
     node_set.each do |node|
       # Case where auto make has just one tune.
       if node.css("ul").empty?
-        models << { make: node.text,
-          href: node.child[:href] }
-
+        models << { make: node.text, href: node.child[:href] }
       # Case where auto make has many models with their own
       #  models listed in a sub menu.
       elsif node.css("ul").first[:class] == "menu"
@@ -38,15 +35,15 @@ module Admin::MaloneTuningsHelper
 
   # This method gathers desired attributes for the various tuning
   # products that will be resold through the Skunkwerx website.
-  def model_engine_tunes
-    tunes = []
+  def vehicle_tunings
+    malone_tunings = []
     # Load document with all tunes for particular model vehicle.
     doc = Nokogiri::HTML(open(@@base + params[:model][:href]))
     # Get each tune's specs from top table with all tunes for
     # that model.
     doc.css('div.view-content tbody tr').each do |tune|
       tune_attributes = {}
-      tune_attributes = { engine: tunes.last[:engine] } unless tunes.empty?
+      tune_attributes = { engine: malone_tunings.last.engine } unless malone_tunings.empty?
       unless tune.css('.views-field-field-engine').text.strip.empty?
         tune_attributes[:engine] = tune.css('.views-field-field-engine').text.strip
       end
@@ -54,14 +51,14 @@ module Admin::MaloneTuningsHelper
         tune_attributes[:engine] = tune.css('.views-field-field-collection-engine').text.strip
       end
       tune_attributes.update(name: tune.css('.views-field-field-new-collection-tune').text.strip)
-      if tune_attributes[:name].empty?
+      if tune_attributes[:name].nil? or tune_attributes[:name].empty?
         tune_attributes[:name] = tune.css('.views-field-field-collection-tune').text.strip
       end
       tune_attributes.update(power: tune.css('.views-field-field-collection-power').text.strip)
       tune_attributes.update(unit_cost: tune.css('.views-field-field-collection-price-cad-').text.strip)
       tune_attributes.update(standalone_price: tune.css('.views-field-field-price').text.strip)
       tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
-      tunes << tune_attributes
+      malone_tunings << MaloneTuning.find_or_create_by(tune_attributes)
     end
     # Get additional attributes from main content including image URLs.
     # First check for presence of main content entries.
@@ -69,17 +66,28 @@ module Admin::MaloneTuningsHelper
     unless tunes_details.first.children[1].text.strip.empty?
       tunes_details.each do |tune|
         tune_name = tune.children[1].text.strip
-        tune_attributes = tunes.find { |a| tune_name =~ /#{a[:name]}/ } || {}
-        tune_attributes[:name] = tune.children[1].text.strip
-        tune_attributes.update(description: tune.css('div.views-field-field-stage-description p').text)
+        # tune_name_regex = tune_name[0,12].gsub(" ", '\s?').gsub(/(\-|\*|\(|\)|\+)/, '[\+\-\*\(\)]')
+        tune_name_regex = tune_name.delete(' ').match(/^(\w|\s|\.)+/).to_s.gsub("",'\s?')
+        tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
+        tuning ||= MaloneTuning.create(name: tune_name)
+        tuning.update_attribute(:name, tune_name)
+        malone_tunings << tuning
+        # { |a| tune_name =~ /#{a[:name]}/ } || {}
+        # tune_attributes[:name] = tune.children[1].text.strip
+        tuning.update_attribute(:description, tune.css('div.views-field-field-stage-description p').text)
         unless tune.css('a').first.nil?
-          tune_attributes.update(image: tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
+          tuning.update_attribute(:graph_url, tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
         end
-        tune_attributes.update(requires: requires_urls(tune))
-        tune_attributes.update(recommended: recommended_urls(tune))
+        if tuning.graph_url.nil?
+        end
+        # Create new MaloneTuning from tune_attributes
+        # tuning = MaloneTuning.find_or_create_by(tune_attributes)
+        # Due to the way Postgresql and ActiveRecord process array columns
+        # tuning cannot be created with array columns, but must be updated.
+        tuning.update_attributes(requires_urls: requires_urls(tune), recommended_urls: recommended_urls(tune) )
       end
     end
-    tunes
+    malone_tunings.uniq
   end
 
   # These graphics are no longer required.
@@ -90,18 +98,6 @@ module Admin::MaloneTuningsHelper
   # These graphics are no longer required.
   def recommended_urls(tune)
     tune.css("div.views-field.views-field-field-recommended-1 img").map { |t| t["src"] }
-  end
-
-  # There can be various pricing mechanisms for any given tune.
-  # This method formats them for display in the
-  # admin/malone_tunes/show view.
-  def display_price(tune)
-    price = "Price: " + tune[:unit_cost] unless tune[:unit_cost].empty?
-    unless tune[:standalone_price].empty?
-      price = "Standalone Price: " + tune[:standalone_price]
-      price += "       Price With Purchase: " + tune[:price_with_purchase] unless tune[:price_with_purchase].empty?
-    end
-    price
   end
 
   # Get and augment params for tunes that have been selected.
@@ -143,7 +139,7 @@ module Admin::MaloneTuningsHelper
   end
 
   def price_to_decimal(price)
-    price.sub(/^\$/, '').to_d
+    price.sub(/^\$/, '')
   end
 
   # Functions for malone_tunes/update.
