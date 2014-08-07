@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140804001149) do
+ActiveRecord::Schema.define(version: 20140807195529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 20140804001149) do
     t.string   "recommended_urls",    default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "make"
+    t.string   "model"
   end
 
   create_table "models", force: true do |t|

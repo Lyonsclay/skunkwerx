@@ -42,8 +42,8 @@ module Admin::MaloneTuningsHelper
     # Get each tune's specs from top table with all tunes for
     # that model.
     doc.css('div.view-content tbody tr').each do |tune|
-      tune_attributes = {}
-      tune_attributes = { engine: malone_tunings.last.engine } unless malone_tunings.empty?
+      tune_attributes = { make: params[:model][:make], model: params[:model][:model]}
+      tune_attributes.update(engine: malone_tunings.last.engine) unless malone_tunings.empty?
       unless tune.css('.views-field-field-engine').text.strip.empty?
         tune_attributes[:engine] = tune.css('.views-field-field-engine').text.strip
       end
@@ -87,7 +87,7 @@ module Admin::MaloneTuningsHelper
         tuning.update_attributes(requires_urls: requires_urls(tune), recommended_urls: recommended_urls(tune) )
       end
     end
-    malone_tunings.uniq
+    malone_tunings
   end
 
   # These graphics are no longer required.
