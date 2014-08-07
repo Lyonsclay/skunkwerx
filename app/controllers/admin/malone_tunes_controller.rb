@@ -7,8 +7,8 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def create
-binding.pry
-    # @tune_ids = new_malone_tunes_from_params
+    MaloneTune.create malone_tune_params
+
   end
 
   def edit
@@ -17,6 +17,10 @@ binding.pry
 
   def new
     @malone_tuning = MaloneTuning.find(params[:format])
+    @malone_tune = MaloneTune.new
+    @malone_tune.name = @malone_tuning.name
+    @malone_tune.description = @malone_tuning.description
+    @malone_tune.unit_cost = @malone_tuning.unit_cost
   end
 
   def update
