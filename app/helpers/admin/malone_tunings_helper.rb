@@ -71,23 +71,21 @@ module Admin::MaloneTuningsHelper
         tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
         tuning ||= MaloneTuning.create(name: tune_name)
         tuning.update_attribute(:name, tune_name)
-        malone_tunings << tuning
         # { |a| tune_name =~ /#{a[:name]}/ } || {}
         # tune_attributes[:name] = tune.children[1].text.strip
         tuning.update_attribute(:description, tune.css('div.views-field-field-stage-description p').text)
         unless tune.css('a').first.nil?
           tuning.update_attribute(:graph_url, tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
         end
-        if tuning.graph_url.nil?
-        end
         # Create new MaloneTuning from tune_attributes
         # tuning = MaloneTuning.find_or_create_by(tune_attributes)
         # Due to the way Postgresql and ActiveRecord process array columns
         # tuning cannot be created with array columns, but must be updated.
         tuning.update_attributes(requires_urls: requires_urls(tune), recommended_urls: recommended_urls(tune) )
+        malone_tunings << tuning
       end
     end
-    malone_tunings
+    malone_tunings.uniq
   end
 
   # These graphics are no longer required.
