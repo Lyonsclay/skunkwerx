@@ -7,8 +7,14 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def create
-    MaloneTune.create malone_tune_params
-
+    # The user input name needs an extension based on make and model
+    # in order to distinquish the tune names such as 'Stage 1'.
+    malone_tune_params[:name] += params[:make_model]
+    malone_tune = MaloneTune.create malone_tune_params
+    # Remove malone_tuning which has been created as tune and/or option.
+    session[:malone_tunings].delete(MaloneTuning.find_by_name(malone_tune[:name]))
+    @malone_tunings = session[:malone_tunings]
+    render "admin/malone_tunings/index"
   end
 
   def edit
@@ -20,7 +26,14 @@ class Admin::MaloneTunesController < ApplicationController
     @malone_tune = MaloneTune.new
     @malone_tune.name = @malone_tuning.name
     @malone_tune.description = @malone_tuning.description
-    @malone_tune.unit_cost = @malone_tuning.unit_cost
+    @malone_tune.unit_cost = price_to_decimal @malone_tuning.unit_cost
+    @malone_tune.save
+    # Make and model will be passed as hidden params to be
+    # added to the malone_tune.name. This method is necessary
+    # because text_field uses malone_tune[:name], and not
+    # malone_tune.name which has been redefined in the malone_tune.rb.
+    @make_name = @malone_tuning.make
+    @model_name = @malone_tuning.model
   end
 
   def update

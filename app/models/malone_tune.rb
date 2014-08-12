@@ -2,7 +2,7 @@ class MaloneTune < ActiveRecord::Base
   has_many :line_items
   has_many :engine_tunes
   has_many :engines, -> { uniq }, through: :engine_tunes
-  validates :name, :quantity, :unit_cost, presence: true
+  validates :name, :unit_cost, presence: true
   validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
 
   # This method associates the attribute ":image" with a file atachment
@@ -20,6 +20,12 @@ class MaloneTune < ActiveRecord::Base
   # Validate the attached image is image/jpg, image/png, etc
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
+
+  # Strip make and model portion of name after '::'.
+  def name
+    self[:name] ||= ""
+    self[:name].match(/.*(?=::)/).to_s
+  end
 
   # For caching
   def self.latest
