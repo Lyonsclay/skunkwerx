@@ -58,7 +58,7 @@ module Admin::MaloneTuningsHelper
       tune_attributes.update(unit_cost: tune.css('.views-field-field-collection-price-cad-').text.strip)
       tune_attributes.update(standalone_price: tune.css('.views-field-field-price').text.strip)
       tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
-      malone_tunings << MaloneTuning.find_or_create_by(tune_attributes)
+      tune_match_or_create(tune_attributes[:name])
     end
     # Get additional attributes from main content including image URLs.
     # First check for presence of main content entries.
@@ -66,10 +66,13 @@ module Admin::MaloneTuningsHelper
     unless tunes_details.first.children[1].text.strip.empty?
       tunes_details.each do |tune|
         tune_name = tune.children[1].text.strip
-        # tune_name_regex = tune_name[0,12].gsub(" ", '\s?').gsub(/(\-|\*|\(|\)|\+)/, '[\+\-\*\(\)]')
-        tune_name_regex = tune_name.delete(' ').match(/^(\w|\s|\.)+/).to_s.gsub("",'\s?')
-        tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
-        tuning ||= MaloneTuning.create(name: tune_name)
+        # Strip tune_name of spaces and take only characters that match
+        # a simple name as found in the tables at the top of the page.
+        # Ex. 'Stage 0', 'Stage 1.5', 'Stage 5 Custom'
+        # Finally a zero or more white space regex expression is inserted
+        # between every remaining character. This will catch a name that
+        # has a missing space like 'Stage 5Custom'.
+        tuning = tune_match_or_create(tune_name)
         tuning.update_attribute(:name, tune_name)
         # { |a| tune_name =~ /#{a[:name]}/ } || {}
         # tune_attributes[:name] = tune.children[1].text.strip
@@ -168,6 +171,13 @@ module Admin::MaloneTuningsHelper
       params[:engine_delete].each { |id| malone_tune.engines.find(id.to_i).delete }
     end
   end
+
+  # This method finds a tune with a similiar name to prevent creating
+  # redundant tunes.
+  def tune_match_or_create(tune_name)
+    tune_name_regex = tune_name.delete(' ').match(/^(\w|\s|\.)+/).to_s.gsub("",'\s?')
+    tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
+    tuning ||= MaloneTuning.create(name: tune_name)
+    tuning
+  end
 end
-
-
