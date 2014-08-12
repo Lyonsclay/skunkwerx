@@ -85,6 +85,7 @@ module Admin::MaloneTuningsHelper
         malone_tunings << tuning
       end
     end
+    session[:malone_tunings] = malone_tunings.uniq.map { |t| t  }
     malone_tunings.uniq
   end
 

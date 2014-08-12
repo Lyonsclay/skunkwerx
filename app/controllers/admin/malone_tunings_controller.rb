@@ -19,7 +19,7 @@ class Admin::MaloneTuningsController < ApplicationController
   # User selects tunes to create as Product and MaloneTune.
   # Post '/create'
   def create
-    session[:malone_tunings] = @malone_tunings = vehicle_tunings
+    @malone_tunings = vehicle_tunings
     @malone_tunings.pop if @malone_tunings.last[:name].empty?
     @make_model = params[:model][:make]
     @make_model += params[:model][:model] unless params[:model][:model].nil?
