@@ -21,8 +21,6 @@ class Admin::MaloneTuningsController < ApplicationController
   def create
     @malone_tunings = vehicle_tunings
     @malone_tunings.pop if @malone_tunings.last[:name].empty?
-    @make_model = params[:model][:make]
-    @make_model += params[:model][:model] unless params[:model][:model].nil?
     render :index
   end
 

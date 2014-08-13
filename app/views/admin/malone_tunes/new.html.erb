@@ -22,12 +22,10 @@
 					<% if c.type == :text %>
 						<td><%= f.text_area c.name, cols: "20", rows: "4" %></td>
 					<% else %>
-						<td><%= f.text_field c.name, size: 20 %></td>
+						<td><%= f.text_field c.name, size: 50 %></td>
 					<% end %>
 				</tr>
 			<% end %>
-
-			<%= hidden_field_tag :make_model, @make_model %>
 
 			<%= render "add_vehicle_from_list" %>
 			<%= render "add_new_vehicle" %>

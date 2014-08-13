@@ -36,6 +36,9 @@ class Admin::MaloneTunesController < ApplicationController
     @model_name = @malone_tuning.model
   end
 
+    # The user input name needs an extension based on make and model
+    # in order to distinquish the tune names such as 'Stage 1'.
+    malone_tune_params[:name] += "::" + tuning.make + " " + tuning.model
   def update
     params[:malone_tune][:image] = nil if params["default_image"] == "1"
     malone_tune = MaloneTune.find_by id: params[:id]
