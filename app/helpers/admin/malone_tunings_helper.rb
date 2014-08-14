@@ -141,7 +141,7 @@ module Admin::MaloneTuningsHelper
   end
 
   def price_to_decimal(price)
-    price.sub(/^\$/, '')
+    price  ##.sub(/^\$/, '')
   end
 
   # Functions for malone_tunes/update.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807195529) do
+ActiveRecord::Schema.define(version: 20140813035545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140807195529) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "item_id"
-    t.decimal  "unit_cost",                     precision: 8, scale: 2
+    t.decimal  "unit_cost",                     precision: 8, scale: 2, default: 0.0
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"

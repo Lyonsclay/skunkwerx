@@ -3,7 +3,7 @@ class MaloneTune < ActiveRecord::Base
   has_many :engine_tunes
   has_many :engines, -> { uniq }, through: :engine_tunes
   validates :name, :unit_cost, presence: true
-  validates :unit_cost, numericality: {greater_than_or_equal_to: 0.01}
+  validates :unit_cost, numericality: {greater_than_or_equal_to: 0.00}
 
   # This method associates the attribute ":image" with a file atachment
   has_attached_file :image,
