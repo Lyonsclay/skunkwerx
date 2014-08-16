@@ -6,17 +6,6 @@ class Admin::MaloneTunesController < ApplicationController
     @malone_tunes = MaloneTune.all
   end
 
-  def create
-    # The user input name needs an extension based on make and model
-    # in order to distinquish the tune names such as 'Stage 1'.
-    malone_tune_params[:name] += params[:make_model]
-    malone_tune = MaloneTune.create malone_tune_params
-    # Remove malone_tuning which has been created as tune and/or option.
-    session[:malone_tunings].delete(MaloneTuning.find_by_name(malone_tune[:name]))
-    @malone_tunings = session[:malone_tunings]
-    render "admin/malone_tunings/index"
-  end
-
   def edit
     @malone_tune = MaloneTune.find_by id: params[:id]
   end
@@ -26,19 +15,26 @@ class Admin::MaloneTunesController < ApplicationController
     @malone_tune = MaloneTune.new
     @malone_tune.name = @malone_tuning.name
     @malone_tune.description = @malone_tuning.description
-    @malone_tune.unit_cost = price_to_decimal @malone_tuning.unit_cost
-    @malone_tune.save
-    # Make and model will be passed as hidden params to be
-    # added to the malone_tune.name. This method is necessary
-    # because text_field uses malone_tune[:name], and not
-    # malone_tune.name which has been redefined in the malone_tune.rb.
-    @make_name = @malone_tuning.make
-    @model_name = @malone_tuning.model
+    @malone_tune.unit_cost ||= price_to_decimal @malone_tuning.unit_cost
   end
 
+  def create
+    # Remove malone_tuning which has been created as tune and option.
+    tuning = MaloneTuning.find_by_name malone_tune_params[:name]
+binding.pry
+    tuning.tune_created = true
+    if tuning.tune_created && tuning.option_created
+      session[:malone_tunings].delete(tuning)
+    end
+    @malone_tunings = session[:malone_tunings]
     # The user input name needs an extension based on make and model
     # in order to distinquish the tune names such as 'Stage 1'.
     malone_tune_params[:name] += "::" + tuning.make + " " + tuning.model
+binding.pry
+    MaloneTune.create malone_tune_params
+    render "admin/malone_tunings/index"
+  end
+
   def update
     params[:malone_tune][:image] = nil if params["default_image"] == "1"
     malone_tune = MaloneTune.find_by id: params[:id]
