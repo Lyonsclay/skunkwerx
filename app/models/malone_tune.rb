@@ -24,7 +24,7 @@ class MaloneTune < ActiveRecord::Base
   # Strip make and model portion of name after '::'.
   def name
     self[:name] ||= ""
-    self[:name].match(/.*(?=::)/).to_s
+    self[:name].match(/^[^(::)]*/).to_s
   end
 
   # For caching
