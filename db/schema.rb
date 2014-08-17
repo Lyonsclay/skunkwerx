@@ -96,12 +96,14 @@ ActiveRecord::Schema.define(version: 20140813035545) do
     t.string   "unit_cost"
     t.string   "standalone_price"
     t.string   "price_with_purchase"
-    t.string   "requires_urls",       default: [], array: true
-    t.string   "recommended_urls",    default: [], array: true
+    t.string   "requires_urls",       default: [],    array: true
+    t.string   "recommended_urls",    default: [],    array: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "make"
     t.string   "model"
+    t.boolean  "tune_created",        default: false
+    t.boolean  "option_created",      default: false
   end
 
   create_table "models", force: true do |t|
