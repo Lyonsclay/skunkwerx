@@ -5,9 +5,9 @@ module Admin::MaloneTuningsHelper
   # Base url
   @@base = ENV['MALONE_TUNING_URL']
 
+  # Build array of models with a hash of attributes.
+  # { make: "", model: "", href: "" }
   def vehicle_models
-    # Build array of models with a hash of attributes.
-    # { make: "", model: "", href: "" }
     models = []
     # Get a Nokogiri::HTML::Document for page.
     doc =  Nokogiri::HTML(open(@@base, read_timeout: 120))
@@ -33,8 +33,8 @@ module Admin::MaloneTuningsHelper
     models
   end
 
-  # This method gathers desired attributes for the various tuning
-  # products that will be resold through the Skunkwerx website.
+  # Gather desired attributes for the various tuning products
+  # that will be sold through the Skunkwerx website.
   def vehicle_tunings
     malone_tunings = []
     # Load document with all tunes for particular model vehicle.
@@ -58,7 +58,7 @@ module Admin::MaloneTuningsHelper
       tune_attributes.update(unit_cost: tune.css('.views-field-field-collection-price-cad-').text.strip)
       tune_attributes.update(standalone_price: tune.css('.views-field-field-price').text.strip)
       tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
-      tune_match_or_create(tune_attributes[:name])
+      tune_match_or_create(tune_attributes)
     end
     # Get additional attributes from main content including image URLs.
     # First check for presence of main content entries.
@@ -66,13 +66,8 @@ module Admin::MaloneTuningsHelper
     unless tunes_details.first.children[1].text.strip.empty?
       tunes_details.each do |tune|
         tune_name = tune.children[1].text.strip
-        # Strip tune_name of spaces and take only characters that match
-        # a simple name as found in the tables at the top of the page.
-        # Ex. 'Stage 0', 'Stage 1.5', 'Stage 5 Custom'
-        # Finally a zero or more white space regex expression is inserted
-        # between every remaining character. This will catch a name that
-        # has a missing space like 'Stage 5Custom'.
-        tuning = tune_match_or_create(tune_name)
+
+        tuning = tune_match_or_create({name: tune_name})
         tuning.update_attribute(:name, tune_name)
         # { |a| tune_name =~ /#{a[:name]}/ } || {}
         # tune_attributes[:name] = tune.children[1].text.strip
@@ -100,44 +95,6 @@ module Admin::MaloneTuningsHelper
   # These graphics are no longer required.
   def recommended_urls(tune)
     tune.css("div.views-field.views-field-field-recommended-1 img").map { |t| t["src"] }
-  end
-
-  # Get and augment params for tunes that have been selected.
-  # Create MaloneTune for each selected tune from params.
-  def new_malone_tunes_from_params
-    # Find Malone tunes that have been selected with checkbox.
-    @new_malone_tunes_ids = []
-    keys = params.keys.select { |key| params[key] == "1" }
-    keys.each do |key|
-      # String is frozen must be duplicated with dup to operate on.
-      tune_name = key.dup.sub(/^checkbox_/, '')
-      tune = params["tune_#{tune_name}"]
-      # Make sure only hash is being passed to dangerous eval method.
-      if eval(tune).class == Hash
-        tune = eval(tune)
-        tune_notes = tune
-        tune.slice! *[:name, :unit_cost, :description]
-        malone_tune = tune.except *[:engine, :standalone_price, :price_with_purchase, :power]
-        # Using a goofy preface to signify tunes that are created for
-        # testing. This will be changed to "Malone" when live.
-        goofy = "Goofy-" + SecureRandom.urlsafe_base64(nil, false)[1..5]
-        tune[:name] = goofy + tune[:name]
-        tune[:requires] = params["requires_#{tune_name}"]
-        tune[:recommended] = params["recommended_#{tune_name}"]
-        # Set quantity to default value of 1 to pass validations,
-        # however, it's worth considering not using quantity for tunes.
-        tune[:quantity] = 1
-        # Must convert string representation of price to decimal.
-        tune[:unit_cost] = price_to_decimal tune[:unit_cost]
-        tune[:standalone_price] = price_to_decimal tune[:standalone_price]
-        tune[:price_with_purchase] = price_to_decimal tune[:price_with_purchase]
-        new_tune = MaloneTune.new(tune)
-        # @new_malone_tunes_ids << new_tune.id if new_tune.persisted?
-        puts "********************* new_tune.errors *************************"
-        puts new_tune.errors.inspect
-      end
-    end
-    @new_malone_tunes_ids
   end
 
   def price_to_decimal(price)
@@ -172,12 +129,17 @@ module Admin::MaloneTuningsHelper
     end
   end
 
-  # This method finds a tune with a similiar name to prevent creating
-  # redundant tunes.
-  def tune_match_or_create(tune_name)
-    tune_name_regex = tune_name.delete(' ').match(/^(\w|\s|\.)+/).to_s.gsub("",'\s?')
+  # Find a tune with a similiar name to prevent creating redundant tunes.
+  # Strip tune_name of spaces and take only characters that match
+  # a simple name as found in the tables at the top of the page.
+  # Ex. 'Stage 0', 'Stage 1.5', 'Stage 5 Custom'
+  # Finally a zero or more white space regex expression is inserted
+  # between every remaining character. This will catch a name that
+  # has a missing space like 'Stage 5Custom'.
+  def tune_match_or_create(tune_attributes)
+    tune_name_regex = tune_attributes[:name].delete(' ').match(/^(\w|\s|\.)+/).to_s.gsub("",'\s?')
     tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
-    tuning ||= MaloneTuning.create(name: tune_name)
+    tuning ||= MaloneTuning.create(tune_attributes)
     tuning
   end
 end
