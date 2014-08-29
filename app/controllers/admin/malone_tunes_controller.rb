@@ -1,4 +1,4 @@
-class Admin::MaloneTunesController < ApplicationController
+git class Admin::MaloneTunesController < ApplicationController
   layout 'admin/application'
   before_filter :authorize
 
@@ -16,13 +16,14 @@ class Admin::MaloneTunesController < ApplicationController
     @malone_tune.name = @malone_tuning.name
     @malone_tune.description = @malone_tuning.description
     @malone_tune.unit_cost ||= price_to_decimal @malone_tuning.unit_cost
+    @make_model = make_model_display(@malone_tuning)
   end
 
   def create
-    # Remove malone_tuning which has been created as tune and option.
+    # Remove malone_tuning which has been created as both
+    # tune and option.
     tuning = MaloneTuning.find_by_name malone_tune_params[:name]
-binding.pry
-    tuning.tune_created = true
+    tuning.update_attribute(:tune_created, true)
     if tuning.tune_created && tuning.option_created
       session[:malone_tunings].delete(tuning)
     end
@@ -30,7 +31,6 @@ binding.pry
     # The user input name needs an extension based on make and model
     # in order to distinquish the tune names such as 'Stage 1'.
     malone_tune_params[:name] += "::" + tuning.make + " " + tuning.model
-binding.pry
     MaloneTune.create malone_tune_params
     render "admin/malone_tunings/index"
   end
