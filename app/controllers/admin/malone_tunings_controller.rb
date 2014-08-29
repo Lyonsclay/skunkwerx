@@ -11,6 +11,8 @@ class Admin::MaloneTuningsController < ApplicationController
     @models = vehicle_models
   end
 
+  # List of tunings for particular engine.
+  # Buttons for create tune or option.
   def index
     @malone_tunings = session[:malone_tunings]
   end
@@ -21,11 +23,7 @@ class Admin::MaloneTuningsController < ApplicationController
   def create
     @malone_tunings = vehicle_tunings
     @malone_tunings.pop if @malone_tunings.last[:name].empty?
+    @make_model = make_model_display(@malone_tunings.first)
     render :index
-  end
-
-  def edit
-    # Display all params along with ability to create Tune or Option
-    # Remove from
   end
 end

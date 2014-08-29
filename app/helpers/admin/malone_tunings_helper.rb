@@ -142,4 +142,8 @@ module Admin::MaloneTuningsHelper
     tuning ||= MaloneTuning.create(tune_attributes)
     tuning
   end
+
+  def make_model_display(malone_tuning)
+    malone_tuning.make + " " + malone_tuning.model
+  end
 end
