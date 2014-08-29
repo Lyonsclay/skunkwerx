@@ -1,7 +1,6 @@
 require 'test_helper'
 include SessionsHelper
 class CreateMaloneTuneTest < ActionDispatch::IntegrationTest
-  self.use_transactional_fixtures = false
   setup do
     @admin = FactoryGirl.create(:admin)
     post "/admin/sessions", session: { email: @admin.email, password: "foobar" }
@@ -44,8 +43,8 @@ class CreateMaloneTuneTest < ActionDispatch::IntegrationTest
   end
 
   test "Check that malone_tuning is removed from list" do
-    get_new_tuning
 binding.pry
+    # get_new_tuning
   end
 
   private
