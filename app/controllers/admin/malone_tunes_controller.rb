@@ -1,4 +1,4 @@
-git class Admin::MaloneTunesController < ApplicationController
+class Admin::MaloneTunesController < ApplicationController
   layout 'admin/application'
   before_filter :authorize
 
