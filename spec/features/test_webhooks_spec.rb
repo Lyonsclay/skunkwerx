@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'capybara/rspec'
 
 include Features::WebhooksTestHelpers
@@ -10,6 +10,7 @@ describe "Get products from Skunkwerx index", freshbooks_items: true do
     expect(response.status).to eq(200)
   end
 
+  # Create unique name begining with "Goofy-rspec-".
   before(:all) do
     @name ||= "Goofy-rspec-" + SecureRandom.urlsafe_base64(nil, false)[1..5]
   end

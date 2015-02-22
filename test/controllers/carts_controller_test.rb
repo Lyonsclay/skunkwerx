@@ -49,4 +49,10 @@ class CartsControllerTest < ActionController::TestCase
 
     assert_redirected_to products_index_path
   end
+
+  test "private method" do
+
+    # binding.pry
+  end
+
 end

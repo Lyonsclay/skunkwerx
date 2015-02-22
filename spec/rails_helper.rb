@@ -60,4 +60,19 @@ RSpec.configure do |config|
   config.filter_run_excluding webhooks: true unless ENV['WEBHOOKS'] == "run"
   # Run tests that create and destroy an item on the Freshbooks database.
   config.filter_run_excluding freshbooks_items: true unless ENV['FRESHBOOKS_ITEMS'] == "run"
+  config.include RSpec::Rails::RequestExampleGroup, type: :feature
 end
+
+# Capybara.always_include_port = true
+
+# Capybara.register_driver :rack_test do |app|
+#   Capybara::RackTest::Driver.new(app, :headers => { 'HTTP_USER_AGENT' => 'Capybara' })
+# end
+
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app)
+end
+
+Capybara.run_server = true
+Capybara.server_port = 3000
+Capybara.app_host = "http://localhost:#{Capybara.server_port}"

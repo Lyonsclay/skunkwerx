@@ -50,7 +50,7 @@ gem 'pry'
 
 group :test do
   gem 'capybara'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 2.38.0'
   gem 'rspec-rails'
 end
 

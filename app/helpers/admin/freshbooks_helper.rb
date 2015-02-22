@@ -102,8 +102,9 @@ module Admin::FreshbooksHelper
     end
     # Delete items that are not slated for web sales.
     items.delete_if {|item| item["tax2_id"].nil? }
-    # Strip uneeded attributes 'updated' and 'folder' from hashes
-    # that will be used to create ActiveRecord records.
+    # Strip uneeded attributes 'updated' and 'folder' from items,
+    # which is then used to create new records on the Skunkwerx
+    # database.
     items.map { |item| item.except *["updated", "folder"] }
     # items
   end
@@ -270,6 +271,8 @@ module Admin::FreshbooksHelper
     flash[:sync_discrepancy] = check_items_against_products(product_items, new_products)
     # Fail-safe if item.delete callback doesn't work.
     if Product.count > product_items.count
+      puts "************ item.delete callback failed *****************"
+      puts "********* freshbooks_controller-spec.rb line 275 *********"
       dead_products_delete(product_items)
     end
     if flash[:sync_discrepancy].empty?

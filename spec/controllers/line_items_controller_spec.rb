@@ -30,6 +30,7 @@ describe LineItemsController do
     it "assigns all line_items as @line_items" do
       line_item = LineItem.create! valid_attributes
       get :index, {}, valid_session
+      ## should is deprecated
       assigns(:line_items).should eq([line_item])
     end
   end
@@ -80,6 +81,7 @@ describe LineItemsController do
     describe "with invalid params" do
       it "assigns a newly created but unsaved line_item as @line_item" do
         # Trigger the behavior that occurs when invalid params are submitted
+        ## any_instance is deprecated
         LineItem.any_instance.stub(:save).and_return(false)
         post :create, valid_session
         expect(assigns(:line_item)).to be_a_new(LineItem)

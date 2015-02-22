@@ -37,7 +37,7 @@ module Features
       goofy_items.map { |i| i["item_id"] }
     end
 
-
+    # Get first item id.
     def freshbooks_get_item_id
       items = get_items
       items.select { |item| item["name"] == @name }

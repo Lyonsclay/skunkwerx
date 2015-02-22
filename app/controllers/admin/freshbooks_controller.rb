@@ -46,28 +46,28 @@ class Admin::FreshbooksController < ApplicationController
       puts "**************** inside params[:system] ***************"
       puts "***params: " + " - " + params.inspect + " - "
       # Callback Verify action for all webhook methods;
-      if params[name] == "callback.verify"
+      if params["name"] == "callback.verify"
         puts "****************** inside callback.verify **************"
         puts "***params[:verifier]: " + params[:verifier]
         puts "********************************************************"
         callback_verify(params[:verifier])
       end
       # Freshbooks sends notification on item create, update and destroy.
-      if params[key] == "item.create"
+      if params["key"] == "item.create"
         puts "********************* inside item.create **************"
         puts "***params[:object_id] : " + params[:object_id]
         item_create(params[:object_id])
         puts "******************************************************"
       end
 
-      if params[key] == "item.update"
+      if params["key"] == "item.update"
         puts "********************* inside item.update **************"
         puts "***params[:object_id] : " + params[:object_id]
         item_update(params[:object_id])
         puts "******************************************************"
       end
 
-      if params[key] == "item.delete"
+      if params["key"] == "item.delete"
         puts "********************* inside item.delete ***************"
         puts "***params[:object_id] : " + params[:object_id]
         item_delete(params[:object_id])
