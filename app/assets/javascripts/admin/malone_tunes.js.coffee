@@ -1,5 +1,4 @@
-# Wrap in closure to give subsequent blocks access to variables defined
-# such as blank, model, etc.
+# Manage engine/model/years selections.
 do ($, window) ->
   jQuery ->
     blank = "\n<option value=\"0\"></option>"

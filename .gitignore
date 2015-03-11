@@ -35,3 +35,9 @@ public/assets/**
 /coveralls/*
 
 /coverage/*
+
+# skunkwerx org planner
+/skunkwerx.org
+
+# emacs projectile ignore directories file
+/.projectile

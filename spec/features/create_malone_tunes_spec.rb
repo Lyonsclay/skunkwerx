@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'capybara/rspec'
 include Features::FreshbooksItemsHelpers
 
-describe "Describe create new MaloneTunes", api: true do
+describe "Create new MaloneTune", api: true do
   let!(:admin) {FactoryGirl.create(:admin)}
   before do
     MaloneTune.delete_all
@@ -10,7 +10,7 @@ describe "Describe create new MaloneTunes", api: true do
     fill_in "Email", with: admin.email
     fill_in "Password", with: admin.password
     click_button "Log in"
-    visit malone_tuning_index_path
+    visit malone_tunings_vehicles_path
   end
 
   describe "Get malone_tuning_index" do
@@ -19,7 +19,7 @@ describe "Describe create new MaloneTunes", api: true do
       # listed on the Malone Tuning website. Failure of this test
       # indicates a change in the website layout that might break
       # some of the code in admin/malone_tunes_helper.rb!
-      expect(page).to have_selector('tr', count: 27)
+      expect(page).to have_selector('tr', count: 28)
     end
   end
 

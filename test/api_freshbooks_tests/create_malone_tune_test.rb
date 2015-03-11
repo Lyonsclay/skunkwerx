@@ -45,7 +45,7 @@ class CreateMaloneTuneTest < ActionDispatch::IntegrationTest
   end
 
   test "Check that malone_tuning is removed from list" do
-binding.pry
+
     # get_new_tuning
   end
 

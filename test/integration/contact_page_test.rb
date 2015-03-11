@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'capybara/rails'
 require 'capybara/dsl'
-Capybara.default_driver = :selenium
+Capybara.default_driver = :chrome
 
 class ContactPageTest < ActionDispatch::IntegrationTest
   test "welcome page has CONTACT button in menu bar" do

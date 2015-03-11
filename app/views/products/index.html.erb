@@ -1,27 +1,27 @@
 <div class="items">
-	<% if notice %>
-	<p id="notice"><%= notice %></p>
-	<% end %>
-	<div id="title">
-		<p>Skunkwerx Products</p>
-		<%= form_tag products_index_path, method: :get do %>
-			<%= text_field_tag :search, params[:search] %>
-			<%= submit_tag "Search", name: nil %>
-		<% end %>
-	</div>
-	<p><%= paginate @products %></p>
-	<table>
-		<% cache(@products) do %>
-			<% @products.each do |item| %>
-				<% cache [item] do %>
-					<% if item.image.url.match /missing/ %>
-						<%= render 'malone_tunes/item_default_image', item: item %>
-					<% else %>
-						<%= render 'malone_tunes/item_big_image', item: item %>
-					<% end %>
-				<% end %>
-			<% end %>
-		<% end %>
-	</table>
+    <% if notice %>
+        <p id="notice"><%= notice %></p>
+    <% end %>
+    <div id="title">
+        <p>Skunkwerx Products</p>
+        <%= form_tag products_index_path, method: :get do %>
+            <%= text_field_tag :search, params[:search] %>
+            <%= submit_tag "Search", name: nil %>
+        <% end %>
+    </div>
+    <p><%= paginate @products %></p>
+    <table>
+        <% cache(@products) do %>
+            <% @products.each do |item| %>
+                <% cache [item] do %>
+                    <% if item.image.url.match /missing/ %>
+                        <%= render 'malone_tunes/item_default_image', item: item %>
+                    <% else %>
+                        <%= render 'malone_tunes/item_big_image', item: item %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% end %>
+    </table>
 </div>
 

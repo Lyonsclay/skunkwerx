@@ -1,37 +1,34 @@
 <div class="content">
+    <div class="contact_details">
+        <div class="categories"
+	    <p>Phone: </p>
+            <p>Email:</p>
+            <p>Address:<br>&nbsp;</p>
+        </div>
+        <div class="client_data">
+            <p>(502) 724-2605</p>
+            <p><%= mail_to "dax@skunkwerx-performance.com" %></p>
+            <p>1608 Russell Ave.<br>Louisville, KY 40213</p>
+        </div>    
+        <p class="bold">By appointment only</p>
+        <p>From Highway 264/Waterson Expressway, exit Poplar Level north. Turn right on Russell Avenue. It is the next street after the traffic light in front of Kroger grocery store. Garage is behind first white house on right. Pull in driveway and knock on garage door if closed.</p>
+        <p>Enter an address for directions to Skunkwerx Performance</p>
+    </div>
 
-	<div class="contact_details">
-		<p>Phone: (502) 724-2605</p>
-		<p>Email: &nbsp;<%= mail_to "dax@skunkwerx-performance.com" %></p>
-		<p>Shop address:</p>
-		<div class="address">
-			<p>3932 Southern Parkway<br>Louisville, KY 40214<br>* Shop is accessed from alley only</p>
-		</div>
-		<p>Shipping (only) address:</p>
-		<div class="address">
-			<p>1814 Bonnycastle Ave.<br> Louisviille, KY 40205</p>
-		</div>
-		<p class="bold">By appointment only</p>
-		<p>From the Watterson Expressway, exit Southern Parkway.  Turn north on Southern (2nd light if approaching from westbound exit).  Then turn left on W. Evelyn Ave (4-5 blocks up, white church on corner).  Take right turn into first alley.  Shop is second garage on the right, VWs always parked outside.</p>
+    <div class="get_address">
+        <input id="address" type="textbox" value="">
+        <input id="map_button" type="button" value="Get Directions">
+    </div>
 
-
-		<p>Enter an address for directions to Skunkwerx Performance</p>
-	</div>
-
-	<div class="get_address">
-    <input id="address" type="textbox" value="">
-    <input id="map_button" type="button" value="Get Directions">
-  </div>
-
-	<div id="map_canvas"></div>
-	</div>
-
-	<div id="directionsPanel">
-	</div>
-
-	<div class="footer">
-	    <p>All work by appointment only</p>
-	    <p>All major credit cards accepted</p>
-	    <p>Please contact for an appointment</p>
-	</div>
+    <div id="map_canvas"></div>
 </div>
+
+<div id="directionsPanel">
+</div>
+
+<div class="footer">
+    <p>All work by appointment only</p>
+    <p>All major credit cards accepted</p>
+    <p>Please contact for an appointment</p>
+</div>
+

@@ -10,7 +10,7 @@ $(document).on('page:change', function() {
     // New map with a map_canvas ( width, height ) and options.
     var map_canvas = document.getElementById('map_canvas');
     // Latlng for buisiness hardcoded.
-    var myLatlng = new google.maps.LatLng(38.197255, -85.767465);
+    var myLatlng = new google.maps.LatLng(38.2005064, -85.7106286);
     var map_options = {
       center: myLatlng,
       zoom: 12,
@@ -22,7 +22,7 @@ $(document).on('page:change', function() {
 
     // Create infowindow with content text.
     var infowindow = new google.maps.InfoWindow({
-        content: "Skunkwerx Performance LLC, &nbsp&nbsp&nbsp* enter from alley *"
+        content: "Skunkwerx Performance LLC"
     });
 
     // Create new marker for business address.

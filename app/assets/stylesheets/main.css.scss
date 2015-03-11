@@ -1,211 +1,244 @@
 /* START_HIGHLIGHT */
 body {
-  background-color: black;
+    background-color: black;
 }
 
 .main {
-  border: 2px none pink;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  margin-top: 0px;
-  width: 1050px;
+    border: 2px none pink;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 0px;
+    width: 1050px;
 }
 
 .banner {
-  height: 0px;
-  margin-top: 0px;
-  margin-left: 14px;
+    height: 0px;
+    margin-top: 0px;
+    margin-left: 14px;
 }
 
 .notice {
-  margin-top: 145px;
-  text-align: center;
-  font-size: 21px;
-  font-family: "nunito";
-  font-weight: 100;
-  color: #dee4d8;
-  color: brown;
-  letter-spacing: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-left: 250px;
-  width: 500px;
-  border: 2px solid DarkGoldenRod;
-  border-radius: 20px;
+    margin-top: 145px;
+    text-align: center;
+    font-size: 21px;
+    font-family: "nunito";
+    font-weight: 100;
+    color: #dee4d8;
+    color: brown;
+    letter-spacing: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 250px;
+    width: 500px;
+    border: 2px solid DarkGoldenRod;
+    border-radius: 20px;
 
-  a[href^="mailto"] {
-    color: DarkGoldenRod;
-  }
+    a[href^="mailto"] {
+        color: DarkGoldenRod;
+    }
 }
 
 .menu_bar {
-  margin-top: 121px;
-  margin-left: 116px;
-  margin-right: 0px;
-  border: 2px none Aqua;
+    margin-top: 121px;
+    margin-left: 116px;
+    margin-right: 0px;
+    border: 2px none Aqua;
 
-  li {
-    display: inline-block;
-    padding-left: 12px;
-    padding-right: 14px;
-  }
+    li {
+        display: inline-block;
+        padding-left: 12px;
+        padding-right: 14px;
+    }
 
-  a {
-    font-size: 18px;
-    color: #dee4d8;
-    color: #A70301;
-    font-family: "Nunito";
-    text-decoration: none;
-    border: 2px solid #A70301;
-    padding: 0px;
-    padding-left: 4px;
-    padding-right: 4px;
-    border-radius: 5px;
-  }
+    a {
+        font-size: 18px;
+        color: #dee4d8;
+        color: #A70301;
+        font-family: "Nunito";
+        text-decoration: none;
+        border: 2px solid #A70301;
+        padding: 0px;
+        padding-left: 4px;
+        padding-right: 4px;
+        border-radius: 5px;
+    }
 
-  a:hover {
-    color: ivory;
-  }
+    a:hover {
+        color: ivory;
+    }
 }
 
 #mini-cart {
-  margin: auto;
-  float: right;
-  margin-right: 110px;
-  width: 210px;
-  border: 2px solid #A70301;
-  border-radius: 5px;
-  margin-top: 50px;
-  padding-left: 7px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-right: 7px;
-  font: 14px "Helvetica Neue", sans-serif;
-  font-weight: 200;
-  color: #dee4d8;
-
-  table {
-    border-collapse: collapse;
-    width: 210px;
-  }
-
-  thead {
-    border-bottom: 1px solid #dee4d8;
-  }
-
-  thead tr td {
-    padding-bottom: 3px;
-    font-weight: 500;
-  }
-
-  tbody tr td {
-    padding-top: 4px;
-  }
-
-  .buttons a {
-    color: #dee4d8;
-    font: 14px  "Nunito";
-    text-decoration: none;
-    border: 2px solid #A70301;
-    padding-left: 4px;
-    padding-right: 4px;
-    border-radius: 5px;
+    margin: auto;
     float: right;
-    margin-right: 5px;
-  }
+    margin-right: 110px;
+    width: 210px;
+    border: 2px solid #A70301;
+    border-radius: 5px;
+    margin-top: 50px;
+    padding-left: 7px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 7px;
+    font: 14px "Helvetica Neue", sans-serif;
+    font-weight: 200;
+    color: #dee4d8;
 
-  .buttons {
-    margin-top: 10px;
-  }
+    table {
+        border-collapse: collapse;
+        width: 210px;
+    }
 
-  .quantity {
-    font-weight: 500;
-    margin-right: 20px;
-    padding-left: 6px;
-  }
+    thead {
+        border-bottom: 1px solid #dee4d8;
+    }
 
-  .name {
-    padding-right: 15px;
-  }
+    thead tr td {
+        padding-bottom: 3px;
+        font-weight: 500;
+    }
 
-  .sub-total td {
-    border-top: 2px solid #A70301;
-    padding-top: 3px;
-  }
+    tbody tr td {
+        padding-top: 4px;
+    }
 
-  td.price {
-    margin-right: 20px;
-  }
+    .buttons a {
+        color: #dee4d8;
+        font: 14px  "Nunito";
+        text-decoration: none;
+        border: 2px solid #A70301;
+        padding-left: 4px;
+        padding-right: 4px;
+        border-radius: 5px;
+        float: right;
+        margin-right: 5px;
+    }
 
-  .image-url {
-    height: inherit;
-    margin-left: 60px;
-  }
+    .buttons {
+        margin-top: 10px;
+    }
+
+    .quantity {
+        font-weight: 500;
+        margin-right: 20px;
+        padding-left: 6px;
+    }
+
+    .name {
+        padding-right: 15px;
+    }
+
+    .sub-total td {
+        border-top: 2px solid #A70301;
+        padding-top: 3px;
+    }
+
+    td.price {
+        margin-right: 20px;
+    }
+
+    .image-url {
+        height: inherit;
+        margin-left: 60px;
+    }
 }
 
 .content {
-  position: relative;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 610px;
-  margin-top: 0px;
-
-  img {
-    margin-top: 50px;
-    margin-left: 0px;
-    border: 3px solid DarkRed;
-    border-radius: 20px;
-    z-index: -1;
-  }
-
-  .statement {
-    margin-top: 20px;
-    margin-bottom: 40px;
-    text-indent: 0px;
-    font: 20px "Helvetica Neue", sans-serif;
-    font-weight: 200;
-    color: #FAF2EC;
-    color: silver;
-    letter-spacing: .5px;
-    width: 700px;
-  }
-
-  .text {
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 610px;
     margin-top: 0px;
-    margin-left: 20px;
-    margin-right: 20px;
-    border-left: 0px solid silver;
-    border-right: 0px solid silver;
 
-    p {
-      text-indent: 0px;
-      font: 20px "Helvetica Neue", sans-serif;
-      font-weight: 200;
-      letter-spacing: 1px;
-      color: gray;
-      text-align: left;
-      padding-left: 20px;
-      padding-right: 20px;
+    img {
+        margin-top: 50px;
+        margin-left: 0px;
+        border: 3px solid DarkRed;
+        border-radius: 20px;
+        z-index: -1;
     }
-  }
+
+    .statement {
+        margin-top: 20px;
+        margin-bottom: 40px;
+        text-indent: 0px;
+        font: 20px "Helvetica Neue", sans-serif;
+        font-weight: 200;
+        color: #FAF2EC;
+        color: silver;
+
+        @media screen and (max-device-width: 480px) {
+            color: white;
+            font-weight: 400
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            color: white;
+            font-weight: 400
+        }
+
+        letter-spacing: .5px;
+        width: 700px;
+    }
+
+    .text {
+        margin-top: 0px;
+        margin-left: 20px;
+        margin-right: 20px;
+        border-left: 0px solid silver;
+        border-right: 0px solid silver;
+
+        p {
+            text-indent: 0px;
+            font: 20px "Helvetica Neue", sans-serif;
+            font-weight: 200;
+            letter-spacing: 1px;
+            color: gray;
+
+            @media screen and (max-device-width: 480px) {
+                color: white;
+                font-weight: 400
+            }
+
+            @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+                color: white;
+                font-weight: 400
+            }
+
+            text-align: left;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
 }
 
 .footer {
-  margin-top: 30px;
-  margin-left: 120px;
+    margin-top: 30px;
+    margin-left: 120px;
 
-  p {
-    font: 14px "Helvetica Neue", sans-serif;
-    font-weight: 200;
-    color: DimGray;
-    letter-spacing: 1px;
-    display: inline-block;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+    p {
+        font: 14px "Helvetica Neue", sans-serif;
+        font-weight: 200;
+        color: DimGray;
+
+        @media screen and (max-device-width: 480px) {
+            color: white;
+            font-weight: 400
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+            color: white;
+            font-weight: 400
+        }
+
+        letter-spacing: 1px;
+        display: inline-block;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 }
 
 /* END_HIGHLIGHT */
