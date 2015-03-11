@@ -58,7 +58,7 @@ module Admin::MaloneTuningsHelper
       tune_attributes.update(unit_cost: tune.css('.views-field-field-collection-price-cad-').text.strip)
       tune_attributes.update(standalone_price: tune.css('.views-field-field-price').text.strip)
       tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
-      tune_match_or_create(tune_attributes)
+      malone_tunings << tune_match_or_create(tune_attributes)
     end
     # Get additional attributes from main content including image URLs.
     # First check for presence of main content entries.

@@ -46,7 +46,8 @@ gem 'unicorn', group: :production
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
-gem 'pry'
+# gem 'pry'
+gem 'byebug'
 
 group :test do
   gem 'capybara'
