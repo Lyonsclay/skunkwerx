@@ -1,0 +1,101 @@
+<% stylesheet 'admin/malone_tunes/show.css' %>
+
+<ul class="menu">
+    <%= button_to "ADMIN PAGE", admin_path, method: :get %>
+    <%= button_to "BACK", malone_tunings_vehicles_path, method: :get %>
+</ul>
+
+<h2>Model Tunes for <%= @make_model %></h2>
+
+<%#= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
+
+<%#= submit_tag "Submit" %>
+<% @malone_tunings.each do |tuning| %>
+    <% if tuning.name =~ /Stock/ %>
+	<table class="stock">
+	    <tr>
+		<td>
+		    <dl>
+			<dd><h3><%= 'Stock Engine  :  ' + tuning.engine %></h3></dd>
+		    </dl>
+		</td>
+	    </tr>
+	</table>
+
+    <% else %>
+	<table class="<%= cycle('list_line_odd', 'list_line_even') %>">
+	    <thead>
+		<tr>
+		    <td class="list_description">
+			<dl>
+			    <!-- <dt>Make:&nbsp</dt> -->
+			    <dd><b>Name:</b>&nbsp;&nbsp;<%= tuning.name %></dd>
+			    <dd><b>Engine:</b>&nbsp;&nbsp;<%= tuning.engine %></dd>
+                            <dd><b>Power:</b>&nbsp;&nbsp;<%= tuning.power %></dd>
+			    <dd><b>Description:</b>&nbsp;&nbsp;<%= tuning.description %></dd>
+			    <dd><b>Unit Cost:</b>&nbsp;&nbsp; <%= tuning.unit_cost %></dd>
+			    <br>
+                            <dd>
+  				<%= form_tag(new_admin_malone_tune_path(tuning), method: 'get') do %>
+                                    <% MaloneTuning.columns.each do |c| %>
+                                        <%= hidden_field_tag :"#{c.name}", tuning.attributes[c.name] %>
+                                    <% end %>
+
+				    <%= submit_tag "Create as Tune" %>
+				<% end %>
+                                <%= form_tag(new_admin_option_path(tuning), method: 'get') do %>
+                                    <% MaloneTuning.columns.each do |c| %>
+                                        <%= hidden_field_tag :"#{c.name}", tuning.attributes[c.name] %>
+                                    <% end %>
+
+                                    <%= submit_tag "Create as Option" %>
+                                <% end %>
+                            </dd>
+			</dl>
+		    </td>
+		    <td class="graph">
+			<% unless tuning.graph_url.nil? %>
+			    <%= image_tag(tuning.graph_url, size: "300x214" ) %>
+			<% end %>
+		    </td>
+		</tr>
+	    </thead>
+	    <tbody>
+
+	    </tbody>
+
+	    <!-- Requires and recommended graphics. -->
+	    <% unless tuning.requires_urls.nil? %>
+	    </tbody>
+	    <tr>
+		<th>
+		    <%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
+		</th>
+		<th>
+		    <%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
+		</th>
+	    </tr>
+	    <tr  class="require-recommend">
+		<% if tuning.requires_urls %>
+		    <td>
+			<% tuning.requires_urls.each do |url| %>
+			    <%= image_tag(url) %>
+			<% end %>
+		    </td>
+		    <td>
+			<% tuning.recommended_urls.each do |url| %>
+			    <%= image_tag(url) %>
+			<% end %>
+		    </td>
+		<% end %>
+	    </tr>
+	    </tbody>
+	    <tfoot>
+		<tr>
+		</tr>
+	    </tfoot>
+	    <% end %>
+	</table>
+    <% end %>
+<% end %>
+

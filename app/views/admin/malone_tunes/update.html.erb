@@ -6,7 +6,7 @@
     <%= link_to "BACK", "/admin/malone_tunes" %>
 </ul>
 
-<h2>Create Malone Tune</h2>
+<h2>Update Malone Tune</h2>
 
 <%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
     <table>
@@ -29,7 +29,6 @@
 	    <%= render "add_vehicle_from_list" %>
 	    <%= render "add_new_vehicle" %>
 	    <tr>
-                <td></td>
 		<td><%= f.submit "Submit" %></td>
 	    </tr>
 	    <!-- Requires and recommended graphics. -->

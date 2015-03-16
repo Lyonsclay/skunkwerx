@@ -1,6 +1,6 @@
 <% stylesheet 'admin/malone_tunes/index' %>
 
-<h1>Listing admin_malone_tunes</h1>
+<h1>Skunkwerx Malone Tunes</h1>
 
 <ul class="menu">
   <%= button_to "ADMIN PAGE", admin_path, method: :get %>
@@ -21,7 +21,7 @@
             <% end %>
           </dl>
         <td class="graph"><%= image_tag(malone_tune.image.url(:medium), size: "150x150") %></td>
-        <td><%= link_to 'Edit', admin_malone_tunings_path(malone_tune) %><br><br></td>
+        <td><%= link_to 'Edit', edit_admin_malone_tune_path(malone_tune) %><br><br></td>
       </tr>
     </table>
   <% end %>

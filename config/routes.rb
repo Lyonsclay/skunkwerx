@@ -30,9 +30,9 @@ Skunkwerx::Application.routes.draw do
     resources :password_resets, except: [:index, :destroy]
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
-    resources :malone_tunes
-    resources :malone_tunings
-    resources :options, only: [:new, :create,]
+    resources :malone_tunes, except: [:show, :destroy]
+    resources :malone_tunings, only: [:create]
+    resources :options, only: [:new, :create]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
     post 'freshbooks/webhooks_delete', to: 'freshbooks#webhooks_delete', as: :webhooks_delete

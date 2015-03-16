@@ -15,7 +15,7 @@ class Admin::MaloneTunesController < ApplicationController
     @malone_tune = MaloneTune.new
     @malone_tune.name = @malone_tuning.name
     @malone_tune.description = @malone_tuning.description
-    @malone_tune.unit_cost ||= price_to_decimal @malone_tuning.unit_cost
+    @malone_tune.unit_cost = price_to_decimal @malone_tuning.unit_cost || @malone_tune.unit_cost
     @make_model = make_model_display(@malone_tuning)
   end
 
@@ -41,7 +41,7 @@ class Admin::MaloneTunesController < ApplicationController
     malone_tune.update(malone_tune_params)
     add_engine_from_list(malone_tune)
     create_and_add_new_engine(malone_tune)
-    delete_engines(malone_tune)
+    delete_engine_tunes(malone_tune)
     redirect_to '/admin/malone_tunes'
   end
 

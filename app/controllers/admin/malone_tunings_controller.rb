@@ -13,7 +13,7 @@ class Admin::MaloneTuningsController < ApplicationController
 
   # List of tunings for particular engine.
   # Buttons for create tune or option.
-  def index
+  def tuning_index
     @malone_tunings = session[:malone_tunings]
   end
 
@@ -24,6 +24,6 @@ class Admin::MaloneTuningsController < ApplicationController
     @malone_tunings = vehicle_tunings
     @malone_tunings.pop if @malone_tunings.last[:name].empty?
     @make_model = make_model_display(@malone_tunings.first)
-    render :index
+    render :tuning_index
   end
 end

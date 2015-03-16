@@ -1,0 +1,47 @@
+<% stylesheet 'admin/malone_tunes/index' %>
+<% stylesheet 'admin/malone_tunes/edit' %>
+
+<ul>
+    <%= link_to 'ADMIN PAGE', '/admin' %>
+    <%= link_to 'BACK', '/admin/malone_tunes' %>
+</ul>
+
+<h2>Edit Malone Tune</h2>
+
+<%= form_for [:admin, @malone_tune], html: {multipart: true} do |f| %>
+    <table>
+        <tbody>
+            <%= render 'update_image' %>
+
+            <% MaloneTune.columns.each do |c| %>
+                <% next if /(at|id|image)/.match c.name %>
+                <tr>
+                    <td><%= f.label c.name %></td>
+                    <% if c.type == :text %>
+                        <td><%= f.text_area c.name, cols: '20', rows: '4' %></td>
+                    <% else %>
+                        <td><%= f.text_field c.name, size: 50 %></td>
+                    <% end %>
+                </tr>
+            <% end %>
+
+            <% @malone_tune.engine_tunes.each do |engine| %>
+                <tr>
+                    <td>Vehicle</td>
+                    <td>
+                        <%= engine.vehicle %>
+                        <%= check_box_tag 'engine_tunes_delete[]', engine.id %>
+                        <%= label :engine_tunes, 'delete', 'Delete' %>
+                    </td>
+                </tr>
+            <% end %>
+            
+            <%= render 'add_vehicle_from_list' %>
+            <%= render 'add_new_vehicle' %>
+            <tr>
+                <td><%= f.submit 'Update' %></td>
+            </tr>
+        </tbody>
+    </table>
+<% end %>
+<br><br><br><br>

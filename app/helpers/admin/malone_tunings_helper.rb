@@ -22,6 +22,7 @@ module Admin::MaloneTuningsHelper
       elsif node.css("ul").first[:class] == "menu"
         node.css("a").each do |n|
           # Case where node href
+          # indicated by right pointing double angle.
           unless n.text.bytes.include? 187
             models << { model: n.child.text,
               make: node.child.child.text,
@@ -36,6 +37,7 @@ module Admin::MaloneTuningsHelper
   # Gather desired attributes for the various tuning products
   # that will be sold through the Skunkwerx website.
   def vehicle_tunings
+    MaloneTuning.delete_all
     malone_tunings = []
     # Load document with all tunes for particular model vehicle.
     doc = Nokogiri::HTML(open(@@base + params[:model][:href]))
@@ -60,6 +62,7 @@ module Admin::MaloneTuningsHelper
       tune_attributes.update(price_with_purchase: tune.css('.views-field-field-price-with-tune-purchase').text.strip)
       malone_tunings << tune_match_or_create(tune_attributes)
     end
+
     # Get additional attributes from main content including image URLs.
     # First check for presence of main content entries.
     tunes_details = doc.css('.view-engine').last.css('div.views-row')
@@ -101,34 +104,6 @@ module Admin::MaloneTuningsHelper
     price  ##.sub(/^\$/, '')
   end
 
-  # Functions for malone_tunes/update.
-  def add_engine_from_list(malone_tune)
-    # Check for selection of at least three attributes??
-    if params[:add_from_list].count >= 3
-      engine = Engine.find_by_sql(["SELECT * FROM engines WHERE engine=? AND model_id IN (SELECT models.id FROM models WHERE id=?)", params[:add_from_list][:engine], params[:add_from_list][:model][:id]]).first
-      malone_tune.engines << engine
-    end
-  end
-
-  def create_and_add_new_engine(malone_tune)
-    vehicle = params[:add_vehicle]
-    unless vehicle[:make].empty?
-      make = Make.find_or_create_by(make: vehicle[:make])
-      model = make.models.find_or_create_by(model: vehicle[:model])
-      engine = model.engines.find_or_create_by(engine: vehicle[:engine])
-      engine.years += (vehicle[:years][:start].to_i..vehicle[:years][:end].to_i).to_a
-      engine.years.uniq!
-      engine.save
-      malone_tune.engines << engine
-    end
-  end
-
-  def delete_engines(malone_tune)
-    if params[:engine_delete]
-      params[:engine_delete].each { |id| malone_tune.engines.find(id.to_i).delete }
-    end
-  end
-
   # Find a tune with a similiar name to prevent creating redundant tunes.
   # Strip tune_name of spaces and take only characters that match
   # a simple name as found in the tables at the top of the page.
@@ -144,6 +119,8 @@ module Admin::MaloneTuningsHelper
   end
 
   def make_model_display(malone_tuning)
-    malone_tuning.make + " " + malone_tuning.model
+    # malone_tuning.model is nil in some cases
+    # necessitating the to_s method.
+    malone_tuning.make + " " + malone_tuning.model.to_s
   end
 end

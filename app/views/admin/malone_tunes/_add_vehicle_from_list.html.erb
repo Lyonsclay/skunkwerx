@@ -1,16 +1,16 @@
 <tr>
-	<td>
-		<%= "Add Vehicle from List" %>
-	</td>
-	<td>
-	  <%= "Make" %>
-		<%= collection_select("add_from_list[make]", "id", Make.distinct(:make), "id", "make",  include_blank: true) %>
-		<%= "Model" %>
-		<%= grouped_collection_select("add_from_list[model]", "id", Make.distinct(:make), "models", "make", "id", "model", include_blank: true) %>
-		<%= "Engine" %>
-		<%= grouped_collection_select( "add_from_list[engine]", "id", Model.distinct(:model), "engines", "model", "years", "engine", include_blank: true) %>
-		<%= "Years" %>
-		<%= collection_select("add_from_list[years]", "id", Engine.all, "id", "years") %>
-		<input id="engine_selected" name="add_from_list[engine]" type="hidden">
-	</td>
+    <td>
+	<%= "Add Vehicle from List" %>
+    </td>
+    <td>
+	<%= "Make" %>
+	<%= collection_select("add_from_list[make]", "id", Make.distinct(:make), "id", "make",  include_blank: true) %>
+	<%= "Model" %>
+	<%= grouped_collection_select("add_from_list[model]", "id", Make.distinct(:make), "models", "make", "id", "model", include_blank: true) %>
+	<%= "Engine" %>
+	<%= grouped_collection_select( "add_from_list[engine]", "id", Model.distinct(:model), "engines", "model", "years", "engine", include_blank: true) %>
+	<%= "Years" %>
+	<%= collection_select("add_from_list[years]", "id", Engine.all, "id", "years") %>
+	<input id="engine_selected" name="add_from_list[engine]" type="hidden">
+    </td>
 </tr>
