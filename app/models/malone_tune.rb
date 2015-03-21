@@ -1,5 +1,6 @@
 class MaloneTune < ActiveRecord::Base
   has_many :line_items
+  has_many :options
   has_many :engine_tunes
   has_many :engines, -> { uniq }, through: :engine_tunes
   validates :name, :unit_cost, presence: true
@@ -23,8 +24,7 @@ class MaloneTune < ActiveRecord::Base
 
   # Strip make and model portion of name after '::'.
   def name
-    self[:name] ||= ""
-    self[:name].match(/^[^(::)]*/).to_s
+    self[:name].match(/[^(MaloneTune::)]*/).to_s
   end
 
   # For caching
