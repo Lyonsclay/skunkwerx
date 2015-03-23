@@ -4,11 +4,11 @@
 </tr>
 <% unless @malone_tuning.graph_url.nil? %>
     <tr>
-	<td><%= label :malone_tune, "Use Default Graphic Instead" %></td>
+	<td><%= label_tag :malone_tune, "Use Default Graphic Instead" %></td>
 	<td><%= check_box_tag "default_image" %></td>
     </tr>
 <% end %>
 <tr>
-    <td><%= label "Change Image" %></td>
+    <td><%= label_tag "Change Image" %></td>
     <td><%= file_field :malone_tune, :image %></td>
 </tr>

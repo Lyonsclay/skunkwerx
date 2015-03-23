@@ -22,6 +22,7 @@ class Admin::MaloneTunesController < ApplicationController
   def create
     # Remove malone_tuning which has been created as both
     # tune and option.
+    byebug
     tuning = MaloneTuning.find_by_name malone_tune_params[:name]
     tuning.update_attribute(:tune_created, true)
     if tuning.tune_created && tuning.option_created
@@ -32,7 +33,7 @@ class Admin::MaloneTunesController < ApplicationController
     # in order to distinquish the tune names such as 'Stage 1'.
     malone_tune_params[:name] += "::" + tuning.make + " " + tuning.model
     MaloneTune.create malone_tune_params
-    render "admin/malone_tunings/index"
+    render "admin/malone_tunings/tuning_index"
   end
 
   def update

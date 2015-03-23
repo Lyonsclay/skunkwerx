@@ -16,6 +16,11 @@ FactoryGirl.define do
     unit_cost 23.56
   end
 
+  factory :malone_tuning do
+    name Faker::Name.name
+    make 
+  end
+ 
   factory :malone_tune do
     name "Malone::" + Faker::Name.name
     description "The juice that gives goose!"
