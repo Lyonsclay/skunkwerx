@@ -1,32 +1,32 @@
-# Manage engine/model/years selections.
+# manage engine/model/years selections.
 do ($, window) ->
   jQuery ->
     blank = "\n<option value=\"0\"></option>"
-    model = $('#add_from_list_model_id')
+    model = $('#select_vehicle_model_id')
     models = model.html()
     model.empty()
-    engine = $('#add_from_list_engine_id')
+    engine = $('#select_vehicle_engine_id')
     engines = engine.html()
     engine.empty()
-    years = $('#add_from_list_years_id')
-    years.empty()
-    $('#add_from_list_make_id').change ->
-      if $('#add_from_list_make_id')
-        make_selected = $('#add_from_list_make_id :selected').text()
+    year = $('#select_vehicle_year_range')
+    years = year.html()
+    year.empty()
+    $('#select_vehicle_make_id').change ->
+      make_selected = $('#select_vehicle_make_id :selected').text()
       options = blank + $(models).filter("optgroup[label=#{make_selected}]").html()
-      if options
-        model.html(options)
-        engine.empty()
-        years.empty()
-    model.change ->
-      model_selected = $('#add_from_list_model_id :selected').text()
-      options = blank + $(engines).filter("optgroup[label=#{model_selected}]").html()
-      if options
-        engine.empty()
-        years.empty()
+      model.html(options)
+      model.change ->
+        model_selected = $('#select_vehicle_model_id :selected')
+        model_text = model_selected.text()
+        model_id = model_selected.val()
+        options = blank + $(engines).filter("optgroup[label=#{model_text}]").html()
         engine.html(options)
-    engine.change ->
-      $('#engine_selected').val($('#add_from_list_engine_id :selected').text().trim())
-      years_selected = JSON.parse($('#add_from_list_engine_id option:selected').val())
-      $("#add_from_list_years_id").html("<option>#{years_selected[0] + '-' + years_selected[1]}</option>")
-
+        engine.change ->
+          engine_selected = $('#select_vehicle_engine_id :selected').val()
+          selections_model = $(years).filter("optgroup[label=#{model_id}]")
+          selections = selections_model.children().filter("option[value=#{engine_selected}]")
+          options = blank + selections.parent().html()
+          year.html(options)
+          year.change ->
+            year_selected = $('#select_vehicle_year_range :selected').text()
+            $('#year_selected')[0].value = year_selected

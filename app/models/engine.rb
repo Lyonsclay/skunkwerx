@@ -1,5 +1,5 @@
 class Engine < ActiveRecord::Base
-  has_many :engine_tunes
-  has_many :malone_tunes, through: :engine_tunes
   belongs_to :model
+  belongs_to :vehicle
+  has_many :years
 end

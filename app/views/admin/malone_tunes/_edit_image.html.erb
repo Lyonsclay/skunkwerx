@@ -1,11 +1,16 @@
-<tr class="graph">
-    <td><%= label :malone_tune, "Current Image" %></td>
-    <td><%= image_tag(@malone_tuning.graph_url, class: 'image_url', size: "150x150") %></td>
-</tr>
-<% unless @malone_tuning.graph_url.nil? %>
+<% if @malone_tuning.graph_url %>
+    <tr class="graph">
+        <td><%= label :malone_tune, "Current Image" %></td>
+        <td><%= image_tag(@malone_tuning.graph_url, class: 'image_url', size: "150x150") %></td>
+    </tr>
     <tr>
 	<td><%= label_tag :malone_tune, "Use Default Graphic Instead" %></td>
 	<td><%= check_box_tag "default_image" %></td>
+    </tr>
+<% else %>
+    <tr class="graph">
+        <td><%= label_tag :malone_tune, "Default Image" %></td>
+        <td><%= image_tag(@malone_tune.image(:small), size: "150x150", class: 'image_url') %></td>
     </tr>
 <% end %>
 <tr>

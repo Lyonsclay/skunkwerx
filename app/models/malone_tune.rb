@@ -1,8 +1,7 @@
 class MaloneTune < ActiveRecord::Base
   has_many :line_items
   has_many :options
-  has_many :engine_tunes
-  has_many :engines, -> { uniq }, through: :engine_tunes
+  belongs_to :vehicle
   validates :name, :unit_cost, presence: true
   validates :unit_cost, numericality: {greater_than_or_equal_to: 0.00}
 
@@ -10,6 +9,7 @@ class MaloneTune < ActiveRecord::Base
   has_attached_file :image,
     styles: {
       thumb: '100x100#',
+      small: '150x150#',
       square: '200x200#',
       medium: '300x300#'
     },
@@ -22,10 +22,10 @@ class MaloneTune < ActiveRecord::Base
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
   validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
 
-  # Strip make and model portion of name after '::'.
-  def name
-    self[:name].match(/[^(MaloneTune::)]*/).to_s
-  end
+  # Strip make and model portion of name after 'Malone - '.
+   def to_s 
+    self[:name].match(/[^(Malone \-)].*/).to_s
+   end
 
   # For caching
   def self.latest

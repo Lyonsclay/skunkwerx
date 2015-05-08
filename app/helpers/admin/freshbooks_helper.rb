@@ -102,11 +102,8 @@ module Admin::FreshbooksHelper
     end
     # Delete items that are not slated for web sales.
     items.delete_if {|item| item["tax2_id"].nil? }
-    # Strip uneeded attributes 'updated' and 'folder' from items,
-    # which is then used to create new records on the Skunkwerx
-    # database.
+    # Strip unused attributes 'updated' and 'folder' from items.
     items.map { |item| item.except *["updated", "folder"] }
-    # items
   end
 
   # Callback create request
@@ -141,6 +138,7 @@ module Admin::FreshbooksHelper
     callback_ids.first.text
     puts "*****************************************************"
   end
+
 
   def delete_all_webhooks
     callback_list = freshbooks_call(callback_list_message)

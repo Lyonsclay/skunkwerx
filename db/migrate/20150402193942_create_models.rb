@@ -3,8 +3,7 @@ class CreateModels < ActiveRecord::Migration
     create_table :models do |t|
       t.string :model
       t.references :make, index: true
-
-      t.timestamps
+      t.references :vehicle, index: true
     end
   end
 end

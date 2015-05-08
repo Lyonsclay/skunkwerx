@@ -4,12 +4,8 @@
     <%= button_to "ADMIN PAGE", admin_path, method: :get %>
     <%= button_to "BACK", malone_tunings_vehicles_path, method: :get %>
 </ul>
-
 <h2>Model Tunes for <%= @make_model %></h2>
 
-<%#= form_tag({ controller: 'admin/malone_tunes', action: 'create' }, method: 'post') do |f| %>
-
-<%#= submit_tag "Submit" %>
 <% @malone_tunings.each do |tuning| %>
     <% if tuning.name =~ /Stock/ %>
 	<table class="stock">
@@ -40,14 +36,13 @@
                                     <% MaloneTuning.columns.each do |c| %>
                                         <%= hidden_field_tag :"#{c.name}", tuning.attributes[c.name] %>
                                     <% end %>
-
 				    <%= submit_tag "Create as Tune" %>
 				<% end %>
+
                                 <%= form_tag(new_admin_option_path(tuning), method: 'get') do %>
                                     <% MaloneTuning.columns.each do |c| %>
                                         <%= hidden_field_tag :"#{c.name}", tuning.attributes[c.name] %>
                                     <% end %>
-
                                     <%= submit_tag "Create as Option" %>
                                 <% end %>
                             </dd>
@@ -60,40 +55,31 @@
 		    </td>
 		</tr>
 	    </thead>
-	    <tbody>
 
-	    </tbody>
-
-	    <!-- Requires and recommended graphics. -->
-	    <% unless tuning.requires_urls.nil? %>
-	    </tbody>
-	    <tr>
-		<th>
-		    <%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
-		</th>
-		<th>
-		    <%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
-		</th>
-	    </tr>
-	    <tr  class="require-recommend">
-		<% if tuning.requires_urls %>
-		    <td>
-			<% tuning.requires_urls.each do |url| %>
-			    <%= image_tag(url) %>
-			<% end %>
-		    </td>
-		    <td>
-			<% tuning.recommended_urls.each do |url| %>
-			    <%= image_tag(url) %>
-			<% end %>
-		    </td>
-		<% end %>
-	    </tr>
-	    </tbody>
-	    <tfoot>
-		<tr>
-		</tr>
-	    </tfoot>
+            <!-- Requires and recommended graphics. -->
+	    <% unless tuning.requires_urls.empty? && tuning.recommended_urls.empty? %>
+	        <tbody>
+	            <tr>
+		        <th>
+		            <%= image_tag("icon_requires.png") %>
+		        </th>
+		        <th>
+		            <%= image_tag("icon_recommended.png") %>
+		        </th>
+	            </tr>
+                    <tr  class="require-recommend">
+		        <td>
+			    <% tuning.requires_urls.each do |url| %>
+			        <%= image_tag(url) %>
+			    <% end %>
+		        </td>
+		        <td>
+			    <% tuning.recommended_urls.each do |url| %>
+			        <%= image_tag(url) %>
+			    <% end %>
+		        </td>
+	            </tr>
+	        </tbody>
 	    <% end %>
 	</table>
     <% end %>

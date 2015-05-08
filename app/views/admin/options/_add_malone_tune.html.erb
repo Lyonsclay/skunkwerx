@@ -1,0 +1,5 @@
+<tr>
+  <td><%= label :option, "Associated Tune"%></td>
+  <td><%= select("option", "malone_tune_id", MaloneTune.pluck(:name, :id), { include_blank: true }) %></td>
+</tr>
+

@@ -29,10 +29,17 @@ engines = %w( 1.2l 2.2l 3.8l V6 V8 )
   5.times do |t|
     make.models << Model.create(model: models[n][t])
   end
-  make.models.each do |m|
-    m.engines << Engine.create(engine: engines[0..2].sample, years: [rand(30) + 1985, rand(30) + 1985].sort)
-    m.engines << Engine.create(engine: engines[3..4].sample, years: [rand(30) + 1985, rand(30) + 1985].sort)
+  make.models.each do |model|
+    engines.each do |engine|
+      model.engines << Engine.create(engine: engine)
+    end
+    model.engines.each do |engine|
+      engine.years << Year.create(years: [1989, 2003])
+      engine.years << Year.create(years: [2005, 2012])
+    end
   end
 end
 
-
+# Year.all.each do |y|
+#   y.init_vehicle
+# end

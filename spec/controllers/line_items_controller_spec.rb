@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # Compared to earlier versions of this generator, there is very limited use of
 # stubs and message expectations in this spec.  Stubs are only used when there

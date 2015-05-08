@@ -1,5 +1,6 @@
 <% stylesheet 'admin/malone_tunes/index' %>
 <% stylesheet 'admin/malone_tunes/edit' %>
+<%= javascript_include_tag 'admin/new_malone_tune' %>
 
 <ul>
     <%= link_to "ADMIN PAGE", "/admin" %>
@@ -13,51 +14,48 @@
 	<tbody>
 	    <%= render "malone_tuning" %>
 	    <%= render "edit_image" %>
-
+            <%= render "tuning_name" %>
 	    <% MaloneTune.columns.each do |c| %>
-		<% next if /(at|id|image)/.match c.name %>
+		<% next if /(at|id|image|name)/.match c.name %>
 		<tr>
 		    <td><%= f.label c.name %></td>
 		    <% if c.type == :text %>
-			<td><%= f.text_area c.name, cols: "20", rows: "4" %></td>
+			<td><%= f.text_area c.name, cols: "20", rows: "4", maxength: 50 %></td>
 		    <% else %>
-			<td><%= f.text_field c.name, size: 50 %></td>
+			<td><%= f.text_field c.name, size: 8 %></td>
 		    <% end %>
 		</tr>
 	    <% end %>
 
-	    <%= render "add_vehicle_from_list" %>
+	    <%= render "select_vehicle" %>
 	    <%= render "add_new_vehicle" %>
 	    <tr>
                 <td></td>
 		<td><%= f.submit "Submit" %></td>
 	    </tr>
 	    <!-- Requires and recommended graphics. -->
-	    <% unless @malone_tuning.requires_urls.nil? %>
+	    <% unless @malone_tuning.requires_urls.empty? && @malone_tuning.recommended_urls.empty? %>
 		<tr>
 		    <th>
-			<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_requires.png") %>
+			<%= image_tag("icon_requires.png") %>
 		    </th>
 		    <th>
-			<%= image_tag("http://www.malonetuning.com/sites/all/themes/malonetuning/images/icon_recommended.png") %>
+			<%= image_tag("icon_recommended.png") %>
 		    </th>
 		</tr>
 		<tr  class="require-recommend">
-		    <% if @malone_tuning.requires_urls %>
-			<td>
-			    <% @malone_tuning.requires_urls.each do |url| %>
-				<%= image_tag(url) %>
-			    <% end %>
-			</td>
-			<td>
-			    <% @malone_tuning.recommended_urls.each do |url| %>
-				<%= image_tag(url) %>
-			    <% end %>
-			</td>
-		    <% end %>
+		    <td>
+			<% @malone_tuning.requires_urls.each do |url| %>
+			    <%= image_tag(url) %>
+			<% end %>
+		    </td>
+		    <td>
+			<% @malone_tuning.recommended_urls.each do |url| %>
+			    <%= image_tag(url) %>
+			<% end %>
+		    </td>
 		</tr>
 	    <% end %>
-
 	</tbody>
     </table>
 <% end %>

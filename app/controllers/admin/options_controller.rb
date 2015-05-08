@@ -11,18 +11,9 @@ class Admin::OptionsController < ApplicationController
   end
 
   def create
-    # Remove malone_tuning which has been created as tune and option.
-    tuning = MaloneTuning.find_by_name option_params[:name]
-    tuning.update_attribute(:tune_created, true)
-    if tuning.tune_created && tuning.option_created
-      session[:malone_tunings].delete(tuning)
-    end
-    @malone_tunings = session[:malone_tunings]
-    # The user input name needs an extension based on make and model
-    # in order to distinquish the tune names such as 'Stage 1'.
-    option_params[:name] += "::" + tuning.make + " " + tuning.model
     Option.create option_params
-    render "admin/malone_tunings/index"
+    @malone_tunings = session[:malone_tunings]
+    render "admin/malone_tunings/tuning_index"
   end
 
   private

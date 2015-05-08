@@ -1,5 +1,6 @@
 Skunkwerx::Application.routes.draw do
 
+  
   get 'malone_tunes/index_deploy'
 
   resources :line_items do
@@ -50,4 +51,6 @@ Skunkwerx::Application.routes.draw do
   get 'page_under_construction', to: 'page_under_construction#index'
 
   get 'malone_tunes/index'
+
+  match '*path', to: redirect('/admin'), via: :all
 end

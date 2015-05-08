@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318014152) do
+ActiveRecord::Schema.define(version: 20150407030103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,22 +32,14 @@ ActiveRecord::Schema.define(version: 20150318014152) do
     t.datetime "updated_at"
   end
 
-  create_table "engine_tunes", force: true do |t|
-    t.integer  "malone_tune_id"
-    t.integer  "engine_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "engines", force: true do |t|
-    t.string   "engine"
-    t.string   "years",      default: [], array: true
-    t.integer  "model_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "engine"
+    t.integer "model_id"
+    t.integer "vehicle_id"
   end
 
   add_index "engines", ["model_id"], name: "index_engines_on_model_id", using: :btree
+  add_index "engines", ["vehicle_id"], name: "index_engines_on_vehicle_id", using: :btree
 
   create_table "line_items", force: true do |t|
     t.integer  "item_id"
@@ -63,12 +55,11 @@ ActiveRecord::Schema.define(version: 20150318014152) do
   add_index "line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
 
   create_table "makes", force: true do |t|
-    t.string   "make"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "make"
+    t.integer "vehicle_id"
   end
 
-  add_index "makes", ["make"], name: "index_makes_on_make", using: :btree
+  add_index "makes", ["vehicle_id"], name: "index_makes_on_vehicle_id", using: :btree
 
   create_table "malone_tunes", force: true do |t|
     t.string   "name",               limit: 50
@@ -85,7 +76,10 @@ ActiveRecord::Schema.define(version: 20150318014152) do
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"
+    t.integer  "vehicle_id"
   end
+
+  add_index "malone_tunes", ["vehicle_id"], name: "index_malone_tunes_on_vehicle_id", using: :btree
 
   create_table "malone_tunings", force: true do |t|
     t.text     "name"
@@ -107,13 +101,13 @@ ActiveRecord::Schema.define(version: 20150318014152) do
   end
 
   create_table "models", force: true do |t|
-    t.string   "model"
-    t.integer  "make_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "model"
+    t.integer "make_id"
+    t.integer "vehicle_id"
   end
 
   add_index "models", ["make_id"], name: "index_models_on_make_id", using: :btree
+  add_index "models", ["vehicle_id"], name: "index_models_on_vehicle_id", using: :btree
 
   create_table "options", force: true do |t|
     t.string   "name",               limit: 50
@@ -170,5 +164,18 @@ ActiveRecord::Schema.define(version: 20150318014152) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
+  create_table "vehicles", force: true do |t|
+    t.string  "name"
+    t.integer "year_id"
+  end
+
+  add_index "vehicles", ["year_id"], name: "index_vehicles_on_year_id", using: :btree
+
+  create_table "years", force: true do |t|
+    t.string  "years",     default: [], array: true
+    t.string  "range"
+    t.integer "engine_id"
+  end
 
 end

@@ -7,11 +7,11 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def edit
-    @malone_tune = MaloneTune.find_by id: params[:id]
+    @malone_tune = MaloneTune.find params[:id]
   end
 
   def new
-    @malone_tuning = MaloneTuning.find(params[:format])
+    @malone_tuning = MaloneTuning.find params[:id]
     @malone_tune = MaloneTune.new
     @malone_tune.name = @malone_tuning.name
     @malone_tune.description = @malone_tuning.description
@@ -20,19 +20,9 @@ class Admin::MaloneTunesController < ApplicationController
   end
 
   def create
-    # Remove malone_tuning which has been created as both
-    # tune and option.
-    byebug
-    tuning = MaloneTuning.find_by_name malone_tune_params[:name]
-    tuning.update_attribute(:tune_created, true)
-    if tuning.tune_created && tuning.option_created
-      session[:malone_tunings].delete(tuning)
-    end
+    tune = MaloneTune.create malone_tune_params
+    VehicleConnect.new(params).associate(tune)
     @malone_tunings = session[:malone_tunings]
-    # The user input name needs an extension based on make and model
-    # in order to distinquish the tune names such as 'Stage 1'.
-    malone_tune_params[:name] += "::" + tuning.make + " " + tuning.model
-    MaloneTune.create malone_tune_params
     render "admin/malone_tunings/tuning_index"
   end
 
@@ -40,7 +30,8 @@ class Admin::MaloneTunesController < ApplicationController
     params[:malone_tune][:image] = nil if params["default_image"] == "1"
     malone_tune = MaloneTune.find_by id: params[:id]
     malone_tune.update(malone_tune_params)
-    add_engine_from_list(malone_tune)
+    vehicle = Vehicle.find_by id: params[:select_vehicle][:vehicle]
+   
     create_and_add_new_engine(malone_tune)
     delete_engine_tunes(malone_tune)
     redirect_to '/admin/malone_tunes'

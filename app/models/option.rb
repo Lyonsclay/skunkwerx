@@ -2,6 +2,7 @@ class Option < ActiveRecord::Base
   belongs_to :malone_tune
   validates :name, :unit_cost, presence: true
   validates :unit_cost, numericality: {greater_than_or_equal_to: 0.00}
+
   # This method associates the attribute ":image" with a file atachment
   has_attached_file :image,
     styles: {
@@ -19,7 +20,7 @@ class Option < ActiveRecord::Base
   validates_attachment_file_name :image, :matches => [/(gif|jp?g|png)\Z/i]
 
   # Strip make and model portion of name after '::'.
-  def name
-    self[:name].match(/[^(Option::)].*/).to_s
+  def to_s 
+    self[:name].match(/[^(Option \-)].*/).to_s
   end
 end

@@ -1,16 +1,17 @@
 require 'nokogiri'
 require 'open-uri'
+require 'byebug'
 
 module Admin::MaloneTuningsHelper
   # Base url
-  @@base = ENV['MALONE_TUNING_URL']
+  BASE = ENV['MALONE_TUNING_URL']
 
   # Build array of models with a hash of attributes.
   # { make: "", model: "", href: "" }
   def vehicle_models
     models = []
     # Get a Nokogiri::HTML::Document for page.
-    doc =  Nokogiri::HTML(open(@@base, read_timeout: 120))
+    doc =  Nokogiri::HTML(open(BASE, read_timeout: 120))
     # Define Nokogiri::XML::NodeSet
     node_set = doc.xpath('//li[.//a[@href = "/ecu-tuning"]]/ul/li')
     node_set.each do |node|
@@ -33,14 +34,14 @@ module Admin::MaloneTuningsHelper
     end
     models
   end
-
-  # Gather desired attributes for the various tuning products
-  # that will be sold through the Skunkwerx website.
+  
+  # Array of malone_tunings with relevant attributes for a particular vehicle.
   def vehicle_tunings
+    # Delete all MaloneTuning to reset @make_model
     MaloneTuning.delete_all
     malone_tunings = []
     # Load document with all tunes for particular model vehicle.
-    doc = Nokogiri::HTML(open(@@base + params[:model][:href]))
+    doc = Nokogiri::HTML(open(BASE + params[:model][:href]))
     # Get each tune's specs from top table with all tunes for
     # that model.
     doc.css('div.view-content tbody tr').each do |tune|
@@ -69,33 +70,41 @@ module Admin::MaloneTuningsHelper
     unless tunes_details.first.children[1].text.strip.empty?
       tunes_details.each do |tune|
         tune_name = tune.children[1].text.strip
-
         tuning = tune_match_or_create({name: tune_name})
-        tuning.update_attribute(:name, tune_name)
-        # { |a| tune_name =~ /#{a[:name]}/ } || {}
-        # tune_attributes[:name] = tune.children[1].text.strip
-        tuning.update_attribute(:description, tune.css('div.views-field-field-stage-description p').text)
+        # tuning.update_attribute(:name, tune_name)  # is this necessary?
+        tuning.description = tune.css('div.views-field-field-stage-description p').text 
         unless tune.css('a').first.nil?
-          tuning.update_attribute(:graph_url, tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href'])
+          tuning.graph_url = tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href']
         end
         # Create new MaloneTuning from tune_attributes
-        # tuning = MaloneTuning.find_or_create_by(tune_attributes)
         # Due to the way Postgresql and ActiveRecord process array columns
         # tuning cannot be created with array columns, but must be updated.
         tuning.update_attributes(requires_urls: requires_urls(tune), recommended_urls: recommended_urls(tune) )
         malone_tunings << tuning
       end
     end
-    session[:malone_tunings] = malone_tunings.uniq.map { |t| t  }
-    malone_tunings.uniq
-  end
 
-  # These graphics are no longer required.
+    malone_tunings.uniq
+    session[:malone_tunings] = malone_tunings.map { |t| t  }
+
+    # Strip description from name and add 'Malone -' + tuning + make/model.
+    malone_tunings.each do |tuning|
+      # #partition splits string into before, match, and after of regex capture.
+      name_parts = tuning.name.partition /^(\w+\.?\w?\s?){1,2}/
+      tuning.name = 'Malone - ' + name_parts[1] + ' ' + tuning.make.to_s + '/' + tuning.model.to_s
+      tuning.description ||= ''
+      tuning.description += name_parts[2] if name_parts[2][0]    # ""[0] == nil
+      tuning.save
+    end
+    session[:malone_tunings] = malone_tunings 
+  end
+ 
+  # The requires and recommended graphics are only used for information that might inform
+  # the admin in formulating the description attribute.
   def requires_urls(tune)
     tune.css("div.views-field.views-field-field-stage-requires-1 img").map { |t| t["src"] }
   end
 
-  # These graphics are no longer required.
   def recommended_urls(tune)
     tune.css("div.views-field.views-field-field-recommended-1 img").map { |t| t["src"] }
   end
@@ -112,7 +121,7 @@ module Admin::MaloneTuningsHelper
   # between every remaining character. This will catch a name that
   # has a missing space like 'Stage 5Custom'.
   def tune_match_or_create(tune_attributes)
-    tune_name_regex = tune_attributes[:name].delete(' ').match(/^(\w|\s|\.)+/).to_s.gsub("",'\s?')
+    tune_name_regex = tune_attributes[:name].delete(' ').match(/(\w|\s|\.|-)+/).to_s.gsub('','\s?')
     tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
     tuning ||= MaloneTuning.create(tune_attributes)
     tuning
