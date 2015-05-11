@@ -2,14 +2,14 @@ require "rails_helper"
 require "vehicle_builder"
 
 describe VehicleBuilder do
-  before(:example) do
+  before do
     @params = {  build_vehicle: {
                         make: "Makiz",
                         model: "Modelo",
                         engine: "VoomVoom",
                         year: { start: "1980", finish: "1999"}
                       } } 
-
+    VehicleBuilder.new(@params)
   end
   
   describe "#new" do
@@ -28,15 +28,21 @@ describe VehicleBuilder do
 
     it "creates a new Model" do
       model = Model.find_by_model @params[:build_vehicle][:model]
+      
+      expect(model.valid?).to equal true
     end
 
     it "creates a new Engine" do
       engine = Engine.find_by_engine @params[:build_vehicle][:engine]
+
+      expect(engine.valid?).to equal true
     end
 
     it "creates a new Year" do
       range = @params[:build_vehicle][:year][:start] + "-" + @params[:build_vehicle][:year][:finish]
       year = Year.find_by_range range
+
+      expect(year.valid?).to equal true
     end
   end
 
