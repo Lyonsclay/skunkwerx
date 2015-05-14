@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include PasswordResetsHelper
   include Admin::FreshbooksHelper
-  include Admin::MaloneTuningsHelper
+  # include Admin::MaloneTuningsHelper
   include LineItemsHelper
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

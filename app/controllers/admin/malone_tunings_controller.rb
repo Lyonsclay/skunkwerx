@@ -1,12 +1,13 @@
+include MaloneTuningsScraper
 # This controller scrapes malonetuning.com gathering
-# attributes of tunes in preparationfor creating a
+# attributes of tunings in preparationfor creating a
 # MaloneTune or Option.
 class Admin::MaloneTuningsController < ApplicationController
   layout 'admin/application'
   before_filter :authorize
 
   # List of engines from malonetuning.com.
-  # User selects engine to show associated tunes.
+  # User selects engine to show associated tunings.
   def vehicle_index
     @models = vehicle_models
   end
@@ -17,7 +18,7 @@ class Admin::MaloneTuningsController < ApplicationController
     @malone_tunings = session[:malone_tunings]
   end
 
-  # Show all tunes for selected engine.
+  # Show all tunings for selected engine.
   # User selects tunes to create as Product and MaloneTune.
   # Post '/create'
   def create
