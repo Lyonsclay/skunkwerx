@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407030103) do
+ActiveRecord::Schema.define(version: 20150816025111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,27 +61,7 @@ ActiveRecord::Schema.define(version: 20150407030103) do
 
   add_index "makes", ["vehicle_id"], name: "index_makes_on_vehicle_id", using: :btree
 
-  create_table "malone_tunes", force: true do |t|
-    t.string   "name",               limit: 50
-    t.text     "description"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.integer  "item_id"
-    t.decimal  "unit_cost",                     precision: 8, scale: 2, default: 0.0
-    t.integer  "inventory"
-    t.integer  "tax1_id"
-    t.integer  "tax2_id"
-    t.integer  "vehicle_id"
-  end
-
-  add_index "malone_tunes", ["vehicle_id"], name: "index_malone_tunes_on_vehicle_id", using: :btree
-
-  create_table "malone_tunings", force: true do |t|
+  create_table "malone_tuning_builders", force: true do |t|
     t.text     "name"
     t.string   "engine"
     t.string   "power"
@@ -99,6 +79,26 @@ ActiveRecord::Schema.define(version: 20150407030103) do
     t.boolean  "tune_created",        default: false
     t.boolean  "option_created",      default: false
   end
+
+  create_table "malone_tunings", force: true do |t|
+    t.string   "name",               limit: 50
+    t.text     "description"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "item_id"
+    t.decimal  "unit_cost",                     precision: 8, scale: 2, default: 0.0
+    t.integer  "inventory"
+    t.integer  "tax1_id"
+    t.integer  "tax2_id"
+    t.integer  "vehicle_id"
+  end
+
+  add_index "malone_tunings", ["vehicle_id"], name: "index_malone_tunings_on_vehicle_id", using: :btree
 
   create_table "models", force: true do |t|
     t.string  "model"
@@ -124,10 +124,10 @@ ActiveRecord::Schema.define(version: 20150407030103) do
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"
-    t.integer  "malone_tune_id"
+    t.integer  "malone_tuning_id"
   end
 
-  add_index "options", ["malone_tune_id"], name: "index_options_on_malone_tune_id", using: :btree
+  add_index "options", ["malone_tuning_id"], name: "index_options_on_malone_tuning_id", using: :btree
 
   create_table "orders", force: true do |t|
     t.string   "name"
