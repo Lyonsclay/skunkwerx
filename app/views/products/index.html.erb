@@ -15,9 +15,9 @@
             <% @products.each do |item| %>
                 <% cache [item] do %>
                     <% if item.image.url.match /missing/ %>
-                        <%= render 'malone_tunes/item_default_image', item: item %>
+                        <%= render 'malone_tunings/item_default_image', item: item %>
                     <% else %>
-                        <%= render 'malone_tunes/item_big_image', item: item %>
+                        <%= render 'malone_tunings/item_big_image', item: item %>
                     <% end %>
                 <% end %>
             <% end %>

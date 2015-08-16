@@ -187,7 +187,7 @@ module Admin::FreshbooksHelper
     puts "****************************************************"
     unless item_hash['tax2_id'].nil?
       if item_hash['name'].match("Malone")
-        MaloneTune.create(item_hash)
+        MaloneTuning.create(item_hash)
       else
         Product.create(item_hash)
       end
@@ -199,7 +199,7 @@ module Admin::FreshbooksHelper
     puts "*************** inside item_delete ******************"
     product = Product.find_by item_id: item_id
     product.delete if product
-    tune = MaloneTune.find_by item_id: item_id
+    tune = MaloneTuning.find_by item_id: item_id
     puts "***Product.last: " + Product.last.inspect
     tune.delete if tune
     puts "****************************************************"
@@ -208,7 +208,7 @@ module Admin::FreshbooksHelper
   def item_update(item_id)
     puts "**************** inside item_update *****************"
     item = Product.find_by item_id: item_id
-    item ||= MaloneTune.find_by item_id: item_id
+    item ||= MaloneTuning.find_by item_id: item_id
     puts "***item: " + item.inspect
     item_hash = item_get(item_id)
     puts "***item_hash: " + item_hash.inspect
@@ -248,16 +248,16 @@ module Admin::FreshbooksHelper
   # Malone Tunes.
   def freshbooks_sync
     items = get_items
-    # malone_tunes_items = []
+    # malone_tunings_items = []
     product_items = []
     # Track newly created items for sync descrepancy assesment.
     new_products = []
-    # Split items into malone_tunes and products then save
+    # Split items into malone_tunings and products then save
     # to database.
     items.each do |item|
       if item["name"].match("Malone")
-        # malone_tunes_items += item
-        MaloneTune.create(item)
+        # malone_tunings_items += item
+        MaloneTuning.create(item)
       else
         product_items << item
         p = Product.create(item)
@@ -305,22 +305,22 @@ module Admin::FreshbooksHelper
     items_ids = items.map { |i| i["item_id"].to_i }
     # Remove dead Products
     Product.where.not(item_id: items_ids).delete_all
-    # Remove dead MaloneTunes
-    MaloneTune.where.not(item_id: items_ids).delete_all
+    # Remove dead MaloneTunings
+    MaloneTuning.where.not(item_id: items_ids).delete_all
     puts "*********************************************************************"
   end
 
   def tune_item_create(id)
-    malone_tune = MaloneTune.find(id) if MaloneTune.find(id)
-    new_item = freshbooks_call(item_create_message(malone_tune))
+    malone_tuning = MaloneTuning.find(id) if MaloneTuning.find(id)
+    new_item = freshbooks_call(item_create_message(malone_tuning))
     # Receive item_id from Freshbooks.
     item_id = new_item["response"]["item_id"].to_i
-    # Update malone_tune item_id.
+    # Update malone_tuning item_id.
     # tax2_id is used to indicate that an item is selected for web sales.
-    malone_tune.update_attributes(item_id: item_id)
+    malone_tuning.update_attributes(item_id: item_id)
     puts "********************** tune_item_create *****************************"
     puts "***new_item: #{new_item}"
-    flash[:notice] = "#{malone_tune.name} with item_id: #{item_id} created on Freshbooks database!"
+    flash[:notice] = "#{malone_tuning.name} with item_id: #{item_id} created on Freshbooks database!"
     puts "*********************************************************************"
   end
 

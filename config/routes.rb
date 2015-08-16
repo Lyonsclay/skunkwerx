@@ -1,7 +1,7 @@
 Skunkwerx::Application.routes.draw do
 
   
-  get 'malone_tunes/index_deploy'
+  get 'malone_tunings/index_deploy'
 
   resources :line_items do
     collection do
@@ -31,8 +31,8 @@ Skunkwerx::Application.routes.draw do
     resources :password_resets, except: [:index, :destroy]
     resources :products, only: [:index, :edit, :update]
     resources :freshbooks, only: [:index]
-    resources :malone_tunes, except: [:show, :destroy]
-    resources :malone_tunings, only: [:create]
+    resources :malone_tunings, except: [:show, :destroy]
+    resources :malone_tuning_builders, only: [:create]
     resources :options, only: [:new, :create]
     post 'freshbooks/items_sync', to: 'freshbooks#items_sync', as: :items_sync
     post 'freshbooks/webhook_create', to: 'freshbooks#webhook_create', as: :webhook_create
@@ -40,7 +40,7 @@ Skunkwerx::Application.routes.draw do
     post 'freshbooks/tunes_create', to: 'freshbooks#tunes_create', as: :tunes_create
   end
 
-  get 'malone_tunings_vehicles', to: 'admin/malone_tunings#vehicle_index'
+  get 'malone_tuning_builders_vehicles', to: 'admin/malone_tuning_builders#vehicle_index'
 
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
 
@@ -50,7 +50,7 @@ Skunkwerx::Application.routes.draw do
 
   get 'page_under_construction', to: 'page_under_construction#index'
 
-  get 'malone_tunes/index'
+  get 'malone_tunings/index'
 
   match '*path', to: redirect('/admin'), via: :all
 end

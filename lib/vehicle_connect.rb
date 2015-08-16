@@ -19,8 +19,8 @@ class VehicleConnect
   end
 
   def associate(tune)
-    @vehicle.malone_tunes << tune
-    @vehicle.malone_tunes.include? tune
+    @vehicle.malone_tunings << tune
+    @vehicle.malone_tunings.include? tune
   end
   
   def delete_vehicles

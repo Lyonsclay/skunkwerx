@@ -1,6 +1,0 @@
-<% @malone_tuning.attributes.each do |k,v| %>
-	<% next if /(urls|graph|id|at|name|descr|unit)/.match k %>
-	<tr>
-		<td><em><%= label :malone_tuning, k %>&nbsp&nbsp:&nbsp&nbsp</em><%= v.to_s %></td>
-	</tr>
-<% end %>

@@ -1,9 +1,9 @@
-<% stylesheet 'admin/malone_tunes/index' %>
-<% stylesheet 'admin/malone_tunes/edit' %>
+<% stylesheet 'admin/malone_tunings/index' %>
+<% stylesheet 'admin/malone_tunings/edit' %>
 
 <ul>
     <%= link_to "ADMIN PAGE", "/admin" %>
-    <%#= link_to "BACK", "/admin/malone_tunes" %>
+    <%#= link_to "BACK", "/admin/malone_tunings" %>
 </ul>
 
 <h2>Create Option</h2>
@@ -12,9 +12,9 @@
 <%= form_for [:admin, @option], html: {multipart: true} do |f| %>
     <table>
 	<tbody>
-	    <%= render "malone_tuning" %>
+	    <%= render "malone_tuning_builder" %>
 	    <%= render "edit_image" %>
-            <%= render "add_malone_tune" %>
+            <%= render "add_malone_tuning" %>
             <%= render "tuning_name" %>
 	    <% Option.columns.each do |c| %>
 		<% next if /(at|id|image|name)/.match c.name %>
@@ -32,7 +32,7 @@
 		<td><%= f.submit "Submit" %></td>
 	    </tr>
 	    <!-- Requires and recommended graphics. -->
-	    <% unless @malone_tuning.requires_urls.empty? && @malone_tuning.recommended_urls.empty? %>
+	    <% unless @malone_tuning_builder.requires_urls.empty? && @malone_tuning_builder.recommended_urls.empty? %>
 		<tr>
 		    <th>
 			<%= image_tag("icon_requires.png") %>
@@ -43,12 +43,12 @@
 		</tr>
 		<tr  class="require-recommend">
 		    <td>
-			<% @malone_tuning.requires_urls.each do |url| %>
+			<% @malone_tuning_builder.requires_urls.each do |url| %>
 			    <%= image_tag(url) %>
 			<% end %>
 		    </td>
 		    <td>
-			<% @malone_tuning.recommended_urls.each do |url| %>
+			<% @malone_tuning_builder.recommended_urls.each do |url| %>
 			    <%= image_tag(url) %>
 			<% end %>
 		    </td>

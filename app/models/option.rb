@@ -1,5 +1,5 @@
 class Option < ActiveRecord::Base
-  belongs_to :malone_tune
+  belongs_to :malone_tuning
   validates :name, :unit_cost, presence: true
   validates :unit_cost, numericality: {greater_than_or_equal_to: 0.00}
 

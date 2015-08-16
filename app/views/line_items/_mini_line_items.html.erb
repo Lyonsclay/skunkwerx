@@ -8,10 +8,10 @@
 	</td>
 	<td class="name">
 		<%= line_item.product.name if line_item.product %>
-		<%= line_item.malone_tune.name if line_item.malone_tune %>
+		<%= line_item.malone_tuning.name if line_item.malone_tuning %>
 	</td>
 	<td class="unit_cost">
 		<%= number_to_currency line_item.product.unit_cost if line_item.product %>
-		<%= number_to_currency line_item.malone_tune.unit_cost if line_item.malone_tune %>
+		<%= number_to_currency line_item.malone_tuning.unit_cost if line_item.malone_tuning %>
 	</td>
 </tr>

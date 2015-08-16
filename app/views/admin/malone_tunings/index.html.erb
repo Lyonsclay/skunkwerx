@@ -1,0 +1,29 @@
+<% stylesheet 'admin/malone_tunings/index' %>
+
+<h1>Skunkwerx Malone Tunes</h1>
+
+<ul class="menu">
+  <%= button_to "ADMIN PAGE", admin_path, method: :get %>
+</ul>
+
+    <% @malone_tunings.each do |malone_tuning| %>
+      <table class="<%= cycle('list_line_odd', 'list_line_even') %>">
+      <tr>
+        <td class="list_description">
+          <dl>
+            <dd><b>Name:</b>&nbsp;&nbsp;<%= malone_tuning.name %></dd>
+            <% MaloneTuning.columns.each do |c| %>
+              <% next if ["name", "created_at", "updated_at", "id"].include? c.name %>
+              <% next if c.name.match /image/ %>
+              <% unless malone_tuning.attributes[c.name].nil? %>
+                  <dd><b><%= c.name %>:</b>&nbsp;&nbsp;<%= malone_tuning.attributes[c.name] %></dd>
+              <% end %>
+            <% end %>
+          </dl>
+        <td class="graph"><%= image_tag(malone_tuning.image.url(:medium), size: "150x150") %></td>
+        <td><%= link_to 'Edit', edit_admin_malone_tuning_path(malone_tuning) %><br><br></td>
+      </tr>
+    </table>
+  <% end %>
+
+

@@ -1,4 +1,4 @@
-# if document.URL == "http://localhost:3000/admin/malone_tunes"
+# if document.URL == "http://localhost:3000/admin/malone_tunings"
 
 ready = ->
 	tuneIDS = $('#tune_ids').data('tune-ids')

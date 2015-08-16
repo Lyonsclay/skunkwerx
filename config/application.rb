@@ -25,7 +25,7 @@ module Skunkwerx
     end
 
     #http://guides.rubyonrails.org/asset_pipeline.html#precompiling-assets
-    # config.assets.precompile += ['admin/application.css', 'admin/malone_tunes/index.css', 'admin/malone_tunes/show.css']
+    # config.assets.precompile += ['admin/application.css', 'admin/malone_tunings/index.css', 'admin/malone_tunings/show.css']
 
     I18n.enforce_available_locales = true
 

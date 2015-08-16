@@ -1,7 +1,7 @@
 require 'byebug'
 
 class Vehicle < ActiveRecord::Base
-  has_many :malone_tunes
+  has_many :malone_tunings
   has_one :make
   has_one :model
   has_one :engine

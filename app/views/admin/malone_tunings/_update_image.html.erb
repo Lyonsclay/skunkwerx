@@ -1,0 +1,14 @@
+<tr class="graph">
+    <td><%= label :malone_tuning, "Current Image" %></td>
+    <td><%= image_tag(@malone_tuning.image.url(:medium), class: 'image_url', size: "150x150") %></td>
+</tr>
+<% unless @malone_tuning.image.nil? %>
+    <tr>
+	<td><%= label :malone_tuning, "Use Default Graphic Instead" %></td>
+	<td><%= check_box_tag "default_image" %></td>
+    </tr>
+<% end %>
+<tr>
+    <td><%= label :malone_tuning, "Change Image" %></td>
+    <td><%= file_field :malone_tuning, :image %></td>
+</tr>

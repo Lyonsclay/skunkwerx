@@ -7,12 +7,12 @@ describe Option do
 
   it { should be_valid }
 
-  it 'should have same attributes as MaloneTune' do
-   expect(Option.attribute_names - ['malone_tune_id']).to match_array(MaloneTune.attribute_names - ['vehicle_id'])
+  it 'should have same attributes as MaloneTuning' do
+   expect(Option.attribute_names - ['malone_tuning_id']).to match_array(MaloneTuning.attribute_names - ['vehicle_id'])
   end
 
   describe Option do
-    it { is_expected.to belong_to(:malone_tune) }
+    it { is_expected.to belong_to(:malone_tuning) }
   end
 
   describe '.name' do

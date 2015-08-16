@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'byebug'
 
-module MaloneTuningsScraper
+module MaloneTuningBuildersScraper
   # Base url
   BASE = ENV['MALONE_TUNING_URL']
 
@@ -35,11 +35,11 @@ module MaloneTuningsScraper
     models
   end
   
-  # Array of malone_tunings with relevant attributes for a particular vehicle.
+  # Array of malone_tuning_builders with relevant attributes for a particular vehicle.
   def vehicle_tunings
-    # Delete all MaloneTuning to reset @make_model
-    MaloneTuning.delete_all
-    malone_tunings = []
+    # Delete all MaloneTuningBuilder to reset @make_model
+    MaloneTuningBuilder.delete_all
+    malone_tuning_builders = []
     # Load document with all tunes for particular model vehicle.
     doc = Nokogiri::HTML(open(BASE + params[:model][:href]))
     # Get each tune's specs from top table with all tunes for
@@ -55,7 +55,7 @@ module MaloneTuningsScraper
       tune_attributes[:unit_cost] = tune.css('.views-field-field-collection-price-cad-').text.strip
       tune_attributes[:standalone_price] = tune.css('.views-field-field-price').text.strip
       tune_attributes[:price_with_purchase] = tune.css('.views-field-field-price-with-tune-purchase').text.strip
-      malone_tunings << tune_match_or_create(tune_attributes)
+      malone_tuning_builders << tune_match_or_create(tune_attributes)
     end
 
     # Get additional attributes from main content including image URLs.
@@ -70,19 +70,19 @@ module MaloneTuningsScraper
         unless tune.css('a').first.nil?
           tuning.graph_url = tune.css('div.views-field.views-field.views-field-field-stage-dyno-chart a').first['href']
         end
-        # Create new MaloneTuning from tune_attributes
+        # Create new MaloneTuningBuilder from tune_attributes
         # Due to the way Postgresql and ActiveRecord process array columns
         # tuning cannot be created with array columns, but must be updated.
         tuning.update_attributes(requires_urls: requires_urls(tune), recommended_urls: recommended_urls(tune) )
-        malone_tunings << tuning
+        malone_tuning_builders << tuning
       end
     end
 
-    malone_tunings.uniq
-    session[:malone_tunings] = malone_tunings.map { |t| t  }
+    malone_tuning_builders.uniq
+    session[:malone_tuning_builders] = malone_tuning_builders.map { |t| t  }
 
     # Strip description from name and add 'Malone -' + tuning + make/model.
-    malone_tunings.each do |tuning|
+    malone_tuning_builders.each do |tuning|
       # #partition splits string into before, match, and after of regex capture.
       name_parts = tuning.name.partition /^(\w+\.?\w?\s?){1,2}/
       tuning.name = 'Malone - ' + name_parts[1] + ' ' + tuning.make.to_s + '/' + tuning.model.to_s
@@ -90,7 +90,7 @@ module MaloneTuningsScraper
       tuning.description += name_parts[2] if name_parts[2][0]    # ""[0] == nil
       tuning.save
     end
-    session[:malone_tunings] = malone_tunings 
+    session[:malone_tuning_builders] = malone_tuning_builders 
   end
  
   # The requires and recommended graphics are only used for information that might inform
@@ -116,14 +116,14 @@ module MaloneTuningsScraper
   # has a missing space like 'Stage 5Custom'.
   def tune_match_or_create(tune_attributes)
     tune_name_regex = tune_attributes[:name].delete(' ').match(/(\w|\s|\.|-)+/).to_s.gsub('','\s?')
-    tuning = MaloneTuning.where("name ~* ?", tune_name_regex).first
-    tuning ||= MaloneTuning.create(tune_attributes)
+    tuning = MaloneTuningBuilder.where("name ~* ?", tune_name_regex).first
+    tuning ||= MaloneTuningBuilder.create(tune_attributes)
     tuning
   end
 
-  def make_model_display(malone_tuning)
-    # malone_tuning.model is nil in some cases
+  def make_model_display(malone_tuning_builder)
+    # malone_tuning_builder.model is nil in some cases
     # necessitating the to_s method.
-    malone_tuning.make + " " + malone_tuning.model.to_s
+    malone_tuning_builder.make + " " + malone_tuning_builder.model.to_s
   end
 end

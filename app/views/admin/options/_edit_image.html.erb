@@ -1,7 +1,7 @@
-<% if @malone_tuning.graph_url %>
+<% if @malone_tuning_builder.graph_url %>
     <tr class="graph">
         <td><%= label :option, "Current Image" %></td>
-        <td><%= image_tag(@malone_tuning.graph_url, class: 'image_url', size: "150x150") %></td>
+        <td><%= image_tag(@malone_tuning_builder.graph_url, class: 'image_url', size: "150x150") %></td>
     </tr>
     <tr>
 	<td><%= label_tag :option, "Use Default Graphic Instead" %></td>
