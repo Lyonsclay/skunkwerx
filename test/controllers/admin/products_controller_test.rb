@@ -24,7 +24,7 @@ class Admin::ProductsControllerTest < ActionController::TestCase
 
   test "should assign image to product" do
     sign_in(@admin)
-    image = fixture_file_upload 'Doggie.gif'
+    image = fixture_file_upload 'images/Doggie.gif'
     patch :update, id: @product, product: { image: image }
     assert_template :index
     assert admin_products_path(assigns(:product))
