@@ -42,7 +42,8 @@ ActiveRecord::Schema.define(version: 20150407030103) do
   add_index "engines", ["vehicle_id"], name: "index_engines_on_vehicle_id", using: :btree
 
   create_table "line_items", force: true do |t|
-    t.integer  "product_id"
+    t.integer  "quantity",   default: 1
+    t.integer  "item_id"
     t.integer  "cart_id"
     t.integer  "order_id"
     t.datetime "created_at"
@@ -51,7 +52,6 @@ ActiveRecord::Schema.define(version: 20150407030103) do
 
   add_index "line_items", ["cart_id"], name: "index_line_items_on_cart_id", using: :btree
   add_index "line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
-  add_index "line_items", ["product_id"], name: "index_line_items_on_product_id", using: :btree
 
   create_table "makes", force: true do |t|
     t.string  "make"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20150407030103) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "item_id"
-    t.decimal  "unit_cost",          precision: 8, scale: 2
+    t.decimal  "unit_cost",          precision: 8, scale: 2, default: 0.0
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"

@@ -9,7 +9,7 @@ class CreateProducts < ActiveRecord::Migration
       t.integer :image_file_size
       t.datetime :image_updated_at
       t.integer :item_id
-      t.decimal :unit_cost, precision: 8, scale: 2
+      t.decimal :unit_cost, precision: 8, scale: 2, default: 0.0
       t.integer :inventory
       t.integer :tax1_id
       t.integer :tax2_id
