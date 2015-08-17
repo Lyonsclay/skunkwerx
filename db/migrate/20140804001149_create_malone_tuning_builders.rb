@@ -1,6 +1,6 @@
-class CreateMaloneTunings < ActiveRecord::Migration
+class CreateMaloneTuningBuilders < ActiveRecord::Migration
   def change
-    create_table :malone_tunings do |t|
+    create_table :malone_tuning_builders do |t|
       t.text :name
       t.string :engine
       t.string :power

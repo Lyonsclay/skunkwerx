@@ -11,20 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150816025111) do
+ActiveRecord::Schema.define(version: 20150407030103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "admins", force: true do |t|
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "name"
     t.string   "password_digest"
     t.string   "remember_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "carts", force: true do |t|
@@ -42,17 +42,16 @@ ActiveRecord::Schema.define(version: 20150816025111) do
   add_index "engines", ["vehicle_id"], name: "index_engines_on_vehicle_id", using: :btree
 
   create_table "line_items", force: true do |t|
-    t.integer  "item_id"
+    t.integer  "product_id"
     t.integer  "cart_id"
+    t.integer  "order_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity",   default: 1
-    t.integer  "order_id"
   end
 
   add_index "line_items", ["cart_id"], name: "index_line_items_on_cart_id", using: :btree
-  add_index "line_items", ["item_id"], name: "index_line_items_on_item_id", using: :btree
   add_index "line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
+  add_index "line_items", ["product_id"], name: "index_line_items_on_product_id", using: :btree
 
   create_table "makes", force: true do |t|
     t.string  "make"
@@ -70,22 +69,16 @@ ActiveRecord::Schema.define(version: 20150816025111) do
     t.string   "unit_cost"
     t.string   "standalone_price"
     t.string   "price_with_purchase"
-    t.string   "requires_urls",       default: [],    array: true
-    t.string   "recommended_urls",    default: [],    array: true
+    t.string   "requires_urls",       default: [], array: true
+    t.string   "recommended_urls",    default: [], array: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "make"
-    t.string   "model"
-    t.boolean  "tune_created",        default: false
-    t.boolean  "option_created",      default: false
   end
 
   create_table "malone_tunings", force: true do |t|
     t.string   "name",               limit: 50
     t.text     "description"
     t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -96,6 +89,8 @@ ActiveRecord::Schema.define(version: 20150816025111) do
     t.integer  "tax1_id"
     t.integer  "tax2_id"
     t.integer  "vehicle_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "malone_tunings", ["vehicle_id"], name: "index_malone_tunings_on_vehicle_id", using: :btree
@@ -113,8 +108,6 @@ ActiveRecord::Schema.define(version: 20150816025111) do
     t.string   "name",               limit: 50
     t.text     "description"
     t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -125,6 +118,8 @@ ActiveRecord::Schema.define(version: 20150816025111) do
     t.integer  "tax1_id"
     t.integer  "tax2_id"
     t.integer  "malone_tuning_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "options", ["malone_tuning_id"], name: "index_options_on_malone_tuning_id", using: :btree
@@ -139,11 +134,9 @@ ActiveRecord::Schema.define(version: 20150816025111) do
   end
 
   create_table "products", force: true do |t|
-    t.text     "name"
+    t.string   "name"
     t.text     "description"
     t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -153,6 +146,8 @@ ActiveRecord::Schema.define(version: 20150816025111) do
     t.integer  "inventory"
     t.integer  "tax1_id"
     t.integer  "tax2_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", force: true do |t|
@@ -177,5 +172,7 @@ ActiveRecord::Schema.define(version: 20150816025111) do
     t.string  "range"
     t.integer "engine_id"
   end
+
+  add_index "years", ["engine_id"], name: "index_years_on_engine_id", using: :btree
 
 end

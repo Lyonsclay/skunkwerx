@@ -32,47 +32,52 @@ file_content_changer () {
   done
 }
 
-before="malone_tuning($|[^s])"
-after="malone_tuning_builder"
-
-file_name_changer
-
-after="malone_tuning_builder\1"
+before="([^_])item_id([^s_])"
+after="\1product_id\2"
 
 file_content_changer
 
-before=malone_tunings
-after=malone_tuning_builders
-
-file_name_changer
-
-file_content_changer
-
-before=MaloneTuning
-after=MaloneTuningBuilder
-
-file_content_changer
-
-before="malone_tune($|[^s])"
-after="malone_tuning"
-
-file_name_changer
-
-after="malone_tuning\1"
-
-file_content_changer
-
-before=malone_tunes
-after=malone_tunings
-
-file_name_changer
-
-file_content_changer
-
-before=MaloneTune
-after=MaloneTuning
-
-file_content_changer
+# before="malone_tuning($|[^s])"
+# after="malone_tuning_builder"
+# 
+# file_name_changer
+# 
+# after="malone_tuning_builder\1"
+# 
+# file_content_changer
+# 
+# before=malone_tunings
+# after=malone_tuning_builders
+# 
+# file_name_changer
+# 
+# file_content_changer
+# 
+# before=MaloneTuning
+# after=MaloneTuningBuilder
+# 
+# file_content_changer
+# 
+# before="malone_tune($|[^s])"
+# after="malone_tuning"
+# 
+# file_name_changer
+# 
+# after="malone_tuning\1"
+# 
+# file_content_changer
+# 
+# before=malone_tunes
+# after=malone_tunings
+# 
+# file_name_changer
+# 
+# file_content_changer
+# 
+# before=MaloneTune
+# after=MaloneTuning
+# 
+# file_content_changer
 
 ## Before running this script make sure to clean working directory and run tests.
 ## In order to undo any changes performed by this script;

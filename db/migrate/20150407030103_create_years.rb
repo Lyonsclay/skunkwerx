@@ -3,7 +3,7 @@ class CreateYears < ActiveRecord::Migration
     create_table :years do |t|
       t.string :years, array: true, default: '{}'
       t.string :range
-      t.references :engine
+      t.references :engine, index: true
     end
   end
 end
