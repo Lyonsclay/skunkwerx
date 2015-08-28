@@ -83,6 +83,8 @@ GEM
     faker (1.4.3)
       i18n (~> 0.5)
     ffi (1.9.6)
+    figaro (1.1.1)
+      thor (~> 0.14)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (1.5.3)
@@ -228,6 +230,7 @@ DEPENDENCIES
   dalli
   factory_girl_rails
   faker
+  figaro
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails

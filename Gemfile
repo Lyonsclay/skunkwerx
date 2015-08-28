@@ -83,3 +83,7 @@ gem 'activerecord-session_store'
 
 # Pagination gem
 gem 'kaminari'
+
+# Store configuration values securely
+gem 'figaro'
+

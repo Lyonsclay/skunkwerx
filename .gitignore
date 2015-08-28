@@ -17,9 +17,6 @@
 
 /.env
 
-# Ignore api credentials
-/config/local_env.yml
-
 # Temporary file for constructing xml strings.
 /message_construct
 
@@ -41,3 +38,6 @@ public/assets/**
 
 # emacs projectile ignore directories file
 /.projectile
+
+# Ignore application configuration
+/config/application.yml
