@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407030103) do
+ActiveRecord::Schema.define(version: 20150902133612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,18 +161,17 @@ ActiveRecord::Schema.define(version: 20150407030103) do
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "vehicles", force: true do |t|
-    t.string  "name"
-    t.integer "year_id"
+    t.string "name"
   end
 
-  add_index "vehicles", ["year_id"], name: "index_vehicles_on_year_id", using: :btree
-
   create_table "years", force: true do |t|
-    t.string  "years",     default: [], array: true
+    t.string  "years",      default: [], array: true
     t.string  "range"
     t.integer "engine_id"
+    t.integer "vehicle_id"
   end
 
   add_index "years", ["engine_id"], name: "index_years_on_engine_id", using: :btree
+  add_index "years", ["vehicle_id"], name: "index_years_on_vehicle_id", using: :btree
 
 end

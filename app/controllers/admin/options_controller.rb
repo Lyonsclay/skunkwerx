@@ -13,7 +13,7 @@ class Admin::OptionsController < ApplicationController
   def create
     Option.create option_params
     @malone_tuning_builders = session[:malone_tuning_builders]
-    render "admin/malone_tuning_builders/tuning_index"
+    render "admin/malone_tuning_builders/tunings_index"
   end
 
   private

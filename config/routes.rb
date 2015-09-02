@@ -42,6 +42,8 @@ Skunkwerx::Application.routes.draw do
 
   get 'malone_tuning_builders_vehicles', to: 'admin/malone_tuning_builders#vehicle_index'
 
+  get 'malone_tuning_builders_tunings', to: 'admin/malone_tuning_builders#tunings_index'
+
   post 'webhooks', to: 'admin/freshbooks#webhooks', as: :webhooks
 
   resources :contact, only: [:index]

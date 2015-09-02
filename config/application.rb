@@ -37,5 +37,7 @@ module Skunkwerx
     end
 
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app/models/vehicle_builders')
+    config.autoload_paths << Rails.root.join('app/models/malone_tuning_builder')
   end
 end

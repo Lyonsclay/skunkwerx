@@ -23,7 +23,7 @@ class Admin::MaloneTuningsController < ApplicationController
     tune = MaloneTuning.create malone_tuning_params
     VehicleConnect.new(params).associate(tune)
     @malone_tuning_builders = session[:malone_tuning_builders]
-    render "admin/malone_tuning_builders/tuning_index"
+    render "admin/malone_tuning_builders/tunings_index"
   end
 
   def update

@@ -7,28 +7,28 @@ describe VehicleBuilder do
                         make: "Makiz",
                         model: "Modelo",
                         engine: "VoomVoom",
-                        year: { start: "1980", finish: "1999"}
+                        year: { first: "1980", last: "1999"}
                       } } 
     VehicleBuilder.new(@params)
   end
-  
+
   describe "#new" do
     it "creates a new Vehicle" do
       count = Vehicle.count
       VehicleBuilder.new(@params)
-      
+
       expect(Vehicle.count - count).to equal 1
     end
-    
+
     it "creates a new Make" do
       make = Make.find_by_make @params[:build_vehicle][:make]
-      
+
       expect(make.valid?).to equal true
     end
 
     it "creates a new Model" do
       model = Model.find_by_model @params[:build_vehicle][:model]
-      
+
       expect(model.valid?).to equal true
     end
 
@@ -39,7 +39,8 @@ describe VehicleBuilder do
     end
 
     it "creates a new Year" do
-      range = @params[:build_vehicle][:year][:start] + "-" + @params[:build_vehicle][:year][:finish]
+      range = @params[:build_vehicle][:year][:first] + "-" + @params[:build_vehicle][:year][:last]
+
       year = Year.find_by_range range
 
       expect(year.valid?).to equal true

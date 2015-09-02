@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'byebug'
 
-module MaloneTuningBuildersScraper
+module MaloneTuningsScraper
   # Base url
   BASE = ENV['MALONE_TUNING_URL']
 
@@ -34,7 +34,7 @@ module MaloneTuningBuildersScraper
     end
     models
   end
-  
+
   # Array of malone_tuning_builders with relevant attributes for a particular vehicle.
   def vehicle_tunings
     # Delete all MaloneTuningBuilder to reset @make_model
@@ -72,7 +72,7 @@ module MaloneTuningBuildersScraper
         end
         # Create new MaloneTuningBuilder from tune_attributes
         # Due to the way Postgresql and ActiveRecord process array columns
-        # tuning cannot be created with array columns, but must be updated.
+        # tuning cannot be created with array columns, but must be updated
         tuning.update_attributes(requires_urls: requires_urls(tune), recommended_urls: recommended_urls(tune) )
         malone_tuning_builders << tuning
       end
@@ -81,7 +81,7 @@ module MaloneTuningBuildersScraper
     malone_tuning_builders.uniq
     session[:malone_tuning_builders] = malone_tuning_builders.map { |t| t  }
 
-    # Strip description from name and add 'Malone -' + tuning + make/model.
+    # Strip description from name and add 'Malone -' + tuning + make/model
     malone_tuning_builders.each do |tuning|
       # #partition splits string into before, match, and after of regex capture.
       name_parts = tuning.name.partition /^(\w+\.?\w?\s?){1,2}/
@@ -90,9 +90,9 @@ module MaloneTuningBuildersScraper
       tuning.description += name_parts[2] if name_parts[2][0]    # ""[0] == nil
       tuning.save
     end
-    session[:malone_tuning_builders] = malone_tuning_builders 
+    malone_tuning_builders
   end
- 
+
   # The requires and recommended graphics are only used for information that might inform
   # the admin in formulating the description attribute.
   def requires_urls(tune)
